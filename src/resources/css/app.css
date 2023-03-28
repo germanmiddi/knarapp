@@ -17,8 +17,12 @@
         @apply rounded-md shadow bg-white my-5 text-black-333;
     }
 
+    .card-header{
+        @apply flex justify-between items-center   
+    }
+    
     .card-title{
-        @apply border-b ;
+        @apply text-lg font-black
     }
 
     .card-title-text{
@@ -33,9 +37,32 @@
         @apply text-sm text-gray-400 font-bold tracking-wider mb-1;
     }
 
+    .card-filter{
+        @apply flex justify-between mt-2
+    }
+
+    /* .filter-input-group{
+        @apply border border-gray-100 py-1 px-2 rounded-md h-10 flex items-center 
+    } */
+
+    .filter-input-group label{
+        @apply text-sm 
+    }
+
+    .filter-input-group input{
+        @apply text-base border border-gray-300 rounded-md ml-2 py-1 pl-2 w-60 
+    }
+
+    .filter-button{
+        @apply border border-gray-200 py-1 px-2 rounded-md flex items-center hover:bg-gray-100
+    }
 
     .btn{
         @apply text-tiny inline-block px-4 py-2 rounded-md focus:outline-none transition duration-500 ease-in-out; 
+    }
+
+    .btn-blue{
+        @apply inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent   rounded-md font-semibold text-xs   text-white uppercase tracking-widest   hover:bg-blue-600 active:bg-blue-900   focus:outline-none focus:border-blue-900   focus:ring focus:ring-blue-300   disabled:opacity-25 transition
     }
 
     .btn-primary{
@@ -58,21 +85,45 @@
         @apply flex py-1 px-4 ml-4 text-base  bg-white text-blue-400 rounded-lg font-bold items-center hover:bg-blue-400 hover:text-white transition duration-500 ease-in-out;
     }
 
-    .label-paid-success{
-        @apply text-xs text-blue-600 rounded font-bold bg-blue-400 h-6 px-3 ml-3 py-1
+    .button-w-icon{
+        @apply flex border border-gray-200 items-center px-3 py-2 rounded-md text-sm hover:bg-gray-100
     }
 
-    .label-paid-danger{
-        @apply text-xs text-white rounded font-bold bg-gray-700 h-6 px-3 ml-3 py-1
+    .top-filter{
+        @apply flex py-1 text-sm w-5/6 justify-around mx-auto font-bold 
     }
 
-    .label-fulfillment-success{
-        @apply text-xs text-blue-600 rounded font-bold bg-blue-200 h-6 px-3 ml-3 py-1
+    .top-filter-item{
+        @apply px-2 rounded-md hover:bg-gray-100 border border-transparent cursor-pointer
     }
 
-    .label-fulfillment-danger{
-        @apply text-xs text-white rounded font-bold bg-orange-500 h-6 px-3 ml-3 py-1
+    .top-filter-number{
+        @apply text-gray-400
     }
+    .top-filter-item-active{
+        @apply bg-gray-100 border border-gray-300
+    }
+
+    .table{
+        @apply rounded-lg
+    }
+
+    .table-header th{
+        @apply bg-gray-50 text-sm py-2 text-gray-500 font-bold
+    }    
+
+    .table-row{
+        @apply text-center text-sm border-b border-gray-300 py-2
+    }
+
+    .table-row td{
+        @apply p-2
+    }
+
+    .table-row td button{
+        @apply flex border border-gray-200 items-center p-1 rounded-md hover:bg-gray-100
+    }
+
 
 
 }

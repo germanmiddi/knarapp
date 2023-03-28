@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-const path = require('path');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,16 +13,13 @@ const path = require('path');
 
 mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
         require('tailwindcss'),
     ])
-    .webpackConfig(require('./webpack.config'));
+    .alias({
+        '@': 'resources/js',
+        ziggy: "vendor/tightenco/ziggy/dist/vue",
+    });
 
 if (mix.inProduction()) {
     mix.version();
-    mix.webpackConfig({
-        output: {
-            publicPath: '/manager/'
-        },
-    });    
 }

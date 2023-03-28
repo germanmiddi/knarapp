@@ -1,86 +1,92 @@
 <template>
-    <div class="content flex-grow flex flex-col justify-between" >
-        <!-- :class="[store.sidebarCollapse ? 'md:pl-16 lg:pl-64' : 'md:pl-16' ]"> -->
-    
-        <div class="md:hidden relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none">
-        <button type="button" class="px-4 border-r border-gray-200 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden" @click="store.mobileSidebar = true">
-            <span class="sr-only">Open sidebar</span>
-            <Bars3Icon class="h-6 w-6" aria-hidden="true" />
-        </button>
-        </div>
+    <div class="w-full" >
 
-        <!-- <div class="m-5"> -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            
-            <!-- <div class="content flex-grow flex flex-col justify-between">
-            </div>                   -->
-                <!-- Component Start -->
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-2 w-full max-w-7xl mt-5 md:mt-8">
+                
+                <div class="col-span-2 md:col-span-4 mx-6 text-3xl font-bold"><h1>Estadísticas de Febrero:</h1></div>
 
-                <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-2 w-full max-w-6xl mt-5 md:mt-8">
-                    
-                    <div class="col-span-3 mx-6 text-3xl font-bold"><h1>Datos Mes:</h1></div>
-
-                    <div class="col-span-3 md:col-span-1 card rounded-xl shadow">
-                        <div class="card-body px-2 py-5 flex items-center" >
-                            <div class="">
-                                <Icons name="shopping-cart" class="w-10 h-10 mx-4 text-indigo-500"></Icons>
-                            </div>    
-                            <div class="flex-grow flex flex-col px-2">
-                                <div class="text-sm text-gray-500">Cantidad Pedidos</div>
-                                <div class="flex items-center justify-between">
-                                    <div class="font-bold text-2xl"></div>
-                                    <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"> %</span>
-                                </div>
-                            </div>   
-                        </div>
-                        <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
-                            <div class="mx-4 text-indigo-500 font-bold">
-                                <!-- <a :href="route('order.list')">Ver todo</a> -->
-                            </div>    
-                        </div>
+                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                    <div class="card-body px-2 py-5 flex items-center" >
+                        <div class="">
+                            <CalendarIcon class="w-10 h-10 mx-4 text-indigo-500" />
+                        </div>    
+                        <div class="flex-grow flex flex-col px-2">
+                            <div class="text-sm text-gray-500">Solicitudes</div>
+                            <div class="flex items-center justify-between">
+                                <div class="font-bold text-2xl">100</div>
+                                <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"> 30%</span>
+                            </div>
+                        </div>   
                     </div>
-
-                    <div class="col-span-3 md:col-span-1 card rounded-xl shadow">
-                        <div class="card-body px-2 py-5 flex items-center" >
-                            <div class="">
-                                <Icons name="file" class="w-10 h-10 mx-4 text-sky-500"></Icons>
-                            </div>    
-                            <div class="flex-grow flex flex-col px-2">
-                                <div class="text-sm text-gray-500">Cantidad Facturas Emitidas</div>
-                                <div class="flex items-center justify-between">
-                                    <div class="font-bold text-2xl"></div>
-                                    <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"> %</span>
-                                </div>
-                            </div>   
-                        </div>
-                        <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
-                            <div class="mx-4 text-sky-500 font-bold">
-                                <!-- <a :href="route('order.list')">Ver todo</a> -->
-                            </div>    
-                        </div>
+                    <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
+                        <div class="mx-4 text-indigo-500 font-bold">
+                            <a href="#">Ver todo</a>
+                        </div>    
                     </div>
-
-                    <div class="col-span-3 md:col-span-1 card rounded-xl shadow">
-                        <div class="card-body px-2 py-5 flex items-center" >
-                            <div class="">
-                                <Icons name="truck" class="w-10 h-10 mx-4 text-blue-500"></Icons>
-                            </div>    
-                            <div class="flex-grow flex flex-col px-2">
-                                <div class="text-sm text-gray-500">Cantidad de Guías</div>
-                                <div class="flex items-center justify-between">
-                                    <div class="font-bold text-2xl"></div>
-                                    <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"></span>
-                                </div>
-                            </div>   
-                        </div>
-                        <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
-                            <div class="mx-4 text-blue-500 font-bold">
-                                <!-- <a :href="route('order.list')">Ver todo</a> -->
-                            </div>    
-                        </div>
-                    </div>
-                    
                 </div>
-                <!-- Component End  -->
+
+                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                    <div class="card-body px-2 py-5 flex items-center" >
+                        <div class="">
+                            <Icons name="file" class="w-10 h-10 mx-4 text-sky-500"></Icons>
+                        </div>    
+                        <div class="flex-grow flex flex-col px-2">
+                            <div class="text-sm text-gray-500">Viajes Realizados</div>
+                            <div class="flex items-center justify-between">
+                                <div class="font-bold text-2xl">80</div>
+                                <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"> 20%</span>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
+                        <div class="mx-4 text-sky-500 font-bold">
+                            <a href="#">Ver todo</a>
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                    <div class="card-body px-2 py-5 flex items-center" >
+                        <div class="">
+                            <Icons name="mapmarkertime" class="w-10 h-10 mx-4 text-blue-500"></Icons>
+                        </div>    
+                        <div class="flex-grow flex flex-col px-2">
+                            <div class="text-sm text-gray-500">Excursiones</div>
+                            <div class="flex items-center justify-between">
+                                <div class="font-bold text-2xl">36</div>
+                                <span class="text-green-600 text-sm font-bold bg-green-100 py-1 px-2 rounded-xl"> 10%</span>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
+                        <div class="mx-4 text-blue-500 font-bold">
+                            <a href="#">Ver todo</a>
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                    <div class="card-body px-2 py-5 flex items-center" >
+                        <div class="">
+                            <Icons name="tranfer" class="w-10 h-10 mx-4 text-blue-500"></Icons>
+                        </div>    
+                        <div class="flex-grow flex flex-col px-2">
+                            <div class="text-sm text-gray-500">Traslados</div>
+                            <div class="flex items-center justify-between">
+                                <div class="font-bold text-2xl">44</div>
+                                <span class="text-red-600 text-sm font-bold bg-red-100 py-1 px-2 rounded-xl"> -5%</span>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="card-footer bg-gray-50 px-2  py-3 text-sm rounded-b-xl ">
+                        <div class="mx-4 text-blue-500 font-bold">
+                            <a href="#">Ver todo</a>
+                        </div>    
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>  
 </template>
@@ -88,20 +94,100 @@
 <script>
     import Icons from '@/Layouts/Components/Icons.vue'
     import store from '@/store.js'
-    import { Bars3Icon } from '@heroicons/vue/24/outline'
+    import { Bars3Icon,
+             XMarkIcon,
+             CalendarIcon
+            } from '@heroicons/vue/24/outline'
 
     export default {
         props:{
 
         },
         components: {
-            Icons,
-            Bars3Icon
+            Bars3Icon,
+            CalendarIcon     
         },
+    
+        setup(){
+            
+        },
+
         data() {
+
+            const orders = [
+                {
+                    id: '1',
+                    fecha : '25/02/2023',
+                    hora: '10:30',
+                    client: 'Agencia ABC',
+                    origen : 'Ezeiza',
+                    destino: 'Hotel Colonial',
+                    pasajeros: '4',
+                    status: 'PROGRAMADO',
+                },
+                {
+                    id: '2',
+                    fecha : '27/02/2023',
+                    hora: '07:00',
+                    client: 'Agencia ABC',
+                    origen : 'Hotel Alvear',
+                    destino: 'Estancia La Linda',
+                    pasajeros: '4',
+                    status: 'PROGRAMADO',
+                },
+                {
+                    id: '3',
+                    fecha : '27/02/2023',
+                    hora: '07:00',
+                    client: 'Agencia ABC',
+                    origen : 'Hotel Alvear',
+                    destino: 'Estancia La Linda',
+                    pasajeros: '4',
+                    status: 'PROGRAMADO',
+                },
+                {
+                    id: '3',
+                    fecha : '',
+                    hora: '',
+                    client: '',
+                    origen : '',
+                    destino: '',
+                    pasajeros: '',
+                    status: '',
+                },
+
+            ];
+
+
+
             return {
-                store,        
+                store,    
+                btnTextMap: '', 
+                filterBtn: true,
+                showFilter: true,
+                orders: orders,
+                filter: {
+                    street: "",
+                    client: "",
+                    driver: "",
+                    status: "TODOS",
+                    date: [
+                        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000 - 3600000 * 3),
+                        new Date(new Date().getTime() - 3600000 * 3)
+                    ]
+                    //new Date(this.form.date + "T00:00:00.000-03:00")
+                },                   
             }
+        },
+        methods:{
+            // showMap() {
+            //     this.showFilter = !this.showFilter
+            //     if (this.showFilter) {
+            //         this.btnTextMap = 'Ver Listado'
+            //     } else {
+            //         this.btnTextMap = 'Ver Mapa'
+            //     }
+            // },
         }
     }
 </script>

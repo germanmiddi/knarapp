@@ -6,10 +6,14 @@
         <div class="flex justify-between h-16">
           <div class="flex">
             <div class="flex-shrink-0 flex items-center">
-              <RocketLaunchIcon class="text-gray-600 w-8"  />
+              <img src="/images/logo-knar.png" class="w-28" alt="">
+              <!-- <RocketLaunchIcon class="text-gray-600 w-8"  /> -->
             </div>
             <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-              <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">
+              <a v-for="item in navigation" :key="item.name" 
+                 :href="route(item.href)" 
+                 :class="[route().current(item.href) ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium']" 
+                 :aria-current="route().current(item.href) ? 'page' : undefined">
                 {{ item.name }}
               </a>
             </div>
@@ -26,7 +30,7 @@
               <transition enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                    <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                    <a :href="route(item.href)" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
                       {{ item.name }}
                     </a>
                   </MenuItem>
@@ -83,10 +87,13 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Dashboard', href: 'dashboard', current: true },
+  { name: 'Pedidos', href: 'order', current: false },
+  { name: 'Clientes', href: 'client', current: false },
+  { name: 'Choferes', href: 'client', current: false },
+  { name: 'Servicios', href: 'client', current: false },
+  { name: 'Reportes', href: 'client', current: false },
+  { name: 'Configuración', href: 'dashboard', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
