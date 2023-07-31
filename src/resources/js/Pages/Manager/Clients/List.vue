@@ -41,32 +41,32 @@
                     <tr class="text-left font-bold bg-blue-500 text-white">
                         <th class="px-6 py-3 text-center">ID</th>
                         <th class="px-6 py-3 text-center">Nombre</th>
-                        <th class="px-6 py-3 ">Dirección</th>
+                        <!-- <th class="px-6 py-3 ">Dirección</th> -->
                         <th class="px-6 py-3 ">Contacto</th>
                         <th class="px-6 py-3 text-center">Acciones</th>
                     </tr>
-                    <tr v-for="client in clients" :key="client.id"
+                    <tr v-for="client in clients.data" :key="client.id"
                         class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm ">
                         <td class="border-t px-6 py-4 text-center">
                             {{ client.id }}
                         </td>
                         <td class="border-t px-6 py-4 text-center">
-                            {{ client.name }}
+                            {{ client.company_name }}
                         </td>
 
-                        <td class="border-t px-6 py-4 text-left">
+                        <!-- <td class="border-t px-6 py-4 text-left">
                             {{ client.address }}
-                        </td>
+                        </td> -->
 
                         <td class="border-t px-6 py-4 text-center">
                             <div class="flex"> 
-                                <PhoneIcon class="w-3 mr-2 text-blue-500"/> +54 1234 5678 </div>
+                                <PhoneIcon class="w-3 mr-2 text-blue-500"/> {{ client.phone }} </div>
                             <div class="flex"> 
-                            <EnvelopeIcon class="w-3 mr-2 text-blue-500"/>miemail@gmail.com</div>
+                            <EnvelopeIcon class="w-3 mr-2 text-blue-500"/>{{ client.email }}</div>
                         </td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
-                            <a type="button" href="#" class="inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
+                            <a type="button" :href="route('client.edit', client.id)" class="inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
                                         hover:bg-gray-300">
                                 <PencilIcon class="h-4 w-4 text-gray-700" aria-hidden="true" /></a>
                             
@@ -277,28 +277,28 @@ export default defineComponent({
     },
     data() {
 
-        const clients = [
-            { id: '1' ,
-              name: 'Agencia ABC',
-              address: 'Av. Libertador 1234, CABA ',
-              cellphone: '+54 9 1234 5678'
-            },
-            { id: '2' ,
-              name: 'Juan Sanchez',
-              address: 'Parana 1234, CABA ',
-              cellphone: '+54 9 1234 5678'
-            },
-            { id: '3' ,
-              name: 'Travel Show',
-              address: 'Peña 1234, CABA ',
-              cellphone: '+54 9 1234 5678'
-            }
+        // const clients = [
+        //     { id: '1' ,
+        //       name: 'Agencia ABC',
+        //       address: 'Av. Libertador 1234, CABA ',
+        //       cellphone: '+54 9 1234 5678'
+        //     },
+        //     { id: '2' ,
+        //       name: 'Juan Sanchez',
+        //       address: 'Parana 1234, CABA ',
+        //       cellphone: '+54 9 1234 5678'
+        //     },
+        //     { id: '3' ,
+        //       name: 'Travel Show',
+        //       address: 'Peña 1234, CABA ',
+        //       cellphone: '+54 9 1234 5678'
+        //     }
 
-        ]
+        // ]
 
         return {
             open: false,
-            clients,
+            clients: {},
             toastMessage: "",
             labelType: "info",
             message: "",
@@ -319,9 +319,9 @@ export default defineComponent({
         },
     },
 
-    // created() {
-    //     this.getClients()
-    // },
+    created() {
+        this.getClients()
+    },
     // mounted() {
     //     if (this.toast) {
     //         if (this.toast['status'] == 200) {

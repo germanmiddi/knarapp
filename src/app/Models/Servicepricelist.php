@@ -30,5 +30,16 @@ class Servicepricelist extends Model
         'price_valid_to'
     ];
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+
     use HasFactory, SoftDeletes;
 }

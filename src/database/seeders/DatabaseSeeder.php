@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Inicio123')
         ]);
 
+        
+
     }
 }

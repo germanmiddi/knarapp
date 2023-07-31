@@ -4,15 +4,12 @@
         <header class="">
             <div class="flex justify-between max-w-7xl mx-auto py-6 px-10">
                 <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-                    Viajes
+                    Solicitudes
                 </h2>
                 <div class="flex"> 
-                    <button class="btn-blue mr-2" @click.prevent="showMap = !showMap ">
-                        Ver Mapa
-                    </button>
-                    <button class="btn-blue mr-2">
-                        Nuevo Viaje
-                    </button>
+                    <a class="btn-blue mr-2" :href="route('request.create')">
+                        Nueva Solicitud
+                    </a>
                     <button class="btn-blue flex" @click="filterBtn = !filterBtn">Filtros
                         <ChevronDownIcon v-if="!filterBtn" class="w-5" />
                         <ChevronUpIcon v-else class="w-5" />
@@ -21,14 +18,14 @@
             </div>
         </header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ul class="top-filter w-full my-3 card">
+            <!-- <ul class="top-filter w-full my-3 card">
                 <li class="top-filter-item top-filter-item-active">TODOS:<span class="top-filter-number"> 58</span></li>
                 <li class="top-filter-item">SOLICITUDES:<span class="top-filter-number"> 20</span></li>
                 <li class="top-filter-item">PROGRAMADOS:<span class="top-filter-number"> 15</span></li>
                 <li class="top-filter-item">EN CURSO:<span class="top-filter-number"> 8</span></li>
                 <li class="top-filter-item">FINALIZADOS:<span class="top-filter-number"> 10</span></li>
                 <li class="top-filter-item">CANCELADOS:<span class="top-filter-number"> 5</span></li>
-            </ul>
+            </ul> -->
 
             <div class="card-filter bg-gray-100 border-gray-300 p-2 rounded-md" v-if="filterBtn">
                 <div class="filter-input-group">
@@ -101,26 +98,21 @@
             <div class="bg-white shadow-lg sm:rounded-lg">
                 <table class="w-full whitespace-nowrap rounded-t-lg">
                     <tr class="text-left font-bold bg-blue-500 text-white rounded-t-lg ">
-                        <th class="px-6 py-3 text-center pl-2">ID</th>
-                        <th class="px-6 py-3 ">Fecha</th>
-                        <th class="px-6 py-3 ">Hora</th>
+                        
+                        <th class="px-6 py-3 ">Recibido</th>
                         <th class="px-6 py-3 ">Cliente</th>
-                        <th class="px-6 py-3 ">Origen</th>
-                        <th class="px-6 py-3 ">Destino</th>
+                        <th class="px-6 py-3 ">Cant Servicios</th>
                         <th class="px-6 py-3 ">Pax</th>
                         <th class="px-6 py-3 ">Estado</th>
                         <th class="px-6 py-3  text-center">Acciones</th>
                     </tr> 
                     <tr class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm" 
-                         v-for="order in this.orders" :key="order.id">
-                        <td class="border-t px-6 py-4">{{order.id}}</td>
-                        <td class="border-t px-6 py-4">{{order.fecha}}</td>
-                        <td class="border-t px-6 py-4">{{order.hora}}</td>
-                        <td class="border-t px-6 py-4">{{order.client}}</td>
-                        <td class="border-t px-6 py-4">{{order.origen}}</td>
-                        <td class="border-t px-6 py-4">{{order.destino}}</td>
-                        <td class="border-t px-6 py-4 text-center">{{order.pasajeros}}</td>
-                        <td class="border-t px-6 py-4">{{order.status}}</td>
+                         v-for="request in this.requests" :key="request.id">
+                        <td class="border-t px-6 py-4">{{request.created_at}}</td>
+                        <td class="border-t px-6 py-4">{{request.client_id}}</td>
+                        <td class="border-t px-6 py-4">2</td>
+                        <td class="border-t px-6 py-4">{{request.cant_pax}}</td>
+                        <td class="border-t px-6 py-4">{{request.status_id}}</td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
                             <div class="flex">
@@ -439,6 +431,7 @@
 
 
             return {
+                requests: [],
                 open: false,
                 store,    
                 btnTextMap: '', 
@@ -460,14 +453,16 @@
             }
         },
         methods:{
-            // showMap() {
-            //     this.showFilter = !this.showFilter
-            //     if (this.showFilter) {
-            //         this.btnTextMap = 'Ver Listado'
-            //     } else {
-            //         this.btnTextMap = 'Ver Mapa'
-            //     }
-            // },
+
+             async get_request(){
+
+                let response = await fetch(route('request.list'),{method: 'GET'})
+                this.requests = await response.json()
+             }
+
+        },
+        created(){
+            this.get_request()
         }
     }
 </script>

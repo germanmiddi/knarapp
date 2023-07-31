@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Client;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 // use App\Models\Address;
 // use App\Models\Company;
 // use App\Models\State;
 // use App\Models\City;
 // use App\Models\Order;
-// use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Support\Facades\DB;
 
 
@@ -57,15 +58,30 @@ class ClientController extends Controller
         DB::beginTransaction();
         try {
             $client = new Client;
-            $client->fullname    = $request->input('fullname');
-            $client->dni         = $request->input('dni');
-            $client->email       = $request->input('email');
-            $client->phone       = $request->input('phone');
-            $client->cellphone   = $request->input('cellphone');
-            $client->client_type = $request->input('client_type');
-            $client->company_id  = $request->input('company_id');
-            $client->price       = $request->input('price') ?? 0;
-            $client->notes       = $request->input('notes');
+            
+            $client->company_name = $request->input('company_name');
+            $client->client_type_id = $request->input('client_type_id');
+            $client->fullname = $request->input('fullname');
+            $client->email = $request->input('email');
+            $client->phone = $request->input('phone');
+            $client->cellphone = $request->input('cellphone');
+            $client->cuit = $request->input('cuit');
+            $client->billing_type = $request->input('billing_type');
+            $client->address = $request->input('address');
+            $client->zipcode = $request->input('zipcode');
+            $client->notes = $request->input('notes');
+
+
+
+            // $client->fullname    = $request->input('fullname');
+            // $client->dni         = $request->input('dni');
+            // $client->email       = $request->input('email');
+            // $client->phone       = $request->input('phone');
+            // $client->cellphone   = $request->input('cellphone');
+            // $client->client_type = $request->input('client_type');
+            // $client->company_id  = $request->input('company_id');
+            // $client->price       = $request->input('price') ?? 0;
+            // $client->notes       = $request->input('notes');
     
             $client->save();
 
@@ -108,9 +124,10 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {      
-            return  Inertia::render('Manager/Clients/Edit',[
-                'cliente' => $client,
-            ]);
+        $client->load('servicePriceLists');    
+        return  Inertia::render('Manager/Clients/Edit',[
+            'cliente' => $client,
+        ]);
     }
 
     /**
@@ -178,12 +195,18 @@ class ClientController extends Controller
                         ->paginate(999)
                         ->withQueryString()
                         ->through(fn ($client) => [
-                            'id'        => $client->id,
-                            'fullname'  => $client->fullname,
-                            'email'     => $client->email,
-                            'address'   => $client->address()->get(),
-                            'cellphone' => $client->cellphone,
-                            'price'     => $client->price,
+                            'id'             => $client->id,
+                            'company_name'   => $client->company_name,
+                            'client_type_id' => $client->client_type_id,
+                            'fullname'       => $client->fullname,
+                            'email'          => $client->email,
+                            'phone'          => $client->phone,
+                            'cellphone'      => $client->cellphone,
+                            'cuit'           => $client->cuit,
+                            'billing_type'   => $client->billing_type,
+                            'address'        => $client->address,
+                            'zipcode'        => $client->zipcode,
+                            'notes'          => $client->notes,
                         ]);
     }
 
