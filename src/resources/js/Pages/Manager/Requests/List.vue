@@ -131,7 +131,7 @@
                                         <MenuItems class="origin-top-left absolute z-50 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
-                                                    <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
+                                                    <a :href="route('request.edit',3)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
                                                 </MenuItem>
                                             </div>
 
@@ -244,62 +244,92 @@
 
                                                 <div class="flex text-sm text-gray-700">
                                                     <label class="text-bold w-24 font-bold">Estado:</label>
-                                                    <span>PROGRAMADO</span>
+                                                    <span>En Curso</span>
                                                 </div>
 
                                                 <hr>
                                                 <div>
-                                                    <label class="block text-xl font-medium text-gray-800">Pasajeros</label>
+                                                    <label class="block text-xl font-medium text-gray-800">Servicios</label>
                                                 </div>
                                                 <div class="p-2">
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 1 </b></label>
+                                                    <label class="block text-sm font-medium text-gray-800"><b>Servicio 1 </b></label>
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Servicio:</label>
+                                                            <span>Transfer Ezeiza / Hotel Céntrico o Viceversa</span>
+                                                        </div>
+
                                                     
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Fecha:</label>
+                                                            <span>21/07/2023</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Hora:</label>
+                                                            <span>10:30</span>
+                                                        </div>
+                                                        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Origen:</label>
+                                                            <span class="underline">Ezeiza</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Destino:</label>
+                                                            <span class="underline">Hotel Colonial</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Pasajeros:</label>
+                                                            <span>4</span>
+                                                        </div>
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Estado:</label>
+                                                            <span>Finalizado</span>
+                                                        </div>
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Total:</label>
+                                                            <span>$ 60,00</span>
+                                                        </div>
+                                                        
 
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
                                                     <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 2 </b></label>
+
+                                                    <label class="block text-sm font-medium text-gray-800"><b>Servicio 2 </b></label>
                                                     
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
 
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
+                                                    <div class="flex text-sm text-gray-700">
+                                                        <label class="text-bold w-24 font-bold">Servicio:</label>
+                                                        <span>Transfer Ezeiza / Hotel Céntrico o Viceversa</span>
+                                                    </div>
 
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
+                                                    <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Fecha:</label>
+                                                            <span>31/07/2023</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Hora:</label>
+                                                            <span>22:30</span>
+                                                        </div>
+                                                        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Origen:</label>
+                                                            <span class="underline">Hotel Colonial</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Destino:</label>
+                                                            <span class="underline">Ezeiza</span>
+                                                        </div>
+        
+                                                        <div class="flex text-sm text-gray-700">
+                                                            <label class="text-bold w-24 font-bold">Pasajeros:</label>
+                                                            <span>4</span>
+                                                        </div>
+                                                        
+                                                        
                                                     <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 3 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-                                                    <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 4 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-
                                                 </div>
                                                 
                                             </div>

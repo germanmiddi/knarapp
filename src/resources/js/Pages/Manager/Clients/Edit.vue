@@ -129,8 +129,8 @@
                             <div class="px-4 sm:px-0 flex justify-between items-center mb-3">
                                 <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>
                                 <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/>
+                                <button type="submit" class="btn-blue">Tomar listas</button>
                                 <button class="btn-blue"> Nuevo Servicio</button>
-                                
                             </div>
                         </div>
                     </div>                        
@@ -202,6 +202,7 @@ export default defineComponent({
         goBack() {
            Inertia.visit(document.referrer);
         },
+
         clearMessage() {
             this.toastMessage = ""
         },
@@ -209,6 +210,19 @@ export default defineComponent({
         submit() {
             this.$inertia.post(route('client.store'), this.form)
         },
+
+        async getAllServices(){
+
+            let url = route('service.getall')
+            const response = await axios.get(url)
+
+            if (response.status == 200) {
+                this.services = response.data
+            }
+
+
+
+        }
     },
     created() {
         this.form = this.cliente

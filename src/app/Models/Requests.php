@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Model\Client;
 use App\Model\RequestStatus;
 use App\Model\User;
+use App\Model\Service;
 use App\Model\RequestService;
 
 

@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Manager\Order;
+namespace App\Http\Controllers\Manager\Service;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-// use App\Models\Client;
 use Illuminate\Support\Facades\Session;
+use App\Models\Service;
+
 
 // use App\Models\Address;
 // use App\Models\Company;
 // use App\Models\State;
 // use App\Models\City;
-// use App\Models\Order;
 // use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Support\Facades\DB;
 
 
-class OrderController extends Controller
+class ServiceController extends Controller
 {
 
      /**
@@ -28,11 +28,17 @@ class OrderController extends Controller
     public function index()
     {
         //
-        return  Inertia::render('Manager/Orders/List',
+        return  Inertia::render('Manager/Services/List',
         [
             'toast' => Session::get('toast')
         ]);
     }
 
+    public function edit(Service $service){
+
+        return Inertia::render('Manager/Services/Edit');
+        
+
+    }
 
 }

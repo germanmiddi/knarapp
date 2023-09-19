@@ -96,11 +96,11 @@ class ClientController extends Controller
 
             // $adrc->save();
             DB::commit();
-            return Redirect::route('clients')->with(['toast' => ['message' => 'Cliente creado correctamente', 'status' => '200']]);
+            return Redirect::route('client')->with(['toast' => ['message' => 'Cliente creado correctamente', 'status' => '200']]);
         } catch (\Throwable $th) {
             DB::rollBack();
             dd($th);
-            return Redirect::route('clients')->with(['toast' => ['message' => 'Se ha producido un error', 'status' => '203']]);
+            return Redirect::route('client')->with(['toast' => ['message' => 'Se ha producido un error', 'status' => '203']]);
         }
 
     }

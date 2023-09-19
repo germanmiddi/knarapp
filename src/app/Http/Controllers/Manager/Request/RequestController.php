@@ -36,5 +36,17 @@ class RequestController extends Controller
         return $requests;
     }
 
+    public function edit(Requests $request)
+    {
+        
+        return  Inertia::render('Manager/Requests/Edit',[
+                                    'clients'=> Client::all(),
+                                    'services'=> Servicepricelist::all(),
+                                    'locations' => Location::all(),
+                                    'request' => $request,
+                                ]);
+        
+    }
+
 
 }

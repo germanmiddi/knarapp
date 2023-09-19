@@ -216,15 +216,16 @@ export default defineComponent({
             form: {},
             toastMessage: "",
             showNewService: false,
-            services: [{
-                        "date":"[native Date Thu May 11 2023 14:26:00 GMT-0300 (Argentina Standard Time)]",
-                        "time":{"hours":9,"minutes":0,"seconds":0},"cant_pax":3,"guia":"1","equipaje":"1",
-                        "service":{"id":30,"client_id":1,"detail":"Transfer Ezeiza / Palermo o Viceversa","type":"TRF VAN","wait_time":1,"baggage":true,"guide":true,"passenger_capacity":6,"duration":null,"price":137,"active":true,"created_by":1,"deleted_at":null,"created_at":null,"updated_at":null},
-                        "guide_name":"asdasd",
-                        "flight_number":"asdasd",
-                        "location_from":"Aeropuerto Internacional Ministro Pistarini (Ezeiza)",
-                        "location_to":"Hotel Pulitzer Buenos Aires"
-                    }],
+            services:[],
+            // services: [{
+            //             "date":"[native Date Thu May 11 2023 14:26:00 GMT-0300 (Argentina Standard Time)]",
+            //             "time":{"hours":9,"minutes":0,"seconds":0},"cant_pax":3,"guia":"1","equipaje":"1",
+            //             "service":{"id":30,"client_id":1,"detail":"Transfer Ezeiza / Palermo o Viceversa","type":"TRF VAN","wait_time":1,"baggage":true,"guide":true,"passenger_capacity":6,"duration":null,"price":137,"active":true,"created_by":1,"deleted_at":null,"created_at":null,"updated_at":null},
+            //             "guide_name":"asdasd",
+            //             "flight_number":"asdasd",
+            //             "location_from":"Aeropuerto Internacional Ministro Pistarini (Ezeiza)",
+            //             "location_to":"Hotel Pulitzer Buenos Aires"
+            //         }],
 
             
 

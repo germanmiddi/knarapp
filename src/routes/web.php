@@ -6,11 +6,14 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\Manager\DashboardController;
 use App\Http\Controllers\Manager\Client\ClientController;
+use App\Http\Controllers\Manager\Service\ServiceController;
+
 use App\Http\Controllers\Manager\Order\OrderController;
 use App\Http\Controllers\Manager\Request\RequestController;
 use App\Http\Controllers\Manager\Servicepricelist\ServicepricelistController;
 use App\Http\Controllers\Manager\Setting\SettingController;
 use App\Http\Controllers\Manager\Location\LocationController;
+use App\Http\Controllers\Manager\Driver\DriverController;
 
 // Dashboard
 
@@ -33,6 +36,10 @@ Route::get('/request/list', [RequestController::class, 'list'])
     ->name('request.list')
     ->middleware('auth');
 
+Route::get('/request/{request}/edit', [RequestController::class, 'edit'])
+    ->name('request.edit')
+    ->middleware('auth');
+
 Route::get('/request/create', [RequestController::class, 'create'])
     ->name('request.create')
     ->middleware('auth');
@@ -41,11 +48,20 @@ Route::get('/request/store ', [RequestController::class, 'store'])
     ->name('request.store')
     ->middleware('auth');
 
+// Services    
+Route::get('/services', [ServiceController::class, 'index'])
+    ->name('services')
+    ->middleware('auth');
+
+Route::get('/service/{service}/edit', [ServiceController::class, 'edit'])
+    ->name('service.edit')
+    ->middleware('auth');
+
+
 // Order    
 Route::get('/order', [OrderController::class, 'index'])
     ->name('order')
     ->middleware('auth');
-
 
 // Client    
 Route::get('/client', [ClientController::class, 'index'])
@@ -68,6 +84,32 @@ Route::get('client/{client}/edit', [ClientController::class, 'edit'])
     ->name('client.edit')
     ->middleware('auth');
 
+
+// Drivers
+
+Route::get('/drivers', [DriverController::class, 'index'])
+    ->name('drivers')
+    ->middleware('auth');
+
+Route::get('/drivers/list', [DriverController::class, 'list'])
+    ->name('drivers.list')
+    ->middleware('auth');
+
+Route::get('/driver/create', [DriverController::class, 'create'])
+    ->name('driver.create')
+    ->middleware('auth');
+
+Route::post('/driver/store', [DriverController::class, 'store'])
+    ->name('driver.store')
+    ->middleware('auth');
+
+Route::get('/driver/{driver}/edit', [DriverController::class, 'edit'])
+    ->name('driver.edit')
+    ->middleware('auth');
+
+Route::put('/driver/{driver}/update', [DriverController::class, 'update'])
+    ->name('driver.update')
+    ->middleware('auth');    
 
 // Service Price List
 

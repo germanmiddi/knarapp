@@ -112,15 +112,17 @@
                         <th class="px-6 py-3  text-center">Acciones</th>
                     </tr> 
                     <tr class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm" 
-                         v-for="order in this.orders" :key="order.id">
-                        <td class="border-t px-6 py-4">{{order.id}}</td>
-                        <td class="border-t px-6 py-4">{{order.fecha}}</td>
-                        <td class="border-t px-6 py-4">{{order.hora}}</td>
-                        <td class="border-t px-6 py-4">{{order.client}}</td>
-                        <td class="border-t px-6 py-4">{{order.origen}}</td>
-                        <td class="border-t px-6 py-4">{{order.destino}}</td>
-                        <td class="border-t px-6 py-4 text-center">{{order.pasajeros}}</td>
-                        <td class="border-t px-6 py-4">{{order.status}}</td>
+                         v-for="service in this.services" :key="service.id">
+                        <td class="border-t px-6 py-4">Servicio: {{service.id}} <br> 
+                                <div class="text-xs text-gray-500" >Solicitud: 001 </div> 
+                        </td>
+                        <td class="border-t px-6 py-4">{{service.fecha}}</td>
+                        <td class="border-t px-6 py-4">{{service.hora}}</td>
+                        <td class="border-t px-6 py-4">{{service.client}}</td>
+                        <td class="border-t px-6 py-4">{{service.origen}}</td>
+                        <td class="border-t px-6 py-4">{{service.destino}}</td>
+                        <td class="border-t px-6 py-4 text-center">{{service.pasajeros}}</td>
+                        <td class="border-t px-6 py-4">{{service.status}}</td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
                             <div class="flex">
@@ -139,7 +141,7 @@
                                         <MenuItems class="origin-top-left absolute z-50 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
-                                                    <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
+                                                    <a :href="route('service.edit', 4)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
                                                 </MenuItem>
                                             </div>
 
@@ -216,7 +218,7 @@
                                             <div class="space-y-2 pt-2 pb-5">
                                                 <div>
                                                     <label for="time"
-                                                        class="block text-xl font-medium text-gray-700 ">Agencia ABC</label>
+                                                        class="block text-xl font-medium text-gray-700 ">ATP</label>
                                                 </div>
                                                 <hr>
                                                 <div class="flex text-sm text-gray-700">
@@ -244,7 +246,6 @@
                                                     <span>4</span>
                                                 </div>
                                                 
-
                                                 <div class="flex text-sm text-gray-700">
                                                     <label class="text-bold w-24 font-bold">Teléfono:</label>
                                                     <span>+54 15 123456</span>
@@ -252,64 +253,24 @@
 
                                                 <div class="flex text-sm text-gray-700">
                                                     <label class="text-bold w-24 font-bold">Estado:</label>
-                                                    <span>PROGRAMADO</span>
+                                                    <span>FINALIZADO</span>
                                                 </div>
 
-                                                <hr>
+                                                <!-- <hr>
                                                 <div>
-                                                    <label class="block text-xl font-medium text-gray-800">Pasajeros</label>
+                                                    <label class="block text-xl font-medium text-gray-800">Pasajero</label>
+                                                </div> -->
+                                                <label class="block text-sm font-medium text-gray-800">
+                                                    <b>Pasajero</b></label>
+                                                <div class="flex text-sm text-gray-700">
+                                                    <label class="text-bold w-24 font-bold">Nombre:</label>
+                                                    <span>Hugo Ibarra</span>
                                                 </div>
-                                                <div class="p-2">
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 1 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
 
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-                                                    <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 2 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-                                                    <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 3 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-                                                    <hr>
-                                                    <label class="block text-sm font-medium text-gray-800">
-                                                        <b>Pasajero 4 </b></label>
-                                                    
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Nombre y Apellido: </b> Hugo Ibarra</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>DNI: </b> 12.345.678</label>
-
-                                                    <label class="block text-sm font-medium text-gray-700">
-                                                        <b>Tel: </b> +54911 1234 5678</label>
-
+                                                <div class="flex text-sm text-gray-700">
+                                                    <label class="text-bold w-24 font-bold">Teléfono:</label>
+                                                    <span>+54911 1234 5678</span>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -392,16 +353,16 @@
 
         data() {
 
-            const orders = [
+            const services = [
                 {
                     id: '1',
                     fecha : '25/02/2023',
                     hora: '10:30',
-                    client: 'Agencia ABC',
+                    client: 'Agencia ATP',
                     origen : 'Ezeiza',
                     destino: 'Hotel Colonial',
                     pasajeros: '4',
-                    status: 'PROGRAMADO',
+                    status: 'FINALIZADO',
                 },
                 {
                     id: '2',
@@ -412,27 +373,17 @@
                     destino: 'Estancia La Linda',
                     pasajeros: '4',
                     status: 'PROGRAMADO',
-                },
-                {
-                    id: '3',
-                    fecha : '27/02/2023',
-                    hora: '07:00',
-                    client: 'Agencia ABC',
-                    origen : 'Hotel Alvear',
-                    destino: 'Estancia La Linda',
-                    pasajeros: '4',
-                    status: 'PROGRAMADO',
-                },
-                {
-                    id: '3',
-                    fecha : '',
-                    hora: '',
-                    client: '',
-                    origen : '',
-                    destino: '',
-                    pasajeros: '',
-                    status: '',
-                },
+                }
+                // {
+                //     id: '3',
+                //     fecha : '27/02/2023',
+                //     hora: '07:00',
+                //     client: 'Agencia ABC',
+                //     origen : 'Hotel Alvear',
+                //     destino: 'Estancia La Linda',
+                //     pasajeros: '4',
+                //     status: 'PROGRAMADO',
+                // }
 
             ];
 
@@ -444,7 +395,7 @@
                 btnTextMap: '', 
                 filterBtn: false,
                 showFilter: true,
-                orders: orders,
+                services: services,
                 filter: {
                     street: "",
                     client: "",

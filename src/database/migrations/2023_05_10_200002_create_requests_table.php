@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger("client_id")->unsigned()->nullable();
 
             $table->string('responsible')->nullable();
+            $table->text("company")->nullable();
             $table->text("observations")->nullable();
             $table->bigInteger("status_id")->unsigned()->nullable();
             $table->bigInteger("created_by")->unsigned()->nullable();

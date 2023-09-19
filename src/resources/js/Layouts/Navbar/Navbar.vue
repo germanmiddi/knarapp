@@ -89,11 +89,11 @@ const user = {
 const navigation = [
   { name: 'Dashboard', href: 'dashboard', current: true },
   { name: 'Solicitudes', href: 'request', current: false },
-  { name: 'Viajes', href: 'order', current: false },
+  { name: 'Viajes', href: 'services', current: false },
   { name: 'Clientes', href: 'client', current: false },
-  { name: 'Choferes', href: 'client', current: false },
-  { name: 'Servicios', href: 'client', current: false },
-  { name: 'Reportes', href: 'client', current: false },
+  { name: 'Choferes', href: 'drivers', current: false },
+  // { name: 'Servicios', href: 'client', current: false },
+  // { name: 'Reportes', href: 'client', current: false },
   { name: 'Configuración', href: 'setting', current: false },
 ]
 const userNavigation = [
