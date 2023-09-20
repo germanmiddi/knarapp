@@ -28,11 +28,22 @@ class DriverController extends Controller
 
     }
 
-    public function create(){}
+    public function create(){
+
+
+
+        return Inertia::render('Manager/Drivers/Create',
+        [
+            'toast' => Session::get('toast')
+        ]);
+    }
 
     public function store(){}
 
-    public function edit(){}
+    public function edit(){
+
+
+    }
 
     public function update(){}
 

@@ -214,5 +214,8 @@ class ClientController extends Controller
         return City::where('zipcode', request('cp'))->get();
     }
 
+    public function getAllPriceList(){
+        return Servicepricelist::all();
+    }
 }
 

@@ -12,17 +12,12 @@ class Service extends Model
 
     ];
  
-    protected $table = 'request_services';
+    protected $table = 'services';
 
-    public function request()
+    public function service_type()
     {
-        return $this->belongsTo(Request::class);
+        return $this->belongsTo(ServiceType::class, 'services_type_id');
     }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }    
 
     use HasFactory;
 }

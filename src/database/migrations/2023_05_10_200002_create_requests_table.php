@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
-            $table->foreign('status_id')->references('id')->on('request_statuses');
+            $table->foreign('status_id')->references('id')->on('request_status');
         });
     }
 

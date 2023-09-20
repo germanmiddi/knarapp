@@ -129,7 +129,7 @@
                             <div class="px-4 sm:px-0 flex justify-between items-center mb-3">
                                 <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>
                                 <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/>
-                                <button type="submit" class="btn-blue">Tomar listas</button>
+                                <button @click.prevent="getAllServices" class="btn-blue">Tomar listas</button>
                                 <button class="btn-blue"> Nuevo Servicio</button>
                             </div>
                         </div>

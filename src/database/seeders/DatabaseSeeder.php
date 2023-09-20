@@ -24,6 +24,29 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Inicio123')
         ]);
 
+        //Entradas en tabla services_types
+        \DB::table('services_type')->insert([
+            'description' => 'Transfer',
+            'created_at' => Carbon\Carbon::now(),
+        ]);
+        \DB::table('services_type')->insert([
+            'description' => 'Transfer VAN',
+            'created_at' => Carbon\Carbon::now(),
+        ]);
+        \DB::table('services_type')->insert([
+            'description' => 'Transfer COMBI',
+            'created_at' => Carbon\Carbon::now(),
+        ]);
+        \DB::table('services_type')->insert([
+            'description' => 'Transfer MINIBUS',
+            'created_at' => Carbon\Carbon::now(),
+        ]);
+
+        \DB::table('services_type')->insert([
+            'description' => 'Excursión',
+            'created_at' => Carbon\Carbon::now(),
+        ]);
+
         
 
     }

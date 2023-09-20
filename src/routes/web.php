@@ -107,7 +107,7 @@ Route::get('/driver/{driver}/edit', [DriverController::class, 'edit'])
     ->name('driver.edit')
     ->middleware('auth');
 
-Route::put('/driver/{driver}/update', [DriverController::class, 'update'])
+Route::post('/driver/update', [DriverController::class, 'update'])
     ->name('driver.update')
     ->middleware('auth');    
 
@@ -122,6 +122,19 @@ Route::get('/services/filter', [ServicepricelistController::class, 'filter'])
 Route::get('/setting', [SettingController::class, 'index'])
      ->name('setting')
      ->middleware('auth');
+
+
+     
+
+Route::get('/services/list', [SettingController::class, 'services_list'])
+    ->name('services.list')
+    ->middleware('auth');
+
+Route::get('/service_type/list', [SettingController::class, 'service_type_list'])
+    ->name('services_type.list')
+    ->middleware('auth');
+
+
 
 //Location
 

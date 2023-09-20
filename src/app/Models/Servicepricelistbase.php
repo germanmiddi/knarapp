@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Servicepricelist extends Model
+class Servicepricelistbase extends Model
 {
+    protected $table = 'servicepricelistsbase';
+
     protected $fillable = [
-        'client_id',
         'detail',
         'type',
         'wait_time',

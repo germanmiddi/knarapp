@@ -4,7 +4,7 @@
             <header class="">
                 <div class="flex justify-between max-w-7xl mx-auto py-6 px-10">
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight flex items-center">
-                       <ChevronLeftIcon class="w-5 mr-2 rounded-full hover:bg-white" @click="goBack" /> Clientes - Crear Cliente
+                       <ChevronLeftIcon class="w-5 mr-2 rounded-full hover:bg-white" @click="goBack" /> Choferes - Crear Chofer
                     </h2>
                     <button class="btn-blue" @click="submit">
                         Guardar
@@ -21,24 +21,17 @@
                             <div class="md:col-span-1">
                                 <div class="px-4 sm:px-0">
                                     <h3 class="text-lg font-medium leading-6 text-gray-900">Información</h3>
-                                    <p class="mt-1 text-sm text-gray-600">Indique los datos del solicitante.</p>
+                                    <p class="mt-1 text-sm text-gray-600">Indique los datos del chofer.</p>
                                 </div>
                             </div>
                             <div class="mt-5 md:mt-0 md:col-span-2">
                                 <form action="#" method="POST">
                                     <div class="grid grid-cols-6 gap-6">
     
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="company_name"
-                                                class="block text-sm font-medium text-gray-700">Nombre / Razón Social
-                                                </label>
-                                            <input type="text" name="company_name" id="company_name" v-model="form.company_name"
-                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-    
+   
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="client_type_id"
-                                                class="block text-sm font-medium text-gray-700">Tipo Cliente</label>
+                                                class="block text-sm font-medium text-gray-700">Tipo Chofer</label>
                                             <select id="client_type_id" name="client_type_id" v-model="form.client_type_id"
                                                 class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                 <option disabled value="">Seleccione un tipo de Cliente</option>

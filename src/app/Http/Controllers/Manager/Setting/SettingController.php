@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
+use \App\Models\ServiceType;
+use \App\Models\Service;
+
 class SettingController extends Controller
 {
     /**
@@ -21,5 +24,21 @@ class SettingController extends Controller
 
     }
 
+    public function service_type_list(){
+    
+        $result = ServiceType::all();
+     
+        return response()->json(['data'=> $result],200);
+
+    }
+
+    public function services_list(){
+    
+        $result = Service::with('service_type')->get();
+     
+     
+        return response()->json(['data'=> $result],200);
+
+    }
     
 }
