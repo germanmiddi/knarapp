@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Carbon\Carbon;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -27,24 +29,24 @@ class DatabaseSeeder extends Seeder
         //Entradas en tabla services_types
         \DB::table('services_type')->insert([
             'description' => 'Transfer',
-            'created_at' => Carbon\Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
         \DB::table('services_type')->insert([
             'description' => 'Transfer VAN',
-            'created_at' => Carbon\Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
         \DB::table('services_type')->insert([
             'description' => 'Transfer COMBI',
-            'created_at' => Carbon\Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
         \DB::table('services_type')->insert([
             'description' => 'Transfer MINIBUS',
-            'created_at' => Carbon\Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
 
         \DB::table('services_type')->insert([
             'description' => 'Excursión',
-            'created_at' => Carbon\Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
 
         
