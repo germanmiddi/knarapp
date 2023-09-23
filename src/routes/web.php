@@ -124,8 +124,6 @@ Route::get('/setting', [SettingController::class, 'index'])
      ->middleware('auth');
 
 
-     
-
 Route::get('/services/list', [SettingController::class, 'services_list'])
     ->name('services.list')
     ->middleware('auth');
