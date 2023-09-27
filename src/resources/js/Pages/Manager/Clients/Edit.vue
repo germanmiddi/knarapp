@@ -99,7 +99,7 @@
 
                                 <div class="col-span-6 sm:col-span-6">
                                     <label for="address"
-                                        class="block text-sm font-medium text-gray-700">Direccion</label>
+                                        class="block text-sm font-medium text-gray-700">Dirección</label>
                                     <input type="text" name="address" id="address" v-model="form.address"
                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 </div>
@@ -129,16 +129,16 @@
                             <div class="px-4 sm:px-0 flex justify-between items-center mb-3">
                                 <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>
                                 <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/>
-                                <button @click.prevent="getAllServices" class="btn-blue">Tomar listas</button>
+                                <!-- <button @click.prevent="getAllServices" class="btn-blue">Tomar listas</button> -->
                                 <button class="btn-blue"> Nuevo Servicio</button>
                             </div>
                         </div>
                     </div>                        
                     <div class="md:col-span-3 mt-5">
                         <table class="w-full whitespace-nowrap">
-                            <tr class="text-left font-bold bg-blue-500 text-white">
-                                <th class="px-6 py-3 text-left"  >Detalle</th>
-                                <th class="px-6 py-3 text-center"  >Tipo</th>
+                            <tr class="text-left font-bold bg-blue-500 text-white text-sm">
+                                <th class="px-6 py-3 text-center">Tipo</th>
+                                <th class="px-6 py-3 text-left">Detalle</th>
                                 <th class="px-6 py-3 text-center">Espera</th>
                                 <th class="px-6 py-3 text-center">Equipaje</th>
                                 <th class="px-6 py-3 text-center">Guia</th>
@@ -146,11 +146,12 @@
                                 <th class="px-6 py-3 text-center">Duración</th>
                                 <th class="px-6 py-3 text-center">Precio</th>
                                 <th class="px-6 py-3 text-center">Activo</th>
+                                <th class="px-6 py-3 text-center">Acciones</th>
                             </tr>
                             <tr v-for="service in cliente.service_price_lists" :key="service.id"
-                                class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm ">
-                                <td class="border-t px-6 py-4 text-left">{{ service.detail }}</td>
-                                <td class="border-t px-6 py-4 text-left">  {{ service.type }}</td>
+                                class="hover:bg-gray-100 focus-within:bg-gray-100 text-xs ">
+                                <td class="border-t px-6 py-4 text-left">  {{ service.service.service_type.description }}</td>
+                                <td class="border-t px-6 py-4 text-left">{{ service.service.name }}</td>
                                 <td class="border-t px-6 py-4 text-center">{{ service.wait_time }} Hs.</td>
                                 <td class="border-t px-6 py-4 text-center">{{ service.baggage }}</td>
                                 <td class="border-t px-6 py-4 text-center">{{ service.guide }}</td>
@@ -158,6 +159,7 @@
                                 <td class="border-t px-6 py-4 text-center">{{ service.duration }}</td>
                                 <td class="border-t px-6 py-4 text-right">USD {{ service.price }}</td>
                                 <td class="border-t px-6 py-4 text-center">{{ service.active }}</td>
+                                <td class="border-t px-6 py-4 text-center">Editar</td>
                             </tr>
                         </table>
                     </div>
@@ -211,18 +213,6 @@ export default defineComponent({
             this.$inertia.post(route('client.store'), this.form)
         },
 
-        async getAllServices(){
-
-            let url = route('service.getall')
-            const response = await axios.get(url)
-
-            if (response.status == 200) {
-                this.services = response.data
-            }
-
-
-
-        }
     },
     created() {
         this.form = this.cliente

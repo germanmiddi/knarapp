@@ -30,20 +30,26 @@
     
    
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="client_type_id"
+                                            <label for="driver_types_id"
                                                 class="block text-sm font-medium text-gray-700">Tipo Chofer</label>
-                                            <select id="client_type_id" name="client_type_id" v-model="form.client_type_id"
+                                            <select id="driver_types_id" name="driver_types_id" v-model="form.driver_types_id"
                                                 class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                <option disabled value="">Seleccione un tipo de Cliente</option>
-                                                <option value="1">Agencia</option>
-                                                <option value="2">Particular</option>
+                                                <option v-for="type in DriverTypes" :key="type.id" :value="type.id">
+                                                    {{ type.name }}</option>
                                             </select>
                                         </div>
     
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="fullname"
-                                                class="block text-sm font-medium text-gray-700">Nombre Contacto</label>
-                                            <input type="text" name="fullname" id="fullname" v-model="form.fullname"
+                                                class="block text-sm font-medium text-gray-700">Nombre</label>
+                                            <input type="text" name="name" id="name" v-model="form.name"
+                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+
+                                        <div class="col-span-6 sm:col-span-3">
+                                            <label for="fullname"
+                                                class="block text-sm font-medium text-gray-700">Apellido</label>
+                                            <input type="text" name="fullname" id="fullname" v-model="form.lastname"
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
     
@@ -62,43 +68,24 @@
                                                 v-model="form.cellphone"
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
-    
+
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="phone"
-                                                class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                            <input type="text" name="phone" id="phone" v-model="form.phone"
-                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-    
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="cuit"
-                                                class="block text-sm font-medium text-gray-700">CUIT</label>
-                                            <input type="text" name="cuit" id="cuit" v-model="form.cuit"
-                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-    
-    
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="client_type"
-                                                class="block text-sm font-medium text-gray-700">Tipo Factura</label>
-                                            <select id="client_type" name="client_type" v-model="form.invoice_type"
-                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                <option disabled value="">Seleccione un tipo de Factura</option>
-                                                <option value="1">Factura A</option>
-                                                <option value="2">Factura B</option>
-                                                <option value="2">Factura X</option>
-                                            </select>
-                                        </div>
-    
-    
-                                        <div class="col-span-6 sm:col-span-6">
                                             <label for="address"
-                                                class="block text-sm font-medium text-gray-700">Direccion</label>
-                                            <input type="text" name="address" id="address" v-model="form.address"
+                                                class="block text-sm font-medium text-gray-700">Dirección</label>
+                                            <input type="text" name="address" id="address"
+                                                v-model="form.address"
+                                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+
+                                        <div class="col-span-6 sm:col-span-3">
+                                            <label for="vehicle"
+                                                class="block text-sm font-medium text-gray-700">Vehículo</label>
+                                            <input type="text" name="vehicle" id="vehicle"
+                                                v-model="form.vehicle"
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
     
-    
+   
                                         <div class="col-span-6 sm:col-span-6">
                                             <label for="notes"
                                                 class="block text-sm font-medium text-gray-700">Notas</label>
@@ -106,7 +93,7 @@
                                                 v-model="form.notes"
                                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> </textarea>
                                         </div>
-    
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -134,7 +121,7 @@
     import { Inertia } from '@inertiajs/inertia';
     export default defineComponent({
         props: {
-    
+            DriverTypes:Object,
         },
     
         components: {
@@ -160,7 +147,7 @@
             },
     
             submit() {
-                this.$inertia.post(route('client.store'), this.form)
+                this.$inertia.post(route('driver.store'), this.form)
             },
         },
         created() {

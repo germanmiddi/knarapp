@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Manager\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Client;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
+
+use App\Models\Client;
+use App\Models\Servicepricelistbase;
+use App\Models\Servicepricelist;
 // use App\Models\Address;
 // use App\Models\Company;
 // use App\Models\State;
@@ -70,33 +74,28 @@ class ClientController extends Controller
             $client->address = $request->input('address');
             $client->zipcode = $request->input('zipcode');
             $client->notes = $request->input('notes');
-
-
-
-            // $client->fullname    = $request->input('fullname');
-            // $client->dni         = $request->input('dni');
-            // $client->email       = $request->input('email');
-            // $client->phone       = $request->input('phone');
-            // $client->cellphone   = $request->input('cellphone');
-            // $client->client_type = $request->input('client_type');
-            // $client->company_id  = $request->input('company_id');
-            // $client->price       = $request->input('price') ?? 0;
-            // $client->notes       = $request->input('notes');
     
             $client->save();
 
-            // $adrc = new Address;
-            // $adrc->client_id = $client->id;
-            // $adrc->google_address = $request->input('google_address') ?? '';
-            // $adrc->google_area1 = $request->input('google_area1');
-            // $adrc->google_postal_code = $request->input('google_postal_code');
-            // $adrc->google_latitude  = $request->input('google_latitude');
-            // $adrc->google_longitude  = $request->input('google_longitude');
-            // $adrc->notes = $request->input('notesAdrc');
+            // Copiar entradas de servicepricelistbase a servicepricelist
+            $servicePriceListBaseItems = Servicepricelistbase::all();
 
-            // $adrc->save();
+            foreach ($servicePriceListBaseItems as $baseItem) {
+                $servicePriceListItem = new Servicepricelist;
+
+                // Asignar valores del baseItem al listItem
+                $servicePriceListItem->client_id = $client->id;
+                $servicePriceListItem->servicepricelistsbase_id = $baseItem->id;
+                $servicePriceListItem->price = $baseItem->price;
+                $servicePriceListItem->created_by = Auth::id();
+
+                $servicePriceListItem->save();
+            }
+
+
             DB::commit();
             return Redirect::route('client')->with(['toast' => ['message' => 'Cliente creado correctamente', 'status' => '200']]);
+       
         } catch (\Throwable $th) {
             DB::rollBack();
             dd($th);
@@ -124,7 +123,11 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {      
-        $client->load('servicePriceLists');    
+
+        $client->load(['servicePriceLists',
+                       'servicePriceLists.service',
+                       'servicePriceLists.service.service_type']);
+
         return  Inertia::render('Manager/Clients/Edit',[
             'cliente' => $client,
         ]);
@@ -162,22 +165,6 @@ class ClientController extends Controller
         
     }
 
-    // public function update_dashboard(Request $request){
-
-    //     DB::beginTransaction();
-    //     try {
-    //         Client::where('id', $request->id)->update([
-    //             'cellphone' => $request->cellphone,
-    //         ]);   
-    //         DB::commit();
-    //         return response()->json(['message'=>'Cliente actualizado correctamente','title'=>'Dashboard'], 200);
-    //     }catch (\Throwable $th) {
-    //         DB::rollback();
-    //         return response()->json(['message'=>'Se ha producido un error','title'=>'Dashboard'], 203);
-    //     }
-
-    // }    
-
     /**
      * Remove the specified resource from storage.
      *
@@ -206,7 +193,7 @@ class ClientController extends Controller
                             'billing_type'   => $client->billing_type,
                             'address'        => $client->address,
                             'zipcode'        => $client->zipcode,
-                            'notes'          => $client->notes,
+                            'notes'          => $client->notes
                         ]);
     }
 

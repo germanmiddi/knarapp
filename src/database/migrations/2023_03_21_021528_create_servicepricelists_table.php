@@ -16,12 +16,6 @@ class CreateServicepricelistsTable extends Migration
         Schema::create('servicepricelists', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
-            $table->foreignId('services_id')->constrained();
-            $table->float('wait_time')->nullable();
-            $table->boolean('baggage');
-            $table->boolean('guide');
-            $table->integer('passenger_capacity')->nullable();
-            $table->float('duration')->nullable();
             $table->float('price');
             $table->boolean('active');
             $table->unsignedBigInteger('created_by');

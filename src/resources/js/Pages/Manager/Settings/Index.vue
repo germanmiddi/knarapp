@@ -4,7 +4,7 @@
 
 	<main class="max-w-7xl mx-auto pb-10 lg:py-12 lg:px-8">
 		<div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
-			<aside class="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
+			<aside class="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-2">
 				<nav class="space-y-1">
 					<a v-for="(item,index) in subNavigation" :key="item.name" @click.prevent="selectItem(index)"
 						:class="[selectedIndex === index ? 'bg-gray-50 text-indigo-600 hover:bg-white' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-50', 'group rounded-md px-3 py-2 flex items-center text-sm font-medium cursor-pointer']">
@@ -15,7 +15,7 @@
 			</aside>
 	
 			<!-- Payment details -->
-			<div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+			<div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-10">
 				<component :is="selectedItem.componentName" :data="selectedItem.componentData" />
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 import Toast from '@/Layouts/Components/Toast.vue'
 import General from './General.vue';
 import Locations from './Locations.vue';
-import ServicesList from './ServicesList.vue';
+import ServicesPriceListBase from './ServicesPriceListBase.vue';
 import ServicesType from './ServicesType.vue';
 import Services from './Services.vue';
 
@@ -45,7 +45,7 @@ const subNavigation = [
     { name: 'Locaciones', icon: MapPinIcon, componentName: 'Locations' },
 	{ name: 'Tipo de Servicios', icon: CubeIcon, componentName: 'ServicesType' },
 	{ name: 'Servicios', icon: CubeIcon, componentName: 'Services' },
-	{ name: 'Lista de Servicios', icon: CubeIcon, componentName: 'ServicesList' },
+	{ name: 'Lista de Servicios', icon: CubeIcon, componentName: 'ServicesPriceListBase' },
     // { name: 'API Whatsapp', icon: AdjustmentsIcon, componentName: 'Whatsapp' },
     // { name: 'Mensajes', icon: ChatAltIcon, componentName: 'Mensajes' },
     // { name: 'Chatbot', icon: ChatAlt2Icon, componentName: 'Chatbot' },
@@ -59,7 +59,7 @@ export default {
 		Toast,
 		General,
 		Locations,
-		ServicesList,
+		ServicesPriceListBase,
 		ServicesType,
 		Services
 	},

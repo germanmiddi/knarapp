@@ -123,7 +123,6 @@ Route::get('/setting', [SettingController::class, 'index'])
      ->name('setting')
      ->middleware('auth');
 
-
 Route::get('/services/list', [SettingController::class, 'services_list'])
     ->name('services.list')
     ->middleware('auth');
@@ -132,7 +131,13 @@ Route::get('/service_type/list', [SettingController::class, 'service_type_list']
     ->name('services_type.list')
     ->middleware('auth');
 
+Route::get('/services_price_list_base/list', [SettingController::class, 'services_price_list_base_list'])
+    ->name('services_price_list_base.list')
+    ->middleware('auth');
 
+Route::post('/services_price_list_base/store', [SettingController::class, 'services_price_list_base_store'])
+    ->name('services_price_list_base.store')
+    ->middleware('auth');
 
 //Location
 

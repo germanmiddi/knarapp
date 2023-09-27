@@ -10,19 +10,14 @@ class Servicepricelist extends Model
 {
     protected $fillable = [
         'client_id',
-        'detail',
-        'type',
-        'wait_time',
-        'baggage',
-        'guide',
-        'passenger_capacity',
-        'duration',
-        'price'
+        'servicepricelistsbase_id',
+        'price',
+        'active',
+        'created_by'
+        
     ];
     
     protected $casts = [
-        'baggage' => 'boolean',
-        'guide'   => 'boolean',
         'active'  => 'boolean'
     ];    
     
@@ -41,6 +36,10 @@ class Servicepricelist extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Servicepricelistbase::class, 'servicepricelistsbase_id');
+    }
 
     use HasFactory, SoftDeletes;
 }

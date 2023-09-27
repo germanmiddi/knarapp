@@ -25,13 +25,13 @@ class RequestController extends Controller
                 'time' => '09:00',
                 'location_from' => [
                     'name' => 'Aeropuerto Eziza',
-                    'lat' => '-34.822222',
-                    'lng' => '-58.535833'
+                    'lat' => -34.822222,
+                    'lng' => -58.535833
                 ],
                 'location_to' => [
                     'name' => 'Hotel Panamericano',
-                    'lat' => '-34.609964',
-                    'lng' => '-58.375181'
+                    'lat' => -34.609964,
+                    'lng' => -58.375181
                 ],
                 'status' => 'pending',
                 'flight_number' => 'AA 1234'
@@ -51,13 +51,13 @@ class RequestController extends Controller
                 'time' => '20:00',
                 'location_from' => [
                     'name' => 'Hotel Panamericano',
-                    'lat' => '-34.609964',
-                    'lng' => '-58.375181'
+                    'lat' => -34.609964,
+                    'lng' => -58.375181
                 ],
                 'location_to' => [
                     'name' => 'Aeropuerto Eziza',
-                    'lat' => '-34.822222',
-                    'lng' => '-58.535833'
+                    'lat' => -34.822222,
+                    'lng' => -58.535833
                 ],
                 'status' => 'pending',
                 'flight_number' => '',

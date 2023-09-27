@@ -11,14 +11,15 @@ class Servicepricelistbase extends Model
     protected $table = 'servicepricelistsbase';
 
     protected $fillable = [
-        'detail',
-        'type',
+        'services_id',
         'wait_time',
         'baggage',
         'guide',
         'passenger_capacity',
         'duration',
-        'price'
+        'price',
+        'cost',
+        'active'
     ];
     
     protected $casts = [
@@ -29,12 +30,11 @@ class Servicepricelistbase extends Model
     
     protected $dates = [
         'deleted_at',
-        'price_valid_to'
     ];
 
-    public function client()
+    public function services()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Service::class);
     }
 
     public function creator()
@@ -42,6 +42,10 @@ class Servicepricelistbase extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function drivers()
+    {
+        return $this->hasMany(DriverServicesPrice::class, 'servicepricelistsbase_id');
+    }
 
     use HasFactory, SoftDeletes;
 }
