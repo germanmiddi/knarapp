@@ -32,4 +32,8 @@ class Driver extends Model
         return $this->hasMany(RequestService::class, 'driver_id');
     }
 
+    public function types()
+    {
+        return $this->belongsTo(Drivertype::class, 'driver_types_id');
+    }
 }

@@ -32,6 +32,22 @@ class DriverController extends Controller
     public function list(){
 
 
+        $length = request('length');
+        $result = Driver::query();
+
+        return  $result->paginate($length)->withQueryString()
+                        ->through(fn ($driver) => [
+                            'id'      => $driver->id,
+                            'name'    => $driver->name,
+                            'lastname' => $driver->lastname,
+                            'email'   => $driver->email,
+                            'phone'   => $driver->phone,
+                            'address' => $driver->address,
+                            'user_id' => $driver->user_id,
+                            'vehicle' => $driver->vehicle,
+                            'driver_type' => $driver->types()->first()->name,
+                        ]);
+
     }
 
     public function create(){
@@ -60,7 +76,7 @@ class DriverController extends Controller
             $driver->name   = $request->name;
             $driver->lastname = $request->lastname;
             $driver->email   = $request->email;
-            $driver->phone   = $request->phone;
+            $driver->phone   = $request->cellphone;
             $driver->address = $request->address;
             $driver->user_id = $user->id;
             $driver->vehicle = $request->vehicle;
@@ -104,13 +120,37 @@ class DriverController extends Controller
                                                                     
         return  Inertia::render('Manager/Drivers/Edit',[
             'driver' => $driver,
-            'driverTypes' => Drivetype::all(),
+            'driverTypes' => Drivertype::all(),
             'serviceBase' => $serviceBase,
         ]);
 
     }
 
-    public function update(){}
+    public function update(Request $request){
+
+        DB::beginTransaction();
+        try {
+            $driver = Driver::find($request->id);
+            $driver->driver_types_id = $request->driver_types_id;
+            $driver->name   = $request->name;
+            $driver->lastname = $request->lastname;
+            $driver->email   = $request->email;
+            $driver->phone   = $request->cellphone;
+            $driver->address = $request->address;
+            $driver->vehicle = $request->vehicle;
+            $driver->save();
+
+            DB::commit();
+            return Redirect::route('drivers')->with(['toast' => ['message' => 'Chofer actualizado correctamente', 'status' => '200']]);
+    
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th);
+            return Redirect::route('drivers')->with(['toast' => ['message' => 'Se ha producido un error', 'status' => '203']]);
+        }
+
+
+    }
 
 
 

@@ -43,6 +43,29 @@ class SettingController extends Controller
 
     }
 
+    public function services_store(Request $request){
+        
+        DB::beginTransaction();
+
+        try{
+
+            $service = new Service();
+            $service->services_type_id = $request->tipo_servicio;
+            $service->name = $request->name;
+            $service->save();
+
+            DB::commit();
+            return response()->json(['message'   => 'Servicio creado correctamente'], 200);
+        }catch(e){
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()     ],200);
+
+        }
+        
+
+    }
+
+
 
     public function services_price_list_base_list(){
         
@@ -72,7 +95,7 @@ class SettingController extends Controller
     
             // $result = Servicepricelistbase::create($data);            
             DB::commit();
-            return response()->json(['data'=> $result],200);
+            return response()->json(['data'=> $data],200);
 
         }catch( \Exception $e){
             DB::rollback();
@@ -80,5 +103,35 @@ class SettingController extends Controller
         }
         
     }
-    
+ 
+    public function services_price_list_base_update(Request $request){
+
+
+        DB::beginTransaction();
+        try{
+
+            $data = Servicepricelistbase::find($request->id);
+            $data->services_id  = $request->services_id;
+            $data->wait_time    = $request->wait_time;
+            $data->baggage      = $request->baggage;
+            $data->guide        = $request->guide;
+            $data->passenger_capacity  = $request->passenger_capacity;
+            $data->duration     = $request->duration;
+            $data->price        = $request->price;
+            $data->cost         = $request->cost;
+            $data->active       = $request->active;
+            $data->save();
+
+            DB::commit();
+            return response()->json(['message'   => 'Servicio creado correctamente'], 200);
+
+        }catch(\Exception $e){
+            DB::rollback();
+            $error = $e->getMessage();
+            return response()->json(['message' => $error], 404);
+        }
+
+
+    }
+
 }

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $fillable = [
-
-
+        'services_type_id',
+        'name'
     ];
  
     protected $table = 'services';

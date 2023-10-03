@@ -14,6 +14,7 @@ use App\Http\Controllers\Manager\Servicepricelist\ServicepricelistController;
 use App\Http\Controllers\Manager\Setting\SettingController;
 use App\Http\Controllers\Manager\Location\LocationController;
 use App\Http\Controllers\Manager\Driver\DriverController;
+use App\Http\Controllers\Manager\Driver\DriverServicePriceController;
 
 // Dashboard
 
@@ -111,6 +112,15 @@ Route::post('/driver/update', [DriverController::class, 'update'])
     ->name('driver.update')
     ->middleware('auth');    
 
+Route::post('/drivers_service_price/store', [DriverServicePriceController::class, 'store'])
+    ->name('drivers_service_price.store')
+    ->middleware('auth');
+
+Route::post('/drivers_service_price/toggleActive', [DriverServicePriceController::class, 'toggleActive'])
+    ->name('drivers_service_price.toggleActive')
+    ->middleware('auth');
+
+
 // Service Price List
 
 Route::get('/services/filter', [ServicepricelistController::class, 'filter'])
@@ -127,6 +137,15 @@ Route::get('/services/list', [SettingController::class, 'services_list'])
     ->name('services.list')
     ->middleware('auth');
 
+Route::post('/services/store', [SettingController::class, 'services_store'])
+    ->name('services.store')
+    ->middleware('auth');
+
+Route::post('/services/update', [SettingController::class, 'services_update'])
+    ->name('services.update')
+    ->middleware('auth');
+      
+
 Route::get('/service_type/list', [SettingController::class, 'service_type_list'])
     ->name('services_type.list')
     ->middleware('auth');
@@ -139,6 +158,10 @@ Route::post('/services_price_list_base/store', [SettingController::class, 'servi
     ->name('services_price_list_base.store')
     ->middleware('auth');
 
+
+Route::post('/services_price_list_base/update', [SettingController::class, 'services_price_list_base_update'])
+    ->name('services_price_list_base.update')
+    ->middleware('auth');    
 //Location
 
 Route::get('/location/list', [LocationController::class, 'list'])

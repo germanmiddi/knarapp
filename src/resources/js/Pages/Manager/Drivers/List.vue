@@ -41,15 +41,13 @@
                         <tr class="text-left font-bold bg-blue-500 text-white">
                             <th class="px-6 py-3 text-center">ID</th>
                             <th class="px-6 py-3 text-center">Tipo</th>
-                            <th class="px-6 py-3 text-center">Servicios</th>
-                            <th class="px-6 py-3 text-center">Vehículo</th>
                             <th class="px-6 py-3 text-center">Nombre</th>
-                            <!-- <th class="px-6 py-3 ">Dirección</th> -->
+                            <th class="px-6 py-3 text-center">Vehículo</th>
                             <th class="px-6 py-3 ">Contacto</th>
                             <th class="px-6 py-3 text-center">Acciones</th>
                         </tr>
-                        <tr v-for="driver in drivers" :key="driver.id"
-                            class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm ">
+                        <tr v-for="driver in drivers.data" :key="driver.id"
+                            class="hover:bg-gray-50 focus-within:bg-gray-100 text-sm ">
                             <td class="border-t px-6 py-4 text-center">
                                 {{ driver.id }}
                             </td>
@@ -57,30 +55,24 @@
                                 {{ driver.driver_type }}
                             </td>
                             <td class="border-t px-6 py-4 text-center">
-                                {{ driver.driver_services }}
+                                {{ driver.name }} {{ driver.lastname }}
                             </td>
                             <td class="border-t px-6 py-4 text-center">
                                 {{ driver.vehicle }}
-                            </td>
-                            <td class="border-t px-6 py-4 text-center">
-                                {{ driver.name }}
-                            </td>
-    
-                            <!-- <td class="border-t px-6 py-4 text-left">
-                                {{ client.address }}
-                            </td> -->
+                            </td>    
     
                             <td class="border-t px-6 py-4 text-center">
                                 <div class="flex"> 
-                                    <PhoneIcon class="w-3 mr-2 text-blue-500"/> {{ driver.cellphone }} </div>
+                                    <PhoneIcon class="w-3 mr-2 text-blue-500"/> {{ driver.phone }} </div>
                                 <div class="flex"> 
                                 <EnvelopeIcon class="w-3 mr-2 text-blue-500"/>{{ driver.email }}</div>
                             </td>
                             <td class="border-t px-6 py-4 text-center">
                                 <!-- <a type="button" :href="route('clients.edit', client.id)" -->
-                                <a type="button" :href="route('driver.edit', driver.id)" class="inline-flex items-center p-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
-                                            hover:bg-gray-300">
-                                    <PencilIcon class="h-4 w-4 text-gray-700 mr-2 " aria-hidden="true" />Editar</a>
+                                <a type="button" :href="route('driver.edit', driver.id)" 
+                                    class="inline-flex items-center p-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
+                                            hover:bg-blue-400 hover:text-white" >
+                                    <PencilIcon class="h-4 w-4  mr-2 " aria-hidden="true" />Editar</a>
                                 
                                 <!-- <a type="button" href="#" class="ml-2 inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
                                             hover:bg-gray-300">
@@ -91,151 +83,7 @@
                 </div>
             </div>
             
-        </div>
-    
-    
-        <TransitionRoot as="template" :show="open">
-            <Dialog as="div" class="fixed inset-0 overflow-hidden" @close="open = false">
-                <div class="absolute inset-0 overflow-hidden">
-                    <DialogOverlay class="absolute inset-0" />
-    
-                    <div class="fixed inset-y-0 pl-16 max-w-full right-0 flex">
-                        <TransitionChild as="template"
-                            enter="transform transition ease-in-out duration-500 sm:duration-700"
-                            enter-from="translate-x-full" enter-to="translate-x-0"
-                            leave="transform transition ease-in-out duration-500 sm:duration-700"
-                            leave-from="translate-x-0" leave-to="translate-x-full">
-                            <div class="w-screen max-w-md">
-                                <form class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
-                                    <div class="flex-1 h-0 overflow-y-auto">
-                                        <div class="py-6 px-4 bg-blue-500 sm:px-6">
-                                            <div class="flex items-center justify-between">
-                                                <DialogTitle class="text-lg font-medium text-white"> Detalle del Chofer
-                                                </DialogTitle>
-    
-                                                <div class="ml-3 h-7 flex items-center">
-                                                    <button type="button"
-                                                        class="bg-blue-500 rounded-md text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                                                        @click="open = false">
-                                                        <span class="sr-only">Cerrar</span>
-                                                        <XMarkIcon class="h-6 w-6" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 flex flex-col justify-between">
-                                            <div class="px-4 divide-y divide-gray-200 sm:px-6">
-                                                <div class="space-y-2 pt-2 pb-5">
-                                                    <div>
-                                                        <label for="time"
-                                                            class="block text-xl font-medium text-gray-700 ">Jorge Machado</label>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Nro Chofer:</label>
-                                                        <span>1</span>
-                                                    </div>
-    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Agencia:</label>
-                                                        <span>Translados SRL</span>
-                                                    </div>
-                                                    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">CUIT:</label>
-                                                        <span>20-12345678-1</span>
-                                                    </div>
-    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Dirección:</label>
-                                                        <span>Av. Libertador 1234, CABA</span>
-                                                    </div>
-    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Teléfono:</label>
-                                                        <span>+54 9 1234 5678</span>
-                                                    </div>
-    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Email:</label>
-                                                        <span>miemail@gmail.com</span>
-                                                    </div>
-    
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Estado:</label>
-                                                        <span>ACTIVO</span>
-                                                    </div>
-
-                                                    <div class="flex text-sm text-gray-700">
-                                                        <label class="text-bold w-24 font-bold">Lista de Precio:</label>
-                                                        <span>General</span>
-                                                    </div>
-
-                                                    <hr>
-                                                    <div>
-                                                        <label for="time"
-                                                            class="block text-xl font-medium text-gray-800">Últimos Viajes</label>
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <label for="time"
-                                                            class="block text-sm font-medium text-gray-700">
-                                                            <b>Fecha: </b>25/02/2023 - 10:30</label>
-    
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Tipo: </b> Translado</label>
-                                                        
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Origen: </b>Aerop. Ezeiza</label>
-    
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Destino: </b>Hotel Colonial</label>
-                                                        
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Estado Servicio: </b>Finalizado</label>
-    
-                                                        <hr>
-    
-                                                        <label for="time"
-                                                            class="block text-sm font-medium text-gray-700">
-                                                            <b>Fecha: </b>27/02/2023 - 07:00</label>
-    
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Tipo: </b> Excursión</label>
-    
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Chofer: </b> Jorge L. Borges</label>
-                                                        
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Origen: </b>Hotel Alvear</label>
-    
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Destino: </b>Estancia La Linda</label>
-                                                        
-                                                        <label class="block text-sm font-medium text-gray-700">
-                                                            <b>Estado Servicio: </b>Finalizado</label>
-    
-                                                        <hr>
-                                                    </div>
-                                                    
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex-shrink-0 px-4 py-4 flex justify-end">
-                                        <button type="button"
-                                            class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                            @click="open = false">Cerrar</button>
-                                        <!-- <button class="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Actualizar Nota</button> -->
-                                    </div>
-                                </form>
-                            </div>
-                        </TransitionChild>
-                    </div>
-                </div>
-            </Dialog>
-        </TransitionRoot>
-    
+        </div> 
     
     </template>
     <script>
@@ -332,7 +180,7 @@
     
             return {
                 open: false,
-                drivers: drivers,
+                drivers: [],
                 toastMessage: "",
                 labelType: "info",
                 message: "",
@@ -340,12 +188,12 @@
             }
         },
         methods: {
-            async getClients() {
+            async getDrivers() {
     
-                const get = `${route('clients.list')}`
+                const get = `${route('drivers.list')}`
     
                 const response = await fetch(get, { method: 'GET' })
-                this.clients = await response.json()
+                this.drivers = await response.json()
     
             },
             clearMessage() {
@@ -354,7 +202,7 @@
         },
     
         created() {
-            this.getClients()
+            this.getDrivers()
         },
         // mounted() {
         //     if (this.toast) {

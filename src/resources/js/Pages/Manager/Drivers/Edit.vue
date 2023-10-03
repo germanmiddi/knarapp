@@ -32,9 +32,12 @@
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="client_type_id"
                                                 class="block text-sm font-medium text-gray-700">Tipo Chofer</label>
-                                            <select id="client_type_id" name="client_type_id" v-model="form.client_type_id"
+                                            <select id="client_type_id" name="client_type_id" v-model="form.driver_types_id"
                                                 class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                <option v-for="type in DriverTypes" :key="type.id" :value="type.id">
+                                                <option v-for="type in driverTypes" 
+                                                             :key="type.id" 
+                                                             :value="type.id"
+                                                             :bind:select="type.id == form.driver_types_id" class="capitalize">
                                                     {{ type.name }}</option>
                                             </select>
                                         </div>
@@ -110,9 +113,9 @@
                             <div class="md:col-span-3">
                                 <div class="px-4 sm:px-0 flex justify-between items-center mb-3">
                                     <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>
-                                    <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/>
+                                    <!-- <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/> -->
                                     <!-- <button @click.prevent="getAllServices" class="btn-blue">Tomar listas</button> -->
-                                    <button class="btn-blue"> Nuevo Servicio</button>
+                                    <!-- <button class="btn-blue"> Nuevo Servicio</button> -->
                                 </div>
                             </div>
                         </div>                        
@@ -126,23 +129,20 @@
                                     <th class="px-6 py-3 text-center">Guia</th>
                                     <th class="px-6 py-3 text-center">Cant Pax</th>
                                     <th class="px-6 py-3 text-center">Duración</th>
-                                    <th class="px-6 py-3 text-center">Precio</th>
+                                    <th class="px-6 py-3 text-center">Costo</th>
                                     <th class="px-6 py-3 text-center">Activo</th>
-                                    <th class="px-6 py-3 text-center">Acciones</th>
+                                    <!-- <th class="px-6 py-3 text-center">Acciones</th> -->
                                 </tr>
-                                <tr v-for="service in cliente.service_price_lists" :key="service.id"
-                                    class="hover:bg-gray-100 focus-within:bg-gray-100 text-xs ">
-                                    <td class="border-t px-6 py-4 text-left">  {{ service.service.service_type.description }}</td>
-                                    <td class="border-t px-6 py-4 text-left">{{ service.service.name }}</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.wait_time }} Hs.</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.baggage }}</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.guide }}</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.passenger_capacity }}</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.duration }}</td>
-                                    <td class="border-t px-6 py-4 text-right">USD {{ service.price }}</td>
-                                    <td class="border-t px-6 py-4 text-center">{{ service.active }}</td>
-                                    <td class="border-t px-6 py-4 text-center">Editar</td>
-                                </tr>
+                                <DriverServiceListItem v-for="service in serviceBase" 
+                                                       :key="service.id" 
+                                                       :driver_id="form.id"
+                                                       :service=service 
+                                                       @update-item="updateServiceList"
+                                                       @toggle-active="toggleActiveService" 
+                                                       @destroy-item="destroyItem" 
+                                                       @toast-message="setMessage"/>                                                       
+                                                       
+                                
                             </table>
                         </div>
                     </div>
@@ -158,6 +158,7 @@
     import { defineComponent } from 'vue'
     import Icons from '@/Layouts/Components/Icons.vue'
     import Toast from '@/Layouts/Components/Toast.vue'
+    import DriverServiceListItem from './DriverServiceListItem.vue' 
     // import GoogleMap from '../../../Layouts/Components/GoogleMap.vue'
     // import VueGoogleAutocomplete from "vue-google-autocomplete"
     import {
@@ -167,7 +168,7 @@
     import { Inertia } from '@inertiajs/inertia';
     export default defineComponent({
         props: {
-            DriverTypes: Object,
+            driverTypes: Object,
             driver: Object,
             serviceBase: Object,
         },
@@ -176,13 +177,16 @@
             Icons,
             Toast,
             ChevronLeftIcon,
-            Inertia        
+            Inertia,
+            DriverServiceListItem        
         },
     
         data() {
             return {
                 form: {},
-                toastMessage: ""
+                toastMessage: "",
+                labelType:    "info",   
+                loadingActive: false,             
             }
         },
     
@@ -190,12 +194,36 @@
             goBack() {
                Inertia.visit(document.referrer);
             },
+            setMessage(message){
+                console.log(message)
+                this.toastMessage = message.message;
+                this.labelType = message.type;
+            },            
             clearMessage() {
                 this.toastMessage = ""
             },
-    
+
+            updateServiceList(data){
+                console.log(data)
+                this.serviceBase.forEach((item, index) => {
+                    if (item.id == data.servicepricelistsbase_id) {
+                        this.serviceBase[index].dsp_id        = data.id
+                        this.serviceBase[index].dsp_price     = data.price
+                        this.serviceBase[index].dsp_active    = data.active
+                        this.serviceBase[index].dsp_driver_id = data.driver_id
+                    }
+                });
+            },
+            toggleActiveService(data){
+                this.serviceBase.forEach((item, index) => {
+                    if (item.dsp_id == data.dsp_id) {
+                        this.serviceBase[index].dsp_active = data.dsp_active
+                    }
+                });
+            },
+
             submit() {
-                this.$inertia.post(route('client.store'), this.form)
+                this.$inertia.post(route('driver.update'), this.form)
             },
         },
         created() {
