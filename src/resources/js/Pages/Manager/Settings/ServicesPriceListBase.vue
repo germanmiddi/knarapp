@@ -12,7 +12,7 @@
                             </div>
                             <div>
                                 <div class="grid grid-cols-12 gap-4">
-                                    <div class="col-span-12 sm:col-span-2 ">
+                                    <div class="col-span-12 sm:col-span-3 ">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Tipo</label>
                                         <select v-model="form.tipo_servicio" id="tipo_servicio" name="tipo_servicio"
                                                 :disabled="form.id != null"
@@ -26,8 +26,9 @@
                                     <div class="col-span-12 sm:col-span-5 ">
                                         <label for="servicio" class="block text-sm font-medium text-gray-700">Servicio</label>
                                         <select v-model="form.services_id" id="servicio_id" name="servicio_id"
-                                                :disabled="form.id != null"    
-                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                :disabled="form.id != null || disableServicios"    
+                                                class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                :class="disableServicios ? 'bg-gray-50' : 'bg-white' ">
                                                 <option v-for="row in servicioFiltrado" :key="row.id" :value="row.id">
                                                     {{ row.name }}</option>
                                         </select>                                        
@@ -99,7 +100,13 @@
                                     <th class="px-5 py-2 text-center">Costo</th>
                                     <th class="px-5 py-2 text-center">Acciones</th>
                                 </tr>
-                                <tr v-for="service in services.data" :key="service.id"
+                                <ServicesPriceListBaseItem
+                                    v-for="service in services.data" :key="service.id"
+                                    :service="service"
+                                    @fillFormUpdate="fillFormUpdate"
+                                    @getServicesPriceListBase="getServicesPriceListBase"
+                                />
+                                <!-- <tr v-for="service in services.data" :key="service.id"
                                     class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm ">
                                         <td class="border-t px-4 py-2 text-left">{{service.services.service_type.description}}</td>
                                         <td class="border-t px-4 py-2 text-left">{{service.services.name}}</td>
@@ -110,8 +117,22 @@
                                         <td class="border-t px-4 py-2 text-center">{{service.duration}} <span class="text-xs text-gray-600">hs</span></td>
                                         <td class="border-t px-4 py-2 text-center"><span class="text-xs text-gray-600">$</span> {{service.price}}</td>
                                         <td class="border-t px-4 py-2 text-center"><span class="text-xs text-gray-600">$</span> {{service.cost}}</td>
-                                        <td class="border-t px-4 py-2 text-center"><button @click="fillFormUpdate(service)">Editar </button></td>
-                                </tr>
+                                        <td class="border-t px-4 py-2 text-center">
+                                            <div v-if="loading" class="flex justify-center">
+                                                <Icons name="loading" class="animate-spin w-6 h-6 text-gray-500" />
+                                            </div> 
+                                            <div class="flex justify-center">
+                                                <button class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
+                                                        hover:bg-blue-400 hover:text-white"
+                                                    @click="fillFormUpdate(service)">
+                                                    <PencilIcon class="h-3 w-3  mr-2 " aria-hidden="true" /> Editar </button>
+                                                <button class="ml-2 inline-flex items-center px-2 py-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
+                                                        hover:bg-blue-400 hover:text-white"
+                                                    @click="deleteService(service)">
+                                                    <TrashIcon class="h-3 w-3  mr-2 " aria-hidden="true" /> Borrar </button>
+                                            </div>  
+                                        </td>
+                                </tr> -->
                             </table>
                         </div>
                     </div>
@@ -121,14 +142,22 @@
 </template>
 
 <script>
+import Icons from '@/Layouts/Components/Icons.vue'
+import ServicesPriceListBaseItem from './ServicesPriceListBaseItem.vue'
 
 export default {
+    components: {
+        ServicesPriceListBaseItem,
+        Icons,
+    },
     data(){
         return {
+            loading: false,
             tipoServicio: [],
             servicio:[],
             servicioFiltrado:[],
             services: [],
+            disableServicios: true,
             form:{
                 baggage : false,
                 guide : false
@@ -138,14 +167,17 @@ export default {
     methods: {
         filtrarServicios(){
             if(this.form.tipo_servicio == null){
+                this.disableServicios = true
                 this.servicioFiltrado = this.servicio
                 return
             }
             this.servicioFiltrado = this.servicio.filter( (servicio) => {
                 return servicio.services_type_id == this.form.tipo_servicio
             })
+            this.disableServicios = false
         },  
         fillFormUpdate(service){
+            alert('fillFormUpdate padre')
             this.form.id            = service.id
             this.form.tipo_servicio = service.services.service_type.id
             this.form.services_id   = service.services.id
@@ -198,6 +230,8 @@ export default {
             })
             this.getServicesPriceListBase()
             this.form = {}
+            this.form.baggage = false
+            this.form.guide = false            
         },
 
         async submit(){
@@ -223,9 +257,33 @@ export default {
 
             this.getServicesPriceListBase()
             this.form = {}
-            // this.form = {}
+            this.form.baggage = false
+            this.form.guide = false
 
-        }
+        },
+
+        async deleteService(service){
+            this.loading = true
+            let response = await fetch(route('services_price_list_base.delete'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(service)
+            })
+
+            if (response.ok) {
+                this.getServicesPriceListBase()
+            }else{
+                alert('No se puede eliminar el servicio')
+            }
+            this.loading = false
+
+        },
+
+    
     },
 
     created() {

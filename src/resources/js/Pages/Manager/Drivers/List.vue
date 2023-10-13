@@ -70,7 +70,7 @@
                             <td class="border-t px-6 py-4 text-center">
                                 <!-- <a type="button" :href="route('clients.edit', client.id)" -->
                                 <a type="button" :href="route('driver.edit', driver.id)" 
-                                    class="inline-flex items-center p-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
+                                    class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 
                                             hover:bg-blue-400 hover:text-white" >
                                     <PencilIcon class="h-4 w-4  mr-2 " aria-hidden="true" />Editar</a>
                                 

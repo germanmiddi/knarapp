@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use \App\Models\ServiceType;
 use \App\Models\Service;
 use \App\Models\Servicepricelistbase;
+use App\Models\DriverServicesPrice;
+use App\Models\Servicepricelist;
 
 class SettingController extends Controller
 {
@@ -27,11 +29,14 @@ class SettingController extends Controller
     }
 
     public function service_type_list(){
-    
-        $result = ServiceType::all();
-     
+        // $result = ServiceType::all();
+        $result = ServiceType::has('services')->get();
         return response()->json(['data'=> $result],200);
+    }
 
+    public function service_type_list_all(){
+        $result = ServiceType::all();
+        return response()->json(['data'=> $result],200);
     }
 
     public function services_list(){
@@ -134,4 +139,35 @@ class SettingController extends Controller
 
     }
 
+    public function services_price_list_base_delete(Request $request){
+        
+        DB::beginTransaction();
+        try{
+
+            // Verificar si algún conductor tiene asignado este servicio
+            $driversWithService = DriverServicesPrice::where('servicepricelistsbase_id', $request->id)->count();
+
+            if ($driversWithService > 0) {
+                DB::rollback();
+                return response()->json(['message' => 'No se puede eliminar este servicio, ya está asignado a conductores'], 400);
+            }
+            $clientWithService = Servicepricelist::where('servicepricelistsbase_id', $request->id)->count();
+            
+            if ($clientWithService > 0) {
+                DB::rollback();
+                return response()->json(['message' => 'No se puede eliminar este servicio, ya está asignado a clientes'], 400);
+            }
+
+            $data = Servicepricelistbase::find($request->id);
+            $data->delete();
+
+            DB::commit();
+            return response()->json(['message'   => 'Servicio creado correctamente'], 200);
+
+        }catch(\Exception $e){
+            DB::rollback();
+            $error = $e->getMessage();
+            return response()->json(['message' => $error], 404);
+        }
+    }
 }

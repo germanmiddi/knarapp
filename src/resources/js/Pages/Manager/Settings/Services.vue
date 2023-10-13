@@ -73,7 +73,7 @@ export default {
     methods: {
         async getServices() {
 
-            let response_st = await fetch(route('services_type.list'), { method: 'GET' })
+            let response_st = await fetch(route('services_type.list_all'), { method: 'GET' })
             this.tipoServicio = await response_st.json()
 
             let response = await fetch(route('services.list'), { method: 'GET' })

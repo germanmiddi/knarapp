@@ -150,6 +150,12 @@ Route::get('/service_type/list', [SettingController::class, 'service_type_list']
     ->name('services_type.list')
     ->middleware('auth');
 
+Route::get('/service_type/list_all', [SettingController::class, 'service_type_list_all'])
+    ->name('services_type.list_all')
+    ->middleware('auth');
+
+
+        
 Route::get('/services_price_list_base/list', [SettingController::class, 'services_price_list_base_list'])
     ->name('services_price_list_base.list')
     ->middleware('auth');
@@ -162,6 +168,11 @@ Route::post('/services_price_list_base/store', [SettingController::class, 'servi
 Route::post('/services_price_list_base/update', [SettingController::class, 'services_price_list_base_update'])
     ->name('services_price_list_base.update')
     ->middleware('auth');    
+
+Route::post('/services_price_list_base/delete', [SettingController::class, 'services_price_list_base_delete'])
+    ->name('services_price_list_base.delete')
+    ->middleware('auth');    
+
 //Location
 
 Route::get('/location/list', [LocationController::class, 'list'])
