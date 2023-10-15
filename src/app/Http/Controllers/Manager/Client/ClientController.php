@@ -124,13 +124,32 @@ class ClientController extends Controller
     public function edit(Client $client)
     {      
 
-        $client->load(['servicePriceLists',
-                       'servicePriceLists.service',
-                       'servicePriceLists.service.service_type']);
+        // $client->load(['servicePriceLists',
+        //                'servicePriceLists.service',
+        //                'servicePriceLists.service.service_type']);
 
+        // return  Inertia::render('Manager/Clients/Edit',[
+        //     'cliente' => $client,
+        // ]);
+
+        $clientId = $client->id; // ID del cliente
+        $serviceBase = Servicepricelistbase::with(['services', 'services.service_type'])
+            ->leftJoin('servicepricelists', function ($join) use ($clientId) {
+                $join->on('servicepricelistsbase.id', '=', 'servicepricelists.servicepricelistsbase_id')
+                        ->where('servicepricelists.client_id', '=', $clientId);
+            })
+            ->selectRaw('servicepricelistsbase.*,
+                         servicepricelists.id AS csp_id,
+                         servicepricelists.client_id AS csp_client_id,
+                         servicepricelists.price AS csp_price,
+                         servicepricelists.active AS csp_active')  
+            ->get();
+                                                                    
         return  Inertia::render('Manager/Clients/Edit',[
-            'cliente' => $client,
-        ]);
+            'client' => $client,
+            // 'driverTypes' => Drivertype::all(),
+            'serviceBase' => $serviceBase,
+        ]);        
     }
 
     /**

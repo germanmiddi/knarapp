@@ -122,10 +122,17 @@ Route::post('/drivers_service_price/toggleActive', [DriverServicePriceController
 
 
 // Service Price List
-
+// Filtra los servicios para el formulario de alta de solicitudes
 Route::get('/services/filter', [ServicepricelistController::class, 'filter'])
     ->name('services.filter')
     ->middleware('auth');
+
+
+Route::post('/clients_service_list/toggleActive', [ServicepricelistController::class, 'toggleActive'])
+    ->name('clients_service_list.toggleActive')
+    ->middleware('auth');    
+
+
 
 // Setting
 
@@ -155,7 +162,6 @@ Route::get('/service_type/list_all', [SettingController::class, 'service_type_li
     ->middleware('auth');
 
 
-        
 Route::get('/services_price_list_base/list', [SettingController::class, 'services_price_list_base_list'])
     ->name('services_price_list_base.list')
     ->middleware('auth');
@@ -173,6 +179,7 @@ Route::post('/services_price_list_base/delete', [SettingController::class, 'serv
     ->name('services_price_list_base.delete')
     ->middleware('auth');    
 
+    
 //Location
 
 Route::get('/location/list', [LocationController::class, 'list'])

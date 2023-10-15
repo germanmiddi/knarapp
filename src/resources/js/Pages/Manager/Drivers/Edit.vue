@@ -194,11 +194,13 @@
             goBack() {
                Inertia.visit(document.referrer);
             },
+
             setMessage(message){
                 console.log(message)
                 this.toastMessage = message.message;
                 this.labelType = message.type;
-            },            
+            },
+                        
             clearMessage() {
                 this.toastMessage = ""
             },

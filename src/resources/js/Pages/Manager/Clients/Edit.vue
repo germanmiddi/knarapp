@@ -4,7 +4,7 @@
         <header class="">
             <div class="flex justify-between max-w-7xl mx-auto py-6 px-10">
                 <h2 class="font-semibold text-2xl text-gray-800 leading-tight flex items-center">
-                   <ChevronLeftIcon class="w-5 mr-2 rounded-full hover:bg-white" @click="goBack" /> Clientes - Crear Cliente
+                   <ChevronLeftIcon class="w-5 mr-2 rounded-full hover:bg-white" @click="goBack" /> Clientes - Editar Cliente
                 </h2>
                 <button class="btn-blue" @click="submit">
                     Guardar
@@ -127,10 +127,7 @@
                     <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-3">
                             <div class="px-4 sm:px-0 flex justify-between items-center mb-3">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>
-                                <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 w-96  shadow-sm sm:text-sm border-gray-300 rounded-md"  placeholder="Buscar"/>
-                                <!-- <button @click.prevent="getAllServices" class="btn-blue">Tomar listas</button> -->
-                                <button class="btn-blue"> Nuevo Servicio</button>
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">Lista de Servicios</h3>                                
                             </div>
                         </div>
                     </div>                        
@@ -144,23 +141,18 @@
                                 <th class="px-6 py-3 text-center">Guia</th>
                                 <th class="px-6 py-3 text-center">Cant Pax</th>
                                 <th class="px-6 py-3 text-center">Duración</th>
-                                <th class="px-6 py-3 text-center">Precio</th>
+                                <th class="px-6 py-3 text-center">Costo</th>
                                 <th class="px-6 py-3 text-center">Activo</th>
-                                <th class="px-6 py-3 text-center">Acciones</th>
                             </tr>
-                            <tr v-for="service in cliente.service_price_lists" :key="service.id"
-                                class="hover:bg-gray-100 focus-within:bg-gray-100 text-xs ">
-                                <td class="border-t px-6 py-4 text-left">  {{ service.service.service_type.description }}</td>
-                                <td class="border-t px-6 py-4 text-left">{{ service.service.name }}</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.wait_time }} Hs.</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.baggage }}</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.guide }}</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.passenger_capacity }}</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.duration }}</td>
-                                <td class="border-t px-6 py-4 text-right">USD {{ service.price }}</td>
-                                <td class="border-t px-6 py-4 text-center">{{ service.active }}</td>
-                                <td class="border-t px-6 py-4 text-center">Editar</td>
-                            </tr>
+                            <ClientServiceListItem v-for="service in serviceBase"
+                                                    :key="service.id"     
+                                                    :service="service" 
+                                                    :client_id="form.id"
+                                                    @update-item="updateServiceList"
+                                                    @toggle-active="toggleActiveService" 
+                                                    @destroy-item="destroyItem" 
+                                                    @toast-message="setMessage"/>                                                                
+                          
                         </table>
                     </div>
                 </div>
@@ -175,28 +167,34 @@
 import { defineComponent } from 'vue'
 import Icons from '@/Layouts/Components/Icons.vue'
 import Toast from '@/Layouts/Components/Toast.vue'
+import ClientServiceListItem from './ClientServiceListItem.vue'
 
 import {
          ChevronLeftIcon
         } from '@heroicons/vue/24/outline'
 
 import { Inertia } from '@inertiajs/inertia';
+
 export default defineComponent({
     props: {
-        cliente: Object,
+        client: Object,
+        serviceBase: Object,
     },
 
     components: {
         Icons,
         Toast,
         ChevronLeftIcon,
-        Inertia        
+        Inertia,
+        ClientServiceListItem        
     },
 
     data() {
         return {
             form: {},
-            toastMessage: ""
+            toastMessage: "",
+            labelType:    "info",   
+            loadingActive: false,                         
         }
     },
 
@@ -205,8 +203,34 @@ export default defineComponent({
            Inertia.visit(document.referrer);
         },
 
+        setMessage(message){
+                console.log(message)
+                this.toastMessage = message.message;
+                this.labelType = message.type;
+        },
+
         clearMessage() {
             this.toastMessage = ""
+        },
+
+        updateServiceList(data){
+            console.log(data)
+            this.serviceBase.forEach((item, index) => {
+                if (item.id == data.servicepricelistsbase_id) {
+                    this.serviceBase[index].dsp_id        = data.id
+                    this.serviceBase[index].dsp_price     = data.price
+                    this.serviceBase[index].dsp_active    = data.active
+                    this.serviceBase[index].dsp_client_id = data.client_id
+                }
+            });
+        },
+
+        toggleActiveService(data){
+                this.serviceBase.forEach((item, index) => {
+                    if (item.dsp_id == data.dsp_id) {
+                        this.serviceBase[index].dsp_active = data.dsp_active
+                    }
+                });
         },
 
         submit() {
@@ -215,7 +239,7 @@ export default defineComponent({
 
     },
     created() {
-        this.form = this.cliente
+        this.form = this.client
     }
 })
 </script>

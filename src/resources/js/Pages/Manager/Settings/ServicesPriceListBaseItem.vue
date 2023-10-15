@@ -56,20 +56,6 @@ export default {
         }
     },
     methods: {
-
-        // fillFormUpdate(service){
-        //     this.form.id            = service.id
-        //     this.form.tipo_servicio = service.services.service_type.id
-        //     this.form.services_id   = service.services.id
-        //     this.form.passenger_capacity = service.passenger_capacity
-        //     this.form.wait_time     = service.wait_time
-        //     this.form.baggage       = service.baggage 
-        //     this.form.guide         = service.guide
-        //     this.form.duration      = service.duration
-        //     this.form.price         = service.price
-        //     this.form.cost          = service.cost
-
-        // },
         
         fillFormUpdate(service){
             alert('fillFormUpdate child')

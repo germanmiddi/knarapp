@@ -14,15 +14,19 @@ class DriverServicePriceController extends Controller{
 
     public function store(Request $request){
 
-        // dd($request->all());
-
         DB::beginTransaction();
         try{
-            $driverServicesPrice = new DriverServicesPrice();
-            $driverServicesPrice->driver_id = $request->driver_id;
-            $driverServicesPrice->servicepricelistsbase_id = $request->service['id'];
+
+            if($request->service['dsp_id']){
+                $driverServicesPrice = DriverServicesPrice::find($request->service['dsp_id']);
+            }else{
+                $driverServicesPrice = new DriverServicesPrice();
+                $driverServicesPrice->driver_id = $request->driver_id;
+                $driverServicesPrice->servicepricelistsbase_id = $request->service['id'];
+                $driverServicesPrice->active = true;
+            }
+
             $driverServicesPrice->price = $request->cost;
-            $driverServicesPrice->active = true;
             $driverServicesPrice->save();
 
             DB::commit();
@@ -46,7 +50,7 @@ class DriverServicePriceController extends Controller{
         try{
             $driverServicesPrice = DriverServicesPrice::find($request->id);
             if ($driverServicesPrice->price <= 0) {
-                throw new \Exception('El precio debe ser mayor a 0 ' . $driverServicesPrice->price);
+                throw new \Exception('El costo debe ser mayor a 0 ' . $driverServicesPrice->price);
             }
             $driverServicesPrice->active = !$driverServicesPrice->active;
             $driverServicesPrice->save();

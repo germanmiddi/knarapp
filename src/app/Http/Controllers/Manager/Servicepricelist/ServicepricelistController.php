@@ -46,6 +46,29 @@ class ServicepricelistController extends Controller
 
     }
 
+    public function toggleActive(Request $request){
+        
+        DB::beginTransaction();
+        try{
+            $servicepricelist = Servicepricelist::find($request->id);
+            if ($servicepricelist->price <= 0) {
+                throw new \Exception('El precio debe ser mayor a 0 ' . $servicepricelist->price);
+            }
+            $servicepricelist->active = !$driverServicesPrice->active;
+            $servicepricelist->save();
+            DB::commit();
+            return response()->json(['message' => 'Servicio activado correctamente',
+                                     'csp_id' => $servicepricelist->id,
+                                     'csp_active' => $servicepricelist->active ], 200);
+
+        }catch(\Exception $e){
+            DB::rollback();
+            $error = $e->getMessage();
+            return response()->json(['message' => $error], 404);
+
+        }
+
+    }    
     // public function index()
     // {
     //     return view('manager.servicepricelist.index');
