@@ -132,28 +132,30 @@
                         </div>
                     </div>                        
                     <div class="md:col-span-3 mt-5">
-                        <table class="w-full whitespace-nowrap">
-                            <tr class="text-left font-bold bg-blue-500 text-white text-sm">
-                                <th class="px-6 py-3 text-center">Tipo</th>
-                                <th class="px-6 py-3 text-left">Detalle</th>
-                                <th class="px-6 py-3 text-center">Espera</th>
-                                <th class="px-6 py-3 text-center">Equipaje</th>
-                                <th class="px-6 py-3 text-center">Guia</th>
-                                <th class="px-6 py-3 text-center">Cant Pax</th>
-                                <th class="px-6 py-3 text-center">Duración</th>
-                                <th class="px-6 py-3 text-center">Costo</th>
-                                <th class="px-6 py-3 text-center">Activo</th>
-                            </tr>
-                            <ClientServiceListItem v-for="service in serviceBase"
-                                                    :key="service.id"     
-                                                    :service="service" 
-                                                    :client_id="form.id"
-                                                    @update-item="updateServiceList"
-                                                    @toggle-active="toggleActiveService" 
-                                                    @destroy-item="destroyItem" 
-                                                    @toast-message="setMessage"/>                                                                
-                          
-                        </table>
+                        <div class="overflow-x-auto">                        
+                            <table class="w-full whitespace-nowrap">
+                                <tr class="text-left font-bold bg-blue-500 text-white text-sm">
+                                    <th class="px-6 py-3 text-center">Tipo</th>
+                                    <th class="px-6 py-3 text-left">Detalle</th>
+                                    <th class="px-6 py-3 text-center">Espera</th>
+                                    <th class="px-6 py-3 text-center">Equipaje</th>
+                                    <th class="px-6 py-3 text-center">Guia</th>
+                                    <th class="px-6 py-3 text-center">Cant Pax</th>
+                                    <th class="px-6 py-3 text-center">Duración</th>
+                                    <th class="px-6 py-3 text-center">Costo</th>
+                                    <th class="px-6 py-3 text-center">Activo</th>
+                                </tr>
+                                <ClientServiceListItem v-for="service in serviceBase"
+                                                        :key="service.id"     
+                                                        :service="service" 
+                                                        :client_id="form.id"
+                                                        @update-item="updateServiceList"
+                                                        @toggle-active="toggleActiveService" 
+                                                        @destroy-item="destroyItem" 
+                                                        @toast-message="setMessage"/>                                                                
+                            
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -217,24 +219,24 @@ export default defineComponent({
             console.log(data)
             this.serviceBase.forEach((item, index) => {
                 if (item.id == data.servicepricelistsbase_id) {
-                    this.serviceBase[index].dsp_id        = data.id
-                    this.serviceBase[index].dsp_price     = data.price
-                    this.serviceBase[index].dsp_active    = data.active
-                    this.serviceBase[index].dsp_client_id = data.client_id
+                    this.serviceBase[index].csp_id        = data.id
+                    this.serviceBase[index].csp_price     = data.price
+                    this.serviceBase[index].csp_active    = data.active
+                    this.serviceBase[index].csp_client_id = data.client_id
                 }
             });
         },
 
         toggleActiveService(data){
                 this.serviceBase.forEach((item, index) => {
-                    if (item.dsp_id == data.dsp_id) {
-                        this.serviceBase[index].dsp_active = data.dsp_active
+                    if (item.csp_id == data.csp_id) {
+                        this.serviceBase[index].csp_active = data.csp_active
                     }
                 });
         },
 
         submit() {
-            this.$inertia.post(route('client.store'), this.form)
+                this.$inertia.post(route('client.update'), this.form)
         },
 
     },

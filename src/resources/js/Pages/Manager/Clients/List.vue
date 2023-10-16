@@ -59,13 +59,17 @@
                             <div class="flex"> 
                             <EnvelopeIcon class="w-3 mr-2 text-blue-500"/>{{ client.email }}</div>
                         </td>
-                        <td class="border-t px-6 py-4 text-center">
-                            <!-- <a type="button" :href="route('clients.edit', client.id)" -->
-                            <a type="button" :href="route('client.edit', client.id)" 
-                               class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-md bg-gray-100 
-                                    hover:bg-gray-300 text-gray-700">
-                                <PencilIcon class="h-4 w-4 mr-2" aria-hidden="true" />Editar</a>
-                            
+                        <td class="border-t px-6 py-4 ">
+                            <div class="flex items-center">   
+                                <a type="button" :href="route('client.edit', client.id)" 
+                                   class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-md bg-gray-100 
+                                        hover:bg-gray-300 text-gray-700">
+                                    <PencilIcon class="h-4 w-4 mr-2" aria-hidden="true" />Editar</a>
+                                <button class="ml-2 inline-flex items-center px-2 py-1 border border-gray-200 rounded-md bg-gray-100 
+                                         hover:bg-gray-300 text-gray-700"
+                                        @click="deleteClient(client)">
+                                        <TrashIcon class="h-3 w-3  mr-2 " aria-hidden="true" /> Borrar </button>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -80,6 +84,7 @@
 
 import { defineComponent } from 'vue'
 import { PencilIcon,
+         TrashIcon,
          PlusCircleIcon,
          XMarkIcon,
          CheckCircleIcon,
@@ -108,6 +113,7 @@ export default defineComponent({
         toast: Object
     },
     components: {
+        TrashIcon,
         PencilIcon,
         PlusCircleIcon,
         Toast,
@@ -124,25 +130,6 @@ export default defineComponent({
     },
     data() {
 
-        // const clients = [
-        //     { id: '1' ,
-        //       name: 'Agencia ABC',
-        //       address: 'Av. Libertador 1234, CABA ',
-        //       cellphone: '+54 9 1234 5678'
-        //     },
-        //     { id: '2' ,
-        //       name: 'Juan Sanchez',
-        //       address: 'Parana 1234, CABA ',
-        //       cellphone: '+54 9 1234 5678'
-        //     },
-        //     { id: '3' ,
-        //       name: 'Travel Show',
-        //       address: 'Peña 1234, CABA ',
-        //       cellphone: '+54 9 1234 5678'
-        //     }
-
-        // ]
-
         return {
             open: false,
             clients: {},
@@ -152,6 +139,7 @@ export default defineComponent({
             showToast: false,
         }
     },
+
     methods: {
         async getClients() {
 
@@ -164,22 +152,30 @@ export default defineComponent({
         clearMessage() {
             this.toastMessage = ""
         },
+        async deleteClient(client) {
+            const response = await fetch(route('client.destroy'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(client)
+            })
+
+            if (response.ok) {
+                this.getClients()
+            } else {
+                const responseData = await response.json();
+                alert(responseData.message)
+            }
+        }
+
     },
 
     created() {
         this.getClients()
     },
-    // mounted() {
-    //     if (this.toast) {
-    //         if (this.toast['status'] == 200) {
-    //             this.message = this.toast['message']
-    //             this.showToast = true
-    //         } else {
-    //             this.labelType = "danger"
-    //             this.toastMessage = this.toast['message']
-    //         }
-    //     }
-    // }
 
 })
 </script>

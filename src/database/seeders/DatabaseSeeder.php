@@ -71,6 +71,23 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
+        DB::table('request_status')->insert([
+            'name' => 'Inicial',
+            'created_at' => Carbon::now(),
+        ]);
+
+        DB::table('request_status')->insert([
+            'name' => 'En Proceso',
+            'created_at' => Carbon::now(),
+        ]);
+        
+        DB::table('request_status')->insert([
+            'name' => 'Finalizado',
+            'created_at' => Carbon::now(),
+        ]);
+
+        
+
         
 
     }

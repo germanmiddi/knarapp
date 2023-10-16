@@ -11,17 +11,7 @@
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="grid grid-cols-6 gap-6">
 
-                        <div class="col-span-6 sm:col-span-2">
-                            <label for="service_type"
-                                class="block text-sm font-medium text-gray-700">Tipo</label>
-                            <select id="service_type" name="service_type" @change="getServices" v-model="form.service_type"
-                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option v-for="(description, id) in servicesTypes" :key="id" :value="id">{{ description }}</option>
-                            </select>
-                        </div>       
-
-                        
-                        <div class="col-span-6 sm:col-span-2">
+                        <div class="col-span-6 sm:col-span-3">
                             <label for="date" class="block text-sm font-medium text-gray-700">Fecha:</label>
 
                             <Datepicker id="date" class="w-full mt-1" v-model="form.date"
@@ -30,7 +20,7 @@
                                 autoApply :format="format"></Datepicker>
                         </div>
 
-                        <div class="col-span-6 sm:col-span-2">
+                        <div class="col-span-6 sm:col-span-3">
                             <label for="time" class="block text-sm font-medium text-gray-700">Hora:</label>
 
                             <Datepicker id="time" class="w-full mt-1" v-model="form.time"
@@ -134,8 +124,7 @@ export default {
 
     props: {
         locations: Object,
-        client: String,
-        servicesTypes: Object,
+        client: String
     },
     
     components: {
@@ -144,7 +133,6 @@ export default {
 
     data(){
         return {
-            services_types: "",
             form:{},
             services: {},
             cant_pax: "",
@@ -170,6 +158,8 @@ export default {
         }
     },
 
+
+
     methods: {
         createService(){
 
@@ -183,7 +173,6 @@ export default {
             
         },
 
-
         async getServices(){
             
             if (this.client === undefined) {
@@ -192,10 +181,6 @@ export default {
 
             let filter = `client_id=${this.client}`
 
-
-            if (this.form.service_type !== undefined) {
-				filter += `&service_type=${this.form.service_type}`
-			}
 
             if (this.form.cant_pax > 0) {
 				filter += `&pax=${this.form.cant_pax}`

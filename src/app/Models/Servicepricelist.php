@@ -36,6 +36,12 @@ class Servicepricelist extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    //create a active scope
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
     public function service()
     {
         return $this->belongsTo(Servicepricelistbase::class, 'servicepricelistsbase_id');

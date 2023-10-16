@@ -29,6 +29,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth');
 
 // Request
+
 Route::get('/request', [RequestController::class, 'index'])
     ->name('request')
     ->middleware('auth');
@@ -45,7 +46,7 @@ Route::get('/request/create', [RequestController::class, 'create'])
     ->name('request.create')
     ->middleware('auth');
 
-Route::get('/request/store ', [RequestController::class, 'store'])
+Route::post('/request/store ', [RequestController::class, 'store'])
     ->name('request.store')
     ->middleware('auth');
 
@@ -85,7 +86,15 @@ Route::get('client/{client}/edit', [ClientController::class, 'edit'])
     ->name('client.edit')
     ->middleware('auth');
 
+Route::post('/client/update', [ClientController::class, 'update'])
+    ->name('client.update')
+    ->middleware('auth');    
 
+Route::post('/client/destroy', [ClientController::class, 'destroy'])
+    ->name('client.destroy')
+    ->middleware('auth');    
+
+    
 // Drivers
 
 Route::get('/drivers', [DriverController::class, 'index'])
@@ -127,12 +136,20 @@ Route::get('/services/filter', [ServicepricelistController::class, 'filter'])
     ->name('services.filter')
     ->middleware('auth');
 
+Route::get('/services/get_services_types_by_client', [ServicepricelistController::class, 'get_services_types_by_client'])
+    ->name('services.get_services_types_by_client')
+    ->middleware('auth');    
+    
 
 Route::post('/clients_service_list/toggleActive', [ServicepricelistController::class, 'toggleActive'])
     ->name('clients_service_list.toggleActive')
     ->middleware('auth');    
 
+Route::post('/clients_service_list/store', [ServicepricelistController::class, 'store'])
+    ->name('clients_service_list.store')
+    ->middleware('auth');    
 
+    
 
 // Setting
 

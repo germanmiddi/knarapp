@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Client;
 use App\Models\Servicepricelistbase;
 use App\Models\Servicepricelist;
+use App\Models\Requests;
 // use App\Models\Address;
 // use App\Models\Company;
 // use App\Models\State;
@@ -72,7 +73,7 @@ class ClientController extends Controller
             $client->cuit = $request->input('cuit');
             $client->billing_type = $request->input('billing_type');
             $client->address = $request->input('address');
-            $client->zipcode = $request->input('zipcode');
+            // $client->zipcode = $request->input('zipcode');
             $client->notes = $request->input('notes');
     
             $client->save();
@@ -124,14 +125,6 @@ class ClientController extends Controller
     public function edit(Client $client)
     {      
 
-        // $client->load(['servicePriceLists',
-        //                'servicePriceLists.service',
-        //                'servicePriceLists.service.service_type']);
-
-        // return  Inertia::render('Manager/Clients/Edit',[
-        //     'cliente' => $client,
-        // ]);
-
         $clientId = $client->id; // ID del cliente
         $serviceBase = Servicepricelistbase::with(['services', 'services.service_type'])
             ->leftJoin('servicepricelists', function ($join) use ($clientId) {
@@ -161,25 +154,28 @@ class ClientController extends Controller
      */
     public function update(Request $request)
     {
+        
         DB::beginTransaction();
         try {
             Client::where('id', $request->id)->update([
-                'fullname'  => $request->fullname,
-                'dni'       => $request->dni,
-                'email'     => $request->email,
-                'phone'     => $request->phone,
-                'cellphone' => $request->cellphone,
-                'client_type' => $request->client_type,
-                'company_id'  => $request->company_id,
-                'price' => $request->price ?? 0,
-                'notes' => $request->notes
+                'company_name'   => $request->company_name,
+                'client_type_id' => $request->client_type_id,
+                'fullname'       => $request->fullname,
+                'email'          => $request->email,
+                'phone'          => $request->phone,
+                'cellphone'      => $request->cellphone,
+                'cuit'           => $request->cuit,
+                'billing_type'   => $request->billing_type,
+                'address'        => $request->address,
+                'notes'          => $request->notes
             ]);     
 
             DB::commit();
-            return Redirect::route('clients')->with(['toast' => ['message' => 'Cliente actualizado correctamente', 'status' => '200']]);
+            return Redirect::route('client')->with(['toast' => ['message' => 'Cliente actualizado correctamente', 'status' => '200']]);
+
         } catch (\Throwable $th) {
             DB::rollback();
-            return Redirect::route('clients')->with(['toast' => ['message' => 'Se ha producido un error', 'status' => '203']]);
+            return response()->json(['message' => 'Se ha producido un error', 'status' => '203']);
         }
         
     }
@@ -190,9 +186,26 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request)
+    {        
+
+        DB::beginTransaction();
+        try{       
+            $countRequests = Requests::where('client_id', $request->id)->count();
+            if ($countRequests > 0) {
+                return response()->json(['message' => 'No se puede eliminar el cliente porque tiene pedidos asociados', 'status' => '203']);
+            } 
+            
+            Servicepricelist::where('client_id', $request->id)->forceDelete();
+            Client::where('id', $request->id)->delete();
+            DB::commit();
+            return response()->json(['message' => 'Cliente eliminado correctamente', 'status' => '200']);
+
+        }catch(\Throwable $th){
+            DB::rollback();
+            return response()->json(['message' => 'Se ha producido un error', 'status' => '203']);
+        }
+
     }
 
     public function list(){
