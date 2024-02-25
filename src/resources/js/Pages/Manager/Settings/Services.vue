@@ -76,13 +76,13 @@ export default {
             let response_st = await fetch(route('services_type.list_all'), { method: 'GET' })
             this.tipoServicio = await response_st.json()
 
-            let response = await fetch(route('services.list'), { method: 'GET' })
+            let response = await fetch(route('settings.services.list'), { method: 'GET' })
             this.services = await response.json()
 
         },
 
         async submit() {
-            let response = await fetch(route('services.store'), {
+            let response = await fetch(route('settings.services.store'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export default {
         },
 
         async update() {
-            let response = await fetch(route('services.update'), {
+            let response = await fetch(route('settings.services.update'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -108,11 +108,11 @@
                     </tr> 
                     <tr class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm" 
                          v-for="request in this.requests" :key="request.id">
-                        <td class="border-t px-6 py-4">{{request.created_at}}</td>
-                        <td class="border-t px-6 py-4">{{request.client_id}}</td>
-                        <td class="border-t px-6 py-4">2</td>
+                        <td class="border-t px-6 py-4">{{ formatFecha(request.created_at) }}</td>
+                        <td class="border-t px-6 py-4">{{ request.client.company_name }}</td>
+                        <td class="border-t px-6 py-4">{{ request.request_services.length }}</td>
                         <td class="border-t px-6 py-4">{{request.cant_pax}}</td>
-                        <td class="border-t px-6 py-4">{{request.status_id}}</td>
+                        <td class="border-t px-6 py-4">{{request.status.name}}</td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
                             <div class="flex">
@@ -140,14 +140,14 @@
                                                     <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
                                                     Confirmar</a>
                                                 </MenuItem>
-                                                <MenuItem v-slot="{ active }">
+                                                <!-- <MenuItem v-slot="{ active }">
                                                     <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
                                                     Asignar Chofer</a>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }">
                                                     <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
                                                     Lorem ipsum</a>
-                                                </MenuItem>
+                                                </MenuItem> -->
                                             </div>
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
@@ -174,7 +174,7 @@
 
     </div>  
 
-    <TransitionRoot as="template" :show="open">
+    <!-- <TransitionRoot as="template" :show="open">
         <Dialog as="div" class="fixed inset-0 overflow-hidden" @close="open = false">
             <div class="absolute inset-0 overflow-hidden">
                 <DialogOverlay class="absolute inset-0" />
@@ -340,7 +340,7 @@
                                     <button type="button"
                                         class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                         @click="open = false">Cerrar</button>
-                                    <!-- <button class="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Actualizar Nota</button> -->
+                                    <button class="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Actualizar Nota</button>
                                 </div>
                             </form>
                         </div>
@@ -348,7 +348,7 @@
                 </div>
             </div>
         </Dialog>
-    </TransitionRoot>
+    </TransitionRoot> -->
 
 
 </template>
@@ -413,53 +413,6 @@
         },
 
         data() {
-
-            const orders = [
-                {
-                    id: '1',
-                    fecha : '25/02/2023',
-                    hora: '10:30',
-                    client: 'Agencia ABC',
-                    origen : 'Ezeiza',
-                    destino: 'Hotel Colonial',
-                    pasajeros: '4',
-                    status: 'PROGRAMADO',
-                },
-                {
-                    id: '2',
-                    fecha : '27/02/2023',
-                    hora: '07:00',
-                    client: 'Agencia ABC',
-                    origen : 'Hotel Alvear',
-                    destino: 'Estancia La Linda',
-                    pasajeros: '4',
-                    status: 'PROGRAMADO',
-                },
-                {
-                    id: '3',
-                    fecha : '27/02/2023',
-                    hora: '07:00',
-                    client: 'Agencia ABC',
-                    origen : 'Hotel Alvear',
-                    destino: 'Estancia La Linda',
-                    pasajeros: '4',
-                    status: 'PROGRAMADO',
-                },
-                {
-                    id: '3',
-                    fecha : '',
-                    hora: '',
-                    client: '',
-                    origen : '',
-                    destino: '',
-                    pasajeros: '',
-                    status: '',
-                },
-
-            ];
-
-
-
             return {
                 requests: [],
                 open: false,
@@ -467,7 +420,7 @@
                 btnTextMap: '', 
                 filterBtn: false,
                 showFilter: true,
-                orders: orders,
+                // orders: orders,
                 filter: {
                     street: "",
                     client: "",
@@ -483,12 +436,21 @@
             }
         },
         methods:{
+            formatFecha(fecha) {
+                const dateObj = new Date(fecha);
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const year = dateObj.getFullYear();
+                const hours = String(dateObj.getHours()).padStart(2, '0');
+                const minutes = String(dateObj.getMinutes()).padStart(2, '0');
 
-             async get_request(){
+                return `${day}/${month}/${year} ${hours}:${minutes}`;
+            },
 
+            async get_request(){
                 let response = await fetch(route('request.list'),{method: 'GET'})
                 this.requests = await response.json()
-             }
+            }
 
         },
         created(){

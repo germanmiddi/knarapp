@@ -27,6 +27,11 @@ class ServicepricelistController extends Controller
     {
 
         $result =  DB::table('servicepricelists')
+                       ->select('servicepricelists.id as servicepricelists_id',
+                                'servicepricelists.*', 
+                                'servicepricelistsbase.*',
+                                'services.*',
+                                'services_type.*')
                        ->join('servicepricelistsbase', 'servicepricelistsbase.id', '=', 'servicepricelistsbase_id')
                        ->join('services', 'services.id', '=', 'servicepricelistsbase.services_id')
                        ->join('services_type', 'services_type.id', '=', 'services.services_type_id')

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RequestStatus extends Model
 {
     use HasFactory;
+
+    protected $table = 'request_status';
+
 }

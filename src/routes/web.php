@@ -50,15 +50,24 @@ Route::post('/request/store ', [RequestController::class, 'store'])
     ->name('request.store')
     ->middleware('auth');
 
-// Services    
+// Request Services  
+  
 Route::get('/services', [ServiceController::class, 'index'])
     ->name('services')
+    ->middleware('auth');
+
+Route::get('/services/list', [ServiceController::class, 'list'])
+    ->name('services.list')
     ->middleware('auth');
 
 Route::get('/service/{service}/edit', [ServiceController::class, 'edit'])
     ->name('service.edit')
     ->middleware('auth');
 
+Route::get('/service/{service}', [ServiceController::class, 'confirmService'])
+    ->name('service.confirm')
+    ->middleware('auth');
+    
 
 // Order    
 Route::get('/order', [OrderController::class, 'index'])
@@ -157,16 +166,16 @@ Route::get('/setting', [SettingController::class, 'index'])
      ->name('setting')
      ->middleware('auth');
 
-Route::get('/services/list', [SettingController::class, 'services_list'])
-    ->name('services.list')
+Route::get('/settings/services/list', [SettingController::class, 'services_list'])
+    ->name('settings.services.list')
     ->middleware('auth');
 
-Route::post('/services/store', [SettingController::class, 'services_store'])
-    ->name('services.store')
+Route::post('/settings/services/store', [SettingController::class, 'services_store'])
+    ->name('settings.services.store')
     ->middleware('auth');
 
-Route::post('/services/update', [SettingController::class, 'services_update'])
-    ->name('services.update')
+Route::post('/settings/services/update', [SettingController::class, 'services_update'])
+    ->name('settings.services.update')
     ->middleware('auth');
       
 

@@ -58,11 +58,27 @@
     }
 
     .btn{
-        @apply text-tiny inline-block px-4 py-2 rounded-md focus:outline-none transition duration-500 ease-in-out; 
+        @apply text-tiny inline-block 
+               px-4 py-2 rounded-md focus:outline-none transition duration-500 ease-in-out; 
+    }
+
+    .btn-outline-red{
+        @apply inline-flex items-center 
+               px-4 py-2 
+               border border-red-600 text-red-600 hover:bg-red-600 hover:text-white
+               rounded-md 
+               font-semibold text-xs uppercase tracking-widest 
+               disabled:opacity-25 transition
     }
 
     .btn-blue{
-        @apply inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent   rounded-md font-semibold text-xs   text-white uppercase tracking-widest   hover:bg-blue-600 active:bg-blue-900   focus:outline-none focus:border-blue-900   focus:ring focus:ring-blue-300   disabled:opacity-25 transition
+        @apply inline-flex items-center 
+               px-4 py-2 
+               bg-blue-500 hover:bg-blue-600 active:bg-blue-900 
+               border border-transparent rounded-md 
+               font-semibold text-xs text-white uppercase tracking-widest 
+               focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 
+               disabled:opacity-25 transition
     }
 
     .btn-primary{

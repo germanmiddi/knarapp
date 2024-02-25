@@ -7,9 +7,9 @@
                     Viajes
                 </h2>
                 <div class="flex"> 
-                    <button class="btn-blue mr-2" @click.prevent="showMap = !showMap ">
+                    <!-- <button class="btn-blue mr-2" @click.prevent="showMap = !showMap ">
                         Ver Mapa
-                    </button>
+                    </button> -->
                     <button class="btn-blue mr-2">
                         Nuevo Viaje
                     </button>
@@ -21,14 +21,14 @@
             </div>
         </header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ul class="top-filter w-full my-3 card">
+            <!-- <ul class="top-filter w-full my-3 card">
                 <li class="top-filter-item top-filter-item-active">TODOS:<span class="top-filter-number"> 58</span></li>
                 <li class="top-filter-item">SOLICITUDES:<span class="top-filter-number"> 20</span></li>
                 <li class="top-filter-item">PROGRAMADOS:<span class="top-filter-number"> 15</span></li>
                 <li class="top-filter-item">EN CURSO:<span class="top-filter-number"> 8</span></li>
                 <li class="top-filter-item">FINALIZADOS:<span class="top-filter-number"> 10</span></li>
                 <li class="top-filter-item">CANCELADOS:<span class="top-filter-number"> 5</span></li>
-            </ul>
+            </ul> -->
 
             <div class="card-filter bg-gray-100 border-gray-300 p-2 rounded-md" v-if="filterBtn">
                 <div class="filter-input-group">
@@ -105,8 +105,8 @@
                         <th class="px-6 py-3 ">Fecha</th>
                         <th class="px-6 py-3 ">Hora</th>
                         <th class="px-6 py-3 ">Cliente</th>
-                        <th class="px-6 py-3 ">Origen</th>
-                        <th class="px-6 py-3 ">Destino</th>
+                        <th class="px-6 py-3 ">Recorrido</th>
+                        <!-- <th class="px-6 py-3 ">Destino</th> -->
                         <th class="px-6 py-3 ">Pax</th>
                         <th class="px-6 py-3 ">Estado</th>
                         <th class="px-6 py-3  text-center">Acciones</th>
@@ -114,15 +114,17 @@
                     <tr class="hover:bg-gray-100 focus-within:bg-gray-100 text-sm" 
                          v-for="service in this.services" :key="service.id">
                         <td class="border-t px-6 py-4">Servicio: {{service.id}} <br> 
-                                <div class="text-xs text-gray-500" >Solicitud: 001 </div> 
+                                <div class="text-xs text-gray-500" >Solicitud: {{  service.requests_id }} </div> 
                         </td>
-                        <td class="border-t px-6 py-4">{{service.fecha}}</td>
-                        <td class="border-t px-6 py-4">{{service.hora}}</td>
-                        <td class="border-t px-6 py-4">{{service.client}}</td>
-                        <td class="border-t px-6 py-4">{{service.origen}}</td>
-                        <td class="border-t px-6 py-4">{{service.destino}}</td>
-                        <td class="border-t px-6 py-4 text-center">{{service.pasajeros}}</td>
-                        <td class="border-t px-6 py-4">{{service.status}}</td>
+                        <td class="border-t px-6 py-4">{{formatFecha(service.date)}}</td>
+                        <td class="border-t px-6 py-4">{{service.time}}</td>
+                        <td class="border-t px-6 py-4">{{service.request.client.company_name}}</td>
+                        <td class="border-t px-6 py-4">{{service.from.name}}<br>
+                                                     {{service.to.name}}</td>
+
+                        <!-- <td class="border-t px-6 py-4">{{service.to.name}}</td> -->
+                        <td class="border-t px-6 py-4 text-center">{{service.pax_cant}}</td>
+                        <td class="border-t px-6 py-4">{{service.status.name}}</td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
                             <div class="flex">
@@ -147,16 +149,12 @@
 
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
-                                                    <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
+                                                    <a href="#" @click.prevent="confirmService(service.id)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
                                                     Confirmar</a>
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }">
                                                     <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
                                                     Asignar Chofer</a>
-                                                </MenuItem>
-                                                <MenuItem v-slot="{ active }">
-                                                    <a href="#" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">
-                                                    Lorem ipsum</a>
                                                 </MenuItem>
                                             </div>
                                             <div class="py-1">
@@ -176,8 +174,6 @@
                             </div>
                         </td>                        
                     </tr>  
-
-
                 </table>
             </div>
         </div>
@@ -353,50 +349,13 @@
 
         data() {
 
-            const services = [
-                {
-                    id: '1',
-                    fecha : '25/02/2023',
-                    hora: '10:30',
-                    client: 'Agencia ATP',
-                    origen : 'Ezeiza',
-                    destino: 'Hotel Colonial',
-                    pasajeros: '4',
-                    status: 'FINALIZADO',
-                },
-                {
-                    id: '2',
-                    fecha : '27/02/2023',
-                    hora: '07:00',
-                    client: 'Agencia ABC',
-                    origen : 'Hotel Alvear',
-                    destino: 'Estancia La Linda',
-                    pasajeros: '4',
-                    status: 'PROGRAMADO',
-                }
-                // {
-                //     id: '3',
-                //     fecha : '27/02/2023',
-                //     hora: '07:00',
-                //     client: 'Agencia ABC',
-                //     origen : 'Hotel Alvear',
-                //     destino: 'Estancia La Linda',
-                //     pasajeros: '4',
-                //     status: 'PROGRAMADO',
-                // }
-
-            ];
-
-
-
-            return {
+              return {
                 open: false,
                 store,    
                 btnTextMap: '', 
                 filterBtn: false,
                 showFilter: true,
-                services: services,
-                filter: {
+                  filter: {
                     street: "",
                     client: "",
                     driver: "",
@@ -407,10 +366,37 @@
                     ]
                     //new Date(this.form.date + "T00:00:00.000-03:00")
                 },  
-                showMap: false                 
+                showMap: false,
+                services:[]
             }
         },
         methods:{
+            formatFecha(fecha) {
+                const dateObj = new Date(fecha);
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const year = dateObj.getFullYear();
+                return `${day}/${month}/${year}`;
+            },
+            
+            async getServices(){
+
+                let response = await fetch(route('services.list'),{method: 'GET'})
+                this.services = await response.json()                
+                console.log(this.services)
+
+            },
+            async confirmService(id){
+                let response = await fetch(route('services.confirm', id),{method: 'GET'})
+                let data = await response.json()
+                console.log(data)
+                if(data.status == 'success'){
+                    this.message = data.message
+                    this.showToast = true
+                    this.getServices()
+                }
+            },
+            
             // showMap() {
             //     this.showFilter = !this.showFilter
             //     if (this.showFilter) {
@@ -419,6 +405,9 @@
             //         this.btnTextMap = 'Ver Mapa'
             //     }
             // },
-        }
+        },
+        created() {
+            this.getServices()
+        },
     }
 </script>

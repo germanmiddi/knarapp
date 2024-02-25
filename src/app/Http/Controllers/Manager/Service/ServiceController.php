@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Session;
 use App\Models\Service;
-
+use App\Models\RequestService;
 
 // use App\Models\Address;
 // use App\Models\Company;
@@ -37,8 +37,31 @@ class ServiceController extends Controller
     public function edit(Service $service){
 
         return Inertia::render('Manager/Services/Edit');
-        
-
     }
 
+    public function create(){
+
+        return Inertia::render('Manager/Services/Create');
+    }
+
+    public function list(){
+        
+        $services = RequestService::with('request','request.client',
+                                        'creator',
+                                        'servicepricelist',
+                                        'driver',
+                                        'status',
+                                        'from',
+                                        'to')->get();
+
+        return $services;
+
+    }
+    public function confirmService(Service $service){
+
+        $service->status_id = 2;
+        $service->save();
+
+        return response()->json(['message' => 'Servicio confirmado'], 200);
+    }
 }

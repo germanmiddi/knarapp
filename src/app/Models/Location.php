@@ -14,6 +14,8 @@ class Location extends Model
         "city",
         "state",
         "zip",
+        "lat",
+        "lng"
     ];
     
     use HasFactory;

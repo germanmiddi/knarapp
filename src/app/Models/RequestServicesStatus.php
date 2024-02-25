@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequestServicesStatus extends Model
 {
+    protected $table = 'request_services_status';
+    
     use HasFactory;
 }
