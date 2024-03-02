@@ -27,6 +27,8 @@ services:
     MYSQL_ROOT_PASSWORD: 123123
     MYSQL_PASSWORD: 123123
     MYSQL_USER: root
+  ports: 
+  - "3399:3306"    
   volumes:
   - knardata:/var/lib/mysq
   networks:

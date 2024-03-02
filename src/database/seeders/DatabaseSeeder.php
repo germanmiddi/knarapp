@@ -101,9 +101,9 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
-        
-
-=        
+        $this->call([
+            LocationSeeder::class
+        ]); 
 
     }
 }
