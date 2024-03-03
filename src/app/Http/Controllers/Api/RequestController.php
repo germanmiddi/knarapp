@@ -13,7 +13,7 @@ class RequestController extends Controller
             [
                 'id' => 1,
                 'service_type' => 'Transfer',
-                'service_name' => 'Transfer Ezeiza / Hotel Céntrico o Viceversa',
+                'service_name' => 'Transfer Aeropuesto BCN / Hotel City',
                 'company' => '',
                 'cant_pax' => '3',
                 'pax_contact' => [

@@ -20,14 +20,15 @@ class TokenAuthController extends Controller
         
         $user = User::where('email', $request->email)->first();
         
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if ($user->is_active && Hash::check($request->password, $user->password)) {
+            return [ 'user'  => $user,   
+                     'token' => $user->createToken($request->device_name)->plainTextToken] ;
+        }else{
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
         
-        return [ 'user'  => $user,   
-                 'token' => $user->createToken($request->device_name)->plainTextToken] ;
 
     }
 }

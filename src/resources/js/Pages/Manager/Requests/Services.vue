@@ -79,12 +79,12 @@
                     <label for="location_from" class="block text-sm font-medium text-gray-700">Origen:</label>
 
                     <div style="position: relative; z-index: 1">
-                        <LocationSelect :locations="locations" @update:selected="updateSelectedLocation" :locationType="1"/>
+                        <LocationSelect :key="`location-from-${locationKey}`" :locations="locations" @update:selected="updateSelectedLocation" :locationType="1"/>
                     </div>
                 </div>
                 <div class="col-span-6 sm:col-span-6">
-                    <label for="location_from" class="block text-sm font-medium text-gray-700">Destino:</label>
-                    <LocationSelect :locations="locations" @update:selected="updateSelectedLocation" :locationType="2" />
+                    <label for="location_to" class="block text-sm font-medium text-gray-700">Destino:</label>
+                    <LocationSelect :key="`location-to-${locationKey}`" :locations="locations" @update:selected="updateSelectedLocation" :locationType="2" />
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -160,6 +160,7 @@ export default {
             services: {},
             showUpdateButton: false,
             loadingServices: false,
+            locationKey: 0
         }
     },
     setup() {
@@ -176,7 +177,8 @@ export default {
 
         return {
             format,
-            startTime
+            startTime,
+            
         }
     },
     // un watch para que cuando se envie el service, se asigne el service al form
@@ -190,6 +192,7 @@ export default {
     methods: {
         clearForm(){
             this.form = {}
+            this.locationKey++
             this.showUpdateButton = false
         },
 
@@ -204,6 +207,8 @@ export default {
         },
 
         createService(){
+            console.log('createService')
+
             if(this.form.service === undefined ){
                 return 
             }else{

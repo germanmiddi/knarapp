@@ -15,6 +15,9 @@ use App\Http\Controllers\Manager\Setting\SettingController;
 use App\Http\Controllers\Manager\Location\LocationController;
 use App\Http\Controllers\Manager\Driver\DriverController;
 use App\Http\Controllers\Manager\Driver\DriverServicePriceController;
+use App\Http\Controllers\Manager\Setting\SettingsUserController;
+
+use App\Http\Controllers\Web\Reservas\ReservasController;
 
 // Dashboard
 
@@ -205,9 +208,18 @@ Route::post('/services_price_list_base/delete', [SettingController::class, 'serv
     ->name('services_price_list_base.delete')
     ->middleware('auth');    
 
+Route::get('/settings/users/list', [SettingsUserController::class, 'list'])->name('settings.users.list')
+    ->middleware('auth');
     
 //Location
 
 Route::get('/location/list', [LocationController::class, 'list'])
     ->name('location.list')
+    ->middleware('auth');
+
+
+// Web
+
+Route::get('/reservas', [ReservasController::class, 'index'])
+    ->name('reservas')
     ->middleware('auth');

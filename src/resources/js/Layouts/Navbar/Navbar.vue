@@ -16,6 +16,10 @@
                  :aria-current="route().current(item.href) ? 'page' : undefined">
                 {{ item.name }}
               </a>
+              <div class="flex items-center px-2 py-2 hover:text-red-600 hover:bg-gray cursor-pointer text-gray-500 hover:bg-gray-200 rounded-md">
+                <PowerIcon class="mr-3 flex-shrink-0 h-5 w-5" />
+                <span @click="logout" class="text-sm font-medium ">Cerrar Sesión</span>
+              </div> 
             </div>
           </div>
           <div class="hidden sm:ml-6 sm:flex sm:items-center">
@@ -41,7 +45,7 @@
         </div>
       </div>
 
-      <!-- <DisclosurePanel class="sm:hidden">
+      <DisclosurePanel class="sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
           <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800', 'block pl-3 pr-4 py-2 border-l-4 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">
             {{ item.name }}
@@ -67,7 +71,7 @@
             </DisclosureButton>
           </div>
         </div>
-      </DisclosurePanel> -->
+      </DisclosurePanel>
 
     </Disclosure>
   </div>
@@ -77,7 +81,7 @@
 
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { RocketLaunchIcon } from '@heroicons/vue/24/outline'
+import { RocketLaunchIcon, PowerIcon } from '@heroicons/vue/24/outline'
 import store from '@/store.js'
 
 const user = {
@@ -111,7 +115,8 @@ export default {
     MenuButton,
     MenuItem,
     MenuItems,
-    RocketLaunchIcon
+    RocketLaunchIcon,
+    PowerIcon
     // BellIcon,
     // MenuIcon,
     // XIcon,
@@ -124,5 +129,10 @@ export default {
       store
     }
   },
+  methods: {
+    logout() {
+      this.$inertia.post(route('logout'));
+    }
+  }
 }
 </script>

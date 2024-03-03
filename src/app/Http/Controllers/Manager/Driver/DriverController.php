@@ -16,7 +16,7 @@ use App\Models\Driver;
 use App\Models\DriverServicesPrice;
 use App\Models\Service;
 use App\Models\Servicepricelistbase;
-
+use App\Models\Role;
 
 class DriverController extends Controller
 {
@@ -82,6 +82,13 @@ class DriverController extends Controller
             $driver->vehicle = $request->vehicle;
             $driver->save();
 
+
+            // Asumiendo que el rol "DRIVER" existe
+            $role = Role::where('name', 'DRIVER')->first();
+
+            // Asignar el rol
+            $user->roles()->attach($role->id);
+
             // Se generan los precios de los servicios para el chofer
             $servicesBase = Servicepricelistbase::all();
 
@@ -92,7 +99,7 @@ class DriverController extends Controller
                 $driverServicesPrice->price = $serviceBase->cost;
                 $driverServicesPrice->save();
             }
-
+            
             DB::commit();
             return Redirect::route('drivers')->with(['toast' => ['message' => 'Chofer creado correctamente', 'status' => '200']]);
     

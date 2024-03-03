@@ -2,6 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpFoundation\Response;
+
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -38,4 +41,17 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        // Detecta si la solicitud es por API
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'No autenticado.'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        // Manejo para solicitudes web
+        return redirect()->guest(route('login'));
+    }    
+
+
 }

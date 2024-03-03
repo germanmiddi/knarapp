@@ -31,10 +31,11 @@ import Locations from './Locations.vue';
 import ServicesPriceListBase from './ServicesPriceListBase.vue';
 import ServicesType from './ServicesType.vue';
 import Services from './Services.vue';
+import Users from './Users.vue';
 
 
 import { CogIcon,
-
+		 UserIcon,
          MapPinIcon,
 		 CubeIcon
   		} from '@heroicons/vue/24/outline'  
@@ -46,6 +47,7 @@ const subNavigation = [
 	{ name: 'Tipo de Servicios', icon: CubeIcon, componentName: 'ServicesType' },
 	{ name: 'Servicios', icon: CubeIcon, componentName: 'Services' },
 	{ name: 'Lista de Servicios', icon: CubeIcon, componentName: 'ServicesPriceListBase' },
+	{ name: 'Usuarios', icon: UserIcon, componentName: 'Users' },
     // { name: 'API Whatsapp', icon: AdjustmentsIcon, componentName: 'Whatsapp' },
     // { name: 'Mensajes', icon: ChatAltIcon, componentName: 'Mensajes' },
     // { name: 'Chatbot', icon: ChatAlt2Icon, componentName: 'Chatbot' },
@@ -61,7 +63,8 @@ export default {
 		Locations,
 		ServicesPriceListBase,
 		ServicesType,
-		Services
+		Services,
+		Users
 	},
 
 	setup() {

@@ -78,6 +78,18 @@ class ClientController extends Controller
     
             $client->save();
 
+            // Se genera el usuario para el chofer
+            $user = new User();
+            $user->name = $request->fullname;
+            $user->email = $request->email;
+            $user->password = bcrypt('12345678');
+            $user->save();
+
+            // Asumiendo que el rol "CLIENT" existe
+            $role = Role::where('name', 'CLIENT')->first();
+            // Asignar el rol
+            $user->roles()->attach($role->id);
+
             // Copiar entradas de servicepricelistbase a servicepricelist
             $servicePriceListBaseItems = Servicepricelistbase::all();
 

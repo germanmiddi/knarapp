@@ -29,8 +29,8 @@ class SettingController extends Controller
     }
 
     public function service_type_list(){
-        // $result = ServiceType::all();
-        $result = ServiceType::has('services')->get();
+        $result = ServiceType::all();
+        //$result = ServiceType::has('services')->get();
         return response()->json(['data'=> $result],200);
     }
 
@@ -69,8 +69,6 @@ class SettingController extends Controller
         
 
     }
-
-
 
     public function services_price_list_base_list(){
         

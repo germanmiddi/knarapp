@@ -27,10 +27,6 @@ class Servicepricelistbase extends Model
         'guide'   => 'boolean',
         'active'  => 'boolean'
     ];    
-    
-    protected $dates = [
-        'deleted_at',
-    ];
 
     public function services()
     {
