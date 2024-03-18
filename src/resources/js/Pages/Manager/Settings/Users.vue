@@ -54,7 +54,12 @@
                                             <td class="border-t px-4 py-2 text-left">{{user.name}}</td>
                                             <td class="border-t px-4 py-2 text-left">{{user.email}}</td>
                                             <td class="border-t px-4 py-2 text-center">{{user.roles[0].name}}</td>
-                                            <td class="border-t px-4 py-2 text-center">{{user.roles[0].name}}</td>
+                                            <td class="border-t px-4 py-2 text-center">{{user.is_active}}</td>
+                                            <td class="border-t px-4 py-2 text-center">
+                                                <button class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-md text-gray-800 bg-gray-100 hover:bg-blue-400 hover:text-white"
+                                                        @click="fillForm(user)">
+                                                            <PencilIcon class="h-3 w-3  mr-2 " aria-hidden="true" /> Editar </button>
+                                            </td>
                                     </tr>
                                 </table>
                             </div>
@@ -66,8 +71,13 @@
     
     <script>
     
+    import { PencilIcon } from '@heroicons/vue/24/outline'
+
     export default {
-    
+        
+        components: {
+            PencilIcon
+        },
         data(){
             return {
                 users:[],

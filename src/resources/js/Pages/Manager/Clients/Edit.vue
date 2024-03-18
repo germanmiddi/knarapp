@@ -142,7 +142,7 @@
                                     <th class="px-6 py-3 text-center">Guia</th>
                                     <th class="px-6 py-3 text-center">Cant Pax</th>
                                     <th class="px-6 py-3 text-center">Duración</th>
-                                    <th class="px-6 py-3 text-center">Costo</th>
+                                    <th class="px-6 py-3 text-center">Precio</th>
                                     <th class="px-6 py-3 text-center">Activo</th>
                                 </tr>
                                 <ClientServiceListItem v-for="service in serviceBase"

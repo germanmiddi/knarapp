@@ -71,5 +71,9 @@ class User extends Authenticatable
     {
         return $query->where('is_active', 1);
     }
-    
+ 
+    public function hasRole($role)
+    {
+        return null !== $this->roles()->where('name', $role)->first();
+    }
 }

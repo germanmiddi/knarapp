@@ -15,6 +15,9 @@ use App\Models\Client;
 use App\Models\Servicepricelistbase;
 use App\Models\Servicepricelist;
 use App\Models\Requests;
+use App\Models\User;
+use App\Models\Role;
+
 // use App\Models\Address;
 // use App\Models\Company;
 // use App\Models\State;
