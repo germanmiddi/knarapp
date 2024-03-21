@@ -41,7 +41,7 @@ Route::get('/request/list', [RequestController::class, 'list'])
     ->name('request.list')
     ->middleware('auth');
 
-Route::get('/request/{request}/edit', [RequestController::class, 'edit'])
+Route::get('/request/{id}/edit', [RequestController::class, 'edit'])
     ->name('request.edit')
     ->middleware('auth');
 
@@ -222,4 +222,8 @@ Route::get('/location/list', [LocationController::class, 'list'])
 
 Route::get('/reservas', [ReservasController::class, 'index'])
     ->name('reservas')
+    ->middleware('auth');
+
+Route::post('/reservas/store', [ReservasController::class, 'store'])
+    ->name('reservas.store')
     ->middleware('auth');

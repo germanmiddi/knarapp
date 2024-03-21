@@ -5,7 +5,6 @@
                 <div class="col-span-6 sm:col-span-2">
                     <label class="text-base font-medium text-gray-900">Tipo</label>
                     <fieldset class="mt-4">
-                        <legend class="sr-only">Tipo de Servicio</legend>
                         <div class="space-y-4">
                         <div v-for="service_type in serviceTypes" :key="service_type.id" class="flex items-center">
                             <input :id="service_type.id" name="notification-method" type="radio" :checked="service_type.id === 1" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
@@ -16,7 +15,7 @@
                         </div>
                     </fieldset>
                 </div>
-
+<!-- 
                 <div class="col-span-6 sm:col-span-2">
                     <label for="service_type"
                         class="block text-sm font-medium text-gray-700">Tipo</label>
@@ -25,7 +24,7 @@
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option v-for="(description, id) in servicesTypes" :key="id" :value="id">{{ description }}</option>
                     </select>
-                </div>       
+                </div>        -->
 
                 
                 <div class="col-span-6 sm:col-span-2">
@@ -62,6 +61,15 @@
                         <option value="0">Sin Guia</option>
                         <option value="1">Con Guia</option>
                     </select>
+                    <div class="cursor-pointer flex justify-center">
+                        <Switch v-model="service.csp_active"
+                                @click="toggleActive(service.guia)"
+                                :class="service.guia ? 'bg-blue-600' : 'bg-gray-200'"
+                                class="relative inline-flex h-6 w-11 items-center rounded-full">
+                                <span :class="service.csp_active ? 'translate-x-6' : 'translate-x-1'"
+                                      class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
+                        </Switch>                
+                    </div>                      
                 </div>                                    
 
                 <div class="col-span-6 sm:col-span-2">
@@ -150,6 +158,7 @@ import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import Icons from '@/Layouts/Components/Icons.vue'
 import LocationSelect from '../../Manager/Requests/LocationSelect.vue'
+import { Switch } from '@headlessui/vue'
 
 export default {
 
@@ -164,7 +173,8 @@ export default {
     components: {
         Datepicker,
         Icons,
-        LocationSelect
+        LocationSelect,
+        Switch
     },
 
     data(){

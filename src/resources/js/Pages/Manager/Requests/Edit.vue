@@ -19,7 +19,8 @@
             </header>
     
             <Toast :toast="this.toastMessage" :type="this.labelType" @clear="clearMessage"></Toast>
-    
+            <!-- <pre>{{ request.request_services[0] }}</pre> -->
+            
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">                        
@@ -35,11 +36,11 @@
                                           <dl class="divide-y divide-gray-100">
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                               <dt class="text-sm font-medium leading-6 text-gray-900">Cliente</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">ATP</dd>
+                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ request.client.company_name }}</dd>
                                             </div>
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                               <dt class="text-sm font-medium leading-6 text-gray-900">Recibido</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">01/07/2023</dd>
+                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ formatDate(request.created_at) }}</dd>
                                             </div>
                                             <!-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                               <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
@@ -47,7 +48,7 @@
                                             </div> -->
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                               <dt class="text-sm font-medium leading-6 text-gray-900">Responsable</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Gisela</dd>
+                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ request.client.fullname}}</dd>
                                             </div>
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                               <dt class="text-sm font-medium leading-6 text-gray-900">Notas</dt>
@@ -61,13 +62,16 @@
                                     <div>
                                         <div class="px-4 sm:px-0 flex justify-between items-center">
                                             <h3 class="text-base font-semibold leading-7 text-gray-900">Detalle del Viaje</h3>
-                                            <div class="bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg text-xs tracking-wider">EN CURSO</div>
-                                        </div>     
-                                        <div v-for="service in services" :key="service.id" class="bg-gray-50 sm:rounded-lg">
+                                            <div class="bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg text-xs tracking-wider">{{ request.status.name }}</div>
+                                        </div>  
+
+                                        <div v-for="service in request.request_services" :key="service.id" class="bg-gray-50 sm:rounded-lg">
                                             <div class="px-4 py-5 sm:px-6 mt-3  ">
                                                 <div class="flex justify-between items-center ">
-                                                    <a :href="route('service.edit', 4)" class="text-lg leading-6 font-medium text-gray-900 hover:underline">{{service.service.detail}}</a>
-                                                    <div class="text-xs bg-green-200 text-green-900 rounded px-2 py-1">{{service.status}}</div>
+                                                    
+                                                    <!-- <a v-if="service.detail"
+                                                        :href="route('service.edit', 4)" class="text-lg leading-6 font-medium text-gray-900 hover:underline">{{ service.detail }}</a> -->
+                                                    <div class="text-xs bg-green-200 text-green-900 rounded px-2 py-1">{{service.status.name}}</div>
                                                 </div>
 
                                                 <p class="mt-1 max-w-2xl text-sm text-gray-500 mb-8">Fecha: {{formatDate(service.date)}}</p>
@@ -75,11 +79,11 @@
                                                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                                     <div class="sm:col-span-1">
                                                         <dt class="text-sm font-medium text-gray-500">Origen</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_from}}</dd>
+                                                        <dd class="mt-1 text-sm text-gray-900">{{service.from.name}}</dd>
                                                     </div>
                                                     <div class="sm:col-span-1">
                                                         <dt class="text-sm font-medium text-gray-500">Destino</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_to}}</dd>
+                                                        <dd class="mt-1 text-sm text-gray-900">{{service.to.name}}</dd>
                                                     </div>
                                                     <div class="sm:col-span-1">
                                                         <dt class="text-sm font-medium text-gray-500">Nombre Guia</dt>
@@ -99,7 +103,8 @@
                                                     </div>    
                                                 </dl>
                                             </div>
-                                        </div>         
+                                        </div>  
+
                                         <!-- <div>
                                             <div class="px-4 sm:px-0 mt-12 flex justify-between items-center">
                                               <h3 class="text-base font-semibold leading-7 text-gray-900">Items del Viaje</h3>
@@ -173,6 +178,7 @@
         props: {
             clients: Object,
             locations: Object,
+            request: Object
         },
     
         components: {

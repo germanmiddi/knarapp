@@ -41,14 +41,20 @@ class RequestController extends Controller
         return $requests;
     }
 
-    public function edit(Request $request)
-    {
-        
+    public function edit(Requests $request)
+    {   
+
         return  Inertia::render('Manager/Requests/Edit',[
                                     'clients'=> Client::all(),
                                     'services'=> Servicepricelist::all(),
                                     'locations' => Location::all(),
-                                    'request' => $request,
+                                    'request' => $request->with('requestServices', 
+                                                                'client',
+                                                                'status', 
+                                                                'requestServices.from', 
+                                                                'requestServices.to',
+                                                                'requestServices.status',
+                                                                'requestServices.driver')->first()->toArray()
                                 ]);
         
     }
