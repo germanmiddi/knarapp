@@ -10,6 +10,7 @@ use App\Models\Servicepricelist;
 use App\Models\Location;
 use App\Models\Requests;
 use App\Models\RequestService;
+use App\Models\Driver;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,20 +42,29 @@ class RequestController extends Controller
         return $requests;
     }
 
-    public function edit(Requests $request)
+    public function edit(Requests $requests)
     {   
 
-        return  Inertia::render('Manager/Requests/Edit',[
-                                    'clients'=> Client::all(),
-                                    'services'=> Servicepricelist::all(),
+        // dd($requests);
+
+        return  Inertia::render('Manager/Requests/Edit/Index',[
+                                    // 'clients'=> Client::all(),
+                                    'drivers' => Driver::all(),
+                                    'servicePriceList'=> Servicepricelist::where('client_id', $requests->client_id)
+                                                        ->with('servicepricelistbase',
+                                                               'servicetype',
+                                                               'service')->get(),
                                     'locations' => Location::all(),
-                                    'request' => $request->with('requestServices', 
-                                                                'client',
-                                                                'status', 
-                                                                'requestServices.from', 
-                                                                'requestServices.to',
-                                                                'requestServices.status',
-                                                                'requestServices.driver')->first()->toArray()
+                                    'request'   =>  $requests->load([
+                                                        'requestServices', 
+                                                        'client',
+                                                        'status', 
+                                                        'requestServices.from', 
+                                                        'requestServices.to',
+                                                        'requestServices.status',
+                                                        'requestServices.driver',
+                                                        'requestServices.serviceType'
+                                                    ])
                                 ]);
         
     }

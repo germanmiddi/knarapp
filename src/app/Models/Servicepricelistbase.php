@@ -19,7 +19,8 @@ class Servicepricelistbase extends Model
         'duration',
         'price',
         'cost',
-        'active'
+        'active',
+        'services_type_id',
     ];
     
     protected $casts = [
@@ -43,5 +44,10 @@ class Servicepricelistbase extends Model
         return $this->hasMany(DriverServicesPrice::class, 'servicepricelistsbase_id');
     }
 
+    public function serviceType()
+    {
+        return $this->belongsTo(ServiceType::class, 'services_type_id');
+    }
+    
     use HasFactory, SoftDeletes;
 }

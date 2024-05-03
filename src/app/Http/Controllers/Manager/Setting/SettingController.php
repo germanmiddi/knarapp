@@ -94,6 +94,7 @@ class SettingController extends Controller
             $data->price        = $request->price;
             $data->cost         = $request->cost;
             $data->active       = true;
+            $data->services_type_id = $request->tipo_servicio;
             $data->save();
     
             // $result = Servicepricelistbase::create($data);            

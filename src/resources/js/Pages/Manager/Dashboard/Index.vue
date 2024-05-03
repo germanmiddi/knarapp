@@ -1,12 +1,20 @@
 <template>
     <div class="w-full" >
+        
+        <div >
+            <!-- <div class="md:hidden "> it is SMALL  </div>
+            <div class="sm:hidden md:block lg:hidden"> it is Medium  </div>
+            <div class="md:hidden lg:block"> it is Large  </div>
+            <div class="hidden lg:block"> it is Extra Large  </div> -->
 
+
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            
-            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-2 w-full max-w-7xl mt-5 md:mt-8">
+            <div class="grid grid-cols-4 gap-2 w-full max-w-7xl mt-5 md:mt-8">
                 
-                <div class="col-span-2 md:col-span-4 mx-6 text-3xl font-bold"><h1>Estadísticas de Febrero:</h1></div>
+                <div class="col-span-4 mx-6 text-3xl font-bold"><h1>Estadísticas de Febrero:</h1></div>
 
-                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                <div class="col-span-2 lg:col-span-1 card rounded-xl shadow">
                     <div class="card-body px-2 py-5 flex items-center" >
                         <div class="">
                             <CalendarIcon class="w-10 h-10 mx-4 text-indigo-500" />
@@ -26,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                <div class="col-span-2 lg:col-span-1 card rounded-xl shadow">
                     <div class="card-body px-2 py-5 flex items-center" >
                         <div class="">
                             <Icons name="file" class="w-10 h-10 mx-4 text-sky-500"></Icons>
@@ -46,7 +54,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                <div class="col-span-2 lg:col-span-1 card rounded-xl shadow">
                     <div class="card-body px-2 py-5 flex items-center" >
                         <div class="">
                             <Icons name="mapmarkertime" class="w-10 h-10 mx-4 text-blue-500"></Icons>
@@ -66,7 +74,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 md:col-span-1 card rounded-xl shadow">
+                <div class="col-span-2 lg:col-span-1 card rounded-xl shadow">
                     <div class="card-body px-2 py-5 flex items-center" >
                         <div class="">
                             <Icons name="tranfer" class="w-10 h-10 mx-4 text-blue-500"></Icons>

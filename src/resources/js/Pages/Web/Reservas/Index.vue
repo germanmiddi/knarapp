@@ -95,6 +95,7 @@ import {
     PencilIcon,
     TrashIcon
 } from '@heroicons/vue/24/outline'
+import axios from 'axios';
 
 
 export default defineComponent({
@@ -186,9 +187,14 @@ export default defineComponent({
             this.toastMessage = ""
         },
 
-        submit() {
+        async submit() {
             this.form.services = this.services
-            this.$inertia.post(route('reservas.store'), this.form)
+
+            const response = await axios.post(route('reservas.store'), this.form)
+            const data = response.data
+            alert(data.message)
+            
+            // this.$inertia.post(route('reservas.store'), this.form)
         },
     },
 })

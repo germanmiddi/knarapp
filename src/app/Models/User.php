@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'group',
-        'is_active'
+        'is_active',
+        'client_id',
     ];
 
     /**
@@ -75,5 +76,10 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return null !== $this->roles()->where('name', $role)->first();
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

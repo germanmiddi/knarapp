@@ -7,7 +7,9 @@
                     <fieldset class="mt-4">
                         <div class="space-y-4">
                             <div v-for="service_type in serviceTypes" :key="service_type.id" class="flex items-center">
-                                <input :id="service_type.id" name="service_type" type="radio" :checked="service_type.id === 1" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
+                                <input :id="service_type.id" name="service_type" type="radio" 
+                                       v-model="form.selectedServiceType" :checked="service_type.id === 1" :value="service_type.id"
+                                       class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
                                 <label :for="service_type.id" class="ml-3 block text-sm font-medium text-gray-700">
                                     {{ service_type.description }}
                                 </label>
@@ -150,7 +152,7 @@ export default {
         serviceTypes: Object,
         service: Object,
         servicesTypesLoading: Boolean,
-        serviceTypes: Object
+        // serviceTypes: Object
     },
     
     components: {
@@ -166,6 +168,7 @@ export default {
             form:{
                 guia: false,
                 bagagge: false,
+                selectedServiceType: null, 
             },
             services: {},
             showUpdateButton: false,

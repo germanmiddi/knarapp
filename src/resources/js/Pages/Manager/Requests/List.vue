@@ -102,7 +102,7 @@
                         <th class="px-6 py-3 ">Recibido</th>
                         <th class="px-6 py-3 ">Cliente</th>
                         <th class="px-6 py-3 ">Cant Servicios</th>
-                        <th class="px-6 py-3 ">Pax</th>
+                        <th class="px-6 py-3 ">Pasajero</th>
                         <th class="px-6 py-3 ">Estado</th>
                         <th class="px-6 py-3  text-center">Acciones</th>
                     </tr> 
@@ -111,7 +111,7 @@
                         <td class="border-t px-6 py-4">{{ formatFecha(request.created_at) }}</td>
                         <td class="border-t px-6 py-4">{{ request.client.company_name }}</td>
                         <td class="border-t px-6 py-4">{{ request.request_services.length }}</td>
-                        <td class="border-t px-6 py-4">{{request.cant_pax}}</td>
+                        <td class="border-t px-6 py-4">{{request.request_services[0].pax_name}}</td>
                         <td class="border-t px-6 py-4">{{request.status.name}}</td>
                         <td class="border-t px-6 py-4 text-center">
                             <!-- <a type="button" :href="route('clients.edit', client.id)" -->
@@ -131,7 +131,7 @@
                                         <MenuItems class="origin-top-left absolute z-50 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
-                                                    <a :href="route('request.edit',3)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
+                                                    <a :href="route('request.edit',request.id)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Detalle</a>
                                                 </MenuItem>
                                             </div>
 
@@ -160,9 +160,9 @@
                                     </transition>
                                 </Menu>
                                 
-                                <a type="button" href="#" class="ml-2 inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
+                                <!-- <a type="button" href="#" class="ml-2 inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
                                             hover:bg-gray-300">
-                                    <ChevronRightIcon @click="open = true" class="h-4 w-4 text-gray-700" aria-hidden="true" /></a>
+                                    <ChevronRightIcon @click="open = true" class="h-4 w-4 text-gray-700" aria-hidden="true" /></a> -->
                             </div>
                         </td>                        
                     </tr>  

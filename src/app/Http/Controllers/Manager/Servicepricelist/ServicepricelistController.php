@@ -16,10 +16,12 @@ class ServicepricelistController extends Controller
         
         $result = Servicepricelist::where('client_id', '=', request('client_id'))
                                     ->active()
-                                    ->with('service', 'service.services', 'service.services.service_type')
+                                    // ->with('service', 'service.services', 'service.services.service_type')
+                                    ->with('servicetype')
                                     ->get();
         
-        $serviceTypes = $result->pluck('service.services.service_type.description', 'service.services.service_type.id')->unique();
+
+        $serviceTypes = $result->pluck('servicetype.description', 'servicetype.id')->unique();
 
         return response()->json($serviceTypes, 200);
     }
@@ -103,6 +105,8 @@ class ServicepricelistController extends Controller
                 $servicepricelist->servicepricelistsbase_id = $request->service['id'];
                 $servicepricelist->created_by = auth()->user()->id;
                 $servicepricelist->active = true;
+                $servicepricelist->services_id  = $request->service['services_id'];
+                $servicepricelist->services_type_id = $request->service['services_type_id'];
                 $msg = "Servicio creado correctamente"; 
             }
 

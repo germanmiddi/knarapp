@@ -22,4 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/token', [TokenAuthController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/orders', [RequestController::class, 'getOrders']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/orders', [RequestController::class, 'getOrders']);
+    Route::post('/sendEmail',  [RequestController::class, 'sendEmail']);
+});
+
+// Route::middleware('auth:sanctum')->get('/orders', [RequestController::class, 'getOrders']);

@@ -27,7 +27,7 @@
 
         <!-- Si el precio del servicio es null, se muestra un boton para asignar el servicio     -->
         <td v-if="service.csp_price == null && !showPriceInput" class="border-t px-6 py-4 text-center" colspan="2">
-            <button @click="showPriceInput = true; new_csp_price = service.cost" class="bg-blue-400 text-white px-2 py-1 rounded text-sm mr-1">Asignar Servicio</button></td>
+            <button @click="showPriceInput = true; new_csp_price = service.price" class="bg-blue-400 text-white px-2 py-1 rounded text-sm mr-1">Asignar Servicio</button></td>
 
         <td v-if="showPriceInput" class="border-t py-4 px-2 text-right" colspan="2">
             <div v-if="loadingNewPrice" class="flex justify-center">

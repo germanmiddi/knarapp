@@ -29,17 +29,17 @@
                                 <div class="md:col-span-1">
                                     <div>
                                         <div class="px-4 sm:px-0">
-                                          <h3 class="text-base font-semibold leading-7 text-gray-900">Información general de solicitud</h3>
+                                          <h3 class="text-base font-semibold leading-7 text-gray-900">Información General de solicitud</h3>
                                           <!-- <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Detalles de la reserva</p> -->
                                         </div>
                                         <div class="mt-6 border-t border-gray-100">
                                           <dl class="divide-y divide-gray-100">
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Cliente</dt>
+                                              <dt class="text-xs font-medium leading-6 text-gray-900">Cliente</dt>
                                               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ request.client.company_name }}</dd>
                                             </div>
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Recibido</dt>
+                                              <dt class="text-xs font-medium leading-6 text-gray-900">Recibido</dt>
                                               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ formatDate(request.created_at) }}</dd>
                                             </div>
                                             <!-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -47,11 +47,11 @@
                                               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
                                             </div> -->
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Responsable</dt>
+                                              <dt class="text-xs font-medium leading-6 text-gray-900">Responsable</dt>
                                               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ request.client.fullname}}</dd>
                                             </div>
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Notas</dt>
+                                              <dt class="text-xs font-medium leading-6 text-gray-900">Notas</dt>
                                               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> 2 Aguas</dd>
                                             </div>
                                           </dl>
@@ -61,8 +61,9 @@
                                 <div class="col-span-2">
                                     <div>
                                         <div class="px-4 sm:px-0 flex justify-between items-center">
-                                            <h3 class="text-base font-semibold leading-7 text-gray-900">Detalle del Viaje</h3>
-                                            <div class="bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg text-xs tracking-wider">{{ request.status.name }}</div>
+                                            <h3 class="text-base font-semibold leading-7 text-gray-900">Servicios Solicitados</h3>
+                                            <div class="text-sm">ESTADO GENERAL <span class="bg-yellow-200 text-yellow-700 px-4 py-1 rounded-lg text-xs tracking-wider uppercase">
+                                                {{ request.status.name }}</span></div>
                                         </div>  
 
                                         <div v-for="service in request.request_services" :key="service.id" class="bg-gray-50 sm:rounded-lg">
@@ -74,31 +75,31 @@
                                                     <div class="text-xs bg-green-200 text-green-900 rounded px-2 py-1">{{service.status.name}}</div>
                                                 </div>
 
-                                                <p class="mt-1 max-w-2xl text-sm text-gray-500 mb-8">Fecha: {{formatDate(service.date)}}</p>
+                                                <p class="mt-1 max-w-2xl text-sm text-gray-500 mb-8">Fecha: {{formatDate(service.date)}} Hora: </p>
                                             
-                                                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Origen</dt>
+                                                <dl class="grid grid-cols-2 gap-x-4 gap-y-8">
+                                                    <div class="col-span-2">
+                                                        <dt class="text-xs font-medium text-gray-500">Origen</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.from.name}}</dd>
                                                     </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Destino</dt>
+                                                    <div class="col-span-2">
+                                                        <dt class="text-xs font-medium text-gray-500">Destino</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.to.name}}</dd>
                                                     </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Nombre Guia</dt>
+                                                    <div class="col-span-2 sm:col-span-1">
+                                                        <dt class="text-xs font-medium text-gray-500">Nombre Guia</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.guide_name}}</dd>
                                                     </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Nro Vuelo</dt>
+                                                    <div class="col-span-2 sm:col-span-1">
+                                                        <dt class="text-xs font-medium text-gray-500">Nro Vuelo</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.flight_number}}</dd>
                                                     </div>    
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Chofer</dt>
+                                                    <div class="col-span-2 sm:col-span-1">
+                                                        <dt class="text-xs font-medium text-gray-500">Chofer</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.driver}}</dd>
                                                     </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Total</dt>
+                                                    <div class="col-span-2 sm:col-span-1">
+                                                        <dt class="text-xs font-medium text-gray-500">Total</dt>
                                                         <dd class="mt-1 text-sm text-gray-900">{{service.total}}</dd>
                                                     </div>    
                                                 </dl>
@@ -216,7 +217,7 @@
                     {description: "Transfer Ezeiza / Hotel Céntrico o Viceversa", price: 43},
                     {description: "Tiempo de espera: 1hs", price: 17},
                 ],
-                showNewItem: false,
+                showNewItem: true,
                 form: {},
                 toastMessage: "",
                 showNewService: false,

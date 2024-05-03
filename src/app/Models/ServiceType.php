@@ -17,4 +17,19 @@ class ServiceType extends Model
     {
         return $this->hasMany(Service::class, 'services_type_id');
     }
+
+    public function servicepricelistbase()
+    {
+        return $this->hasMany(Servicepricelistbase::class, 'services_type_id');
+    }
+
+    public function servicepricelist()
+    {
+        return $this->hasMany(Servicepricelist::class, 'service_type_id');
+    }
+    public function requestServices()
+    {
+        return $this->hasMany(RequestService::class, 'service_type_id');
+    }
+    
 }

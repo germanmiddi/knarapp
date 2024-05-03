@@ -21,10 +21,18 @@ class ReservasController extends Controller
             && !auth()->user()->hasRole('ADMIN') ){
             abort(403, 'Unauthorized');
         }
-    
-        $list = Servicepricelist::where('client_id', auth()->user()->id)
+        
+        if(!auth()->user()->hasRole('CLIENT') && 
+            auth()->user()->client != null){
+            abort(403, 'Su usuario no esta asociado a ningun cliente.');
+        }
+        
+
+        $list = Servicepricelist::where('client_id', auth()->user()->client->id)
                                 ->active()
-                                ->with('service', 'service.services', 'service.services.service_type')
+                                ->with('servicepricelistbase', 
+                                       'servicepricelistbase.services', 
+                                       'servicepricelistbase.services.service_type')
                                 ->get();
 
         // Preparar servicepricelist para pasar a la vista
@@ -34,7 +42,7 @@ class ReservasController extends Controller
         $serviceTypes = $list->pluck('service.services.service_type.description', 'service.services.service_type.id')->unique()->toArray();
 
         $list_array = $list->toArray();
-
+        
         // Extraer con un map service_types con id y description
         $serviceTypes = array_map(function($item){
             $return['id'] = $item['service']['services']['service_type']['id'];
@@ -61,7 +69,7 @@ class ReservasController extends Controller
         try{
 
             $requests = new Requests;
-            $requests->client_id   = auth()->user()->id;//$request->client_id;
+            $requests->client_id   = auth()->user()->client->id;//$request->client_id;
             // $requests->responsible = $request->responsible;
             // $requests->company = $request->company;
             // $requests->observations = $request->observations;
@@ -80,7 +88,8 @@ class ReservasController extends Controller
                 // dd($service['time']);
                 $requestService = new RequestService();
                 $requestService->requests_id = $requests->id;
-                $requestService->servicepricelists_id = 1; // $service['service']['servicepricelists_id'];
+                $requestService->services_type_id = $service['selectedServiceType'];
+                // $requestService->servicepricelists_id = 1; // $service['service']['servicepricelists_id'];
                 $requestService->location_from = $location_from;
                 $requestService->location_to   = $location_to;
                 $requestService->date = $service['date'];

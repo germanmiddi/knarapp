@@ -13,7 +13,9 @@ class Servicepricelist extends Model
         'servicepricelistsbase_id',
         'price',
         'active',
-        'created_by'
+        'created_by',
+        'service_id',
+        'service_type_id',
         
     ];
     
@@ -42,9 +44,19 @@ class Servicepricelist extends Model
         return $query->where('active', 1);
     }
 
-    public function service()
+    public function servicepricelistbase()
     {
         return $this->belongsTo(Servicepricelistbase::class, 'servicepricelistsbase_id');
+    }
+
+    public function servicetype()
+    {
+        return $this->belongsTo(ServiceType::class, 'services_type_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'services_id');
     }
 
     use HasFactory, SoftDeletes;

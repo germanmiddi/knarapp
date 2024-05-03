@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class RequestController extends Controller
 {
@@ -92,15 +94,34 @@ class RequestController extends Controller
             ]
         ];
 
-                                        
-
-
         return response()->json([
 
             'services' => $services,
 
         ],200);
     
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $destino = $request->destino;
+        // $client = $request->client;
+
+        $user = User::where('email', $destino)->first();
+        
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+       
+        $link = 'DEEPLINK';
+
+        Mail::send('email.tracking', ['link' => $link], function ($m) use ($destino) {
+            $m->from('suscripciones@aideas.com.ar', 'Suscripciones');
+            $m->to($destino, 'Cliente')->subject('Confirmá tu email');
+        });
+
+        return response()->json(['message' => 'Email sent successfully'], 200);
+
     }
 
 }

@@ -72,32 +72,51 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('request_status')->insert([
-            'name' => 'Inicial',
+            'name' => 'pendiente',
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('request_status')->insert([
-            'name' => 'En Proceso',
+            'name' => 'confirmado',
+            'created_at' => Carbon::now(),
+        ]);
+        DB::table('request_status')->insert([
+            'name' => 'iniciado',
             'created_at' => Carbon::now(),
         ]);
         
         DB::table('request_status')->insert([
-            'name' => 'Finalizado',
+            'name' => 'finalizado',
+            'created_at' => Carbon::now(),
+        ]);
+
+        DB::table('request_status')->insert([
+            'name' => 'cancelado',
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('request_services_status')->insert([
-            'name' => 'Inicial',
+            'name' => 'pendiente',
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('request_services_status')->insert([
-            'name' => 'En Proceso',
+            'name' => 'confirmado',
+            'created_at' => Carbon::now(),
+        ]);
+
+        DB::table('request_services_status')->insert([
+            'name' => 'en viaje',
             'created_at' => Carbon::now(),
         ]);
         
         DB::table('request_services_status')->insert([
-            'name' => 'Finalizado',
+            'name' => 'finalizado',
+            'created_at' => Carbon::now(),
+        ]);
+
+        DB::table('request_services_status')->insert([
+            'name' => 'cancelado',
             'created_at' => Carbon::now(),
         ]);
 

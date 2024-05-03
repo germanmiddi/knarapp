@@ -81,11 +81,12 @@ class ClientController extends Controller
     
             $client->save();
 
-            // Se genera el usuario para el chofer
+            // Se genera el usuario para el Cliente
             $user = new User();
             $user->name = $request->fullname;
             $user->email = $request->email;
             $user->password = bcrypt('12345678');
+            $user->client_id = $client->id;
             $user->save();
 
             // Asumiendo que el rol "CLIENT" existe

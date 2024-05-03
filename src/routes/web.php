@@ -41,7 +41,7 @@ Route::get('/request/list', [RequestController::class, 'list'])
     ->name('request.list')
     ->middleware('auth');
 
-Route::get('/request/{id}/edit', [RequestController::class, 'edit'])
+Route::get('/request/{requests}/edit', [RequestController::class, 'edit'])
     ->name('request.edit')
     ->middleware('auth');
 

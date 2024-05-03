@@ -49,10 +49,19 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::authenticateUsing(function (Request $request) {
             
-            $user = User::where('email', $request->email)->first();
-
+            $user = User::where('email', $request->email)
+                        ->with('roles')            
+                        ->first();
+            // dd($user->roles);
             if ($user && Hash::check($request->password, $user->password)) {
-                return $user->is_active ? $user : null;
+                // Asigna el array actualizado a la variable de sesión
+                if($user->is_active){
+                    session(['userRoles' => $user->roles]);
+                    return $user;
+                }else{
+                    return null;
+                }
+                // return $user->is_active ? $user : null;
             }
            
         });

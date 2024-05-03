@@ -18,11 +18,15 @@ class RequestService extends Model
         'status_id',
         'driver_id',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'services_type_id',
+        'guide_name'
     ];
  
     protected $casts = [
-        'time' => 'json',
+        'time'    => 'json',
+        'baggage' => 'boolean',
+        'guide'   => 'boolean'
     ];
 
     public function request()
@@ -58,6 +62,9 @@ class RequestService extends Model
         return $this->belongsTo(Location::class, 'location_to');
     }
 
+    public function serviceType(){
+        return $this->belongsTo(ServiceType::class, 'services_type_id');
+    }
 
     use HasFactory;
 }

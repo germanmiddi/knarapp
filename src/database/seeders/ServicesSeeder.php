@@ -77,6 +77,8 @@ class ServicesSeeder extends Seeder
                 'price' => 50,
                 'cost' => 40,
                 'active' => 1,
+                'services_type_id' => 1,
+
             ],
             [
                 'services_id' => 1,
@@ -88,6 +90,7 @@ class ServicesSeeder extends Seeder
                 'price' => 90,
                 'cost' => 40,
                 'active' => 1,
+                'services_type_id' => 1,
             ],
             [
                 'services_id' => 1,
@@ -99,6 +102,7 @@ class ServicesSeeder extends Seeder
                 'price' => 50,
                 'cost' => 40,
                 'active' => 1,
+                'services_type_id' => 1,
             ],
             [
                 'services_id' => 1,
@@ -110,6 +114,7 @@ class ServicesSeeder extends Seeder
                 'price' => 50,
                 'cost' => 40,
                 'active' => 1,
+                'services_type_id' => 1,
             ],
         ];
 
