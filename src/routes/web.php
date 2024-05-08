@@ -16,6 +16,7 @@ use App\Http\Controllers\Manager\Location\LocationController;
 use App\Http\Controllers\Manager\Driver\DriverController;
 use App\Http\Controllers\Manager\Driver\DriverServicePriceController;
 use App\Http\Controllers\Manager\Setting\SettingsUserController;
+use App\Http\Controllers\Manager\RequestService\RequestServiceController;
 
 use App\Http\Controllers\Web\Reservas\ReservasController;
 
@@ -53,6 +54,15 @@ Route::post('/request/store ', [RequestController::class, 'store'])
     ->name('request.store')
     ->middleware('auth');
 
+Route::get('/requestservice/{requestService}/cancel', [RequestServiceController::class, 'cancel'])
+    ->name('requestservice.cancel')
+    ->middleware('auth');
+
+Route::post('/requestservice/confirmService', [RequestServiceController::class, 'confirm'])
+    ->name('requestservice.confirm')
+    ->middleware('auth');
+
+        
 // Request Services  
   
 Route::get('/services', [ServiceController::class, 'index'])

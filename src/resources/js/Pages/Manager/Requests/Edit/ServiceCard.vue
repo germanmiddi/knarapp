@@ -64,9 +64,9 @@
                 <div class="col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Servicio</dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                        <select v-model="service.service_type"
+                        <select v-model="service.servicepricelists_id"
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option v-for="price_list_item in price_list" :value="type" :key="price_list_item.id">{{ buildOptionService(price_list_item) }}</option>
+                            <option v-for="price_list_item in price_list" :value="price_list_item.id" :key="price_list_item.id">{{ buildOptionService(price_list_item) }}</option>
                         </select>
                     </dd>
                 </div>
@@ -95,10 +95,12 @@
     
         </div>
         <div class="flex justify-between w-full px-6 py-4 bg-gray-50 rounded-b-lg border-t  border-gray-300">
-            <button  class="btn-outline-red">Cancelar</button>            
-            <!-- <button  class="btn-warning mt-1 px-4 py-2 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest ">Cancelar</button>             -->
-            <button  class="btn-blue">Confirmar</button>
+            <div><button v-if="service.status_id == 1" @click="cancelService(service.id)" class="btn-outline-red">Cancelar</button></div>   
+            <button v-if="service.status_id == 1" @click="confirmService()" class="btn-blue">Confirmar</button>
+            <button v-else-if="service.status_id == 2 || service.status_id == 3" class="btn-blue">Finalizar</button>
+            <button v-else-if="service.status_id == 4 || service.status_id == 5" class="btn-blue">Re Abrir</button>
         </div>
+
     </div>  
       
 </template>
@@ -110,11 +112,11 @@ import { CalendarDaysIcon, ClockIcon } from '@heroicons/vue/24/outline'
 import { Switch } from '@headlessui/vue'
 
 const labelStatus = {
-    'pendiente'   : 'bg-yellow-100 text-yellow-800 border border-yellow-400',  // Amarillo para indicar espera o en proceso
-    'confirmado' : 'bg-green-100 text-green-800 border border-green-500',       // Verde para confirmación, típicamente asociado con éxito
-    'en viaje'  : 'bg-blue-100 text-blue-800 border border-blue-400',          // Azul, da una sensación de movimiento o acción
-    'finalizado'  : 'bg-gray-100 text-gray-800 border border-gray-400',        // Gris, neutral y comúnmente usado para estados completados
-    'cancelado'  : 'bg-red-100 text-red-800 border border-red-500',             // Rojo para cancelación, claro indicativo de alerta o parada
+    'pendiente'  : 'bg-yellow-100 text-yellow-800 border border-yellow-400', // Amarillo para indicar espera o en proceso
+    'confirmado' : 'bg-green-100 text-green-800 border border-green-500',    // Verde para confirmación, típicamente asociado con éxito
+    'en viaje'   : 'bg-blue-100 text-blue-800 border border-blue-400',       // Azul, da una sensación de movimiento o acción
+    'finalizado' : 'bg-gray-100 text-gray-800 border border-gray-400',       // Gris, neutral y comúnmente usado para estados completados
+    'cancelado'  : 'bg-red-100 text-red-800 border border-red-500',          // Rojo para cancelación, claro indicativo de alerta o parada
 };
 
 
@@ -172,6 +174,35 @@ export default {
             const price = price_list_item.price ? price_list_item.price : 0;
 
             return `${price_list_item.service.name} ${guia} ${equipaje} ${pax} | USD ${price_list_item.price}`;
+        },
+        
+        async confirmService(){
+            const confirm = window.confirm('¿Está seguro de confirmar el servicio?');
+            if (confirm) {
+
+                const url = route('requestservice.confirm', this.service);
+
+                const response = await axios.post(url);
+
+                const data = response.data;
+                alert(data.message);
+
+            }
+        },
+
+        async cancelService(service_id) {
+            
+            const confirm = window.confirm('¿Está seguro de cancelar el servicio?');
+            if (confirm) {
+                const url = route('requestservice.cancel', service_id);
+
+                const response = await axios.get(url);
+
+                const data = response.data;
+                alert(data.message);
+
+            }
+
         }
     }
 
