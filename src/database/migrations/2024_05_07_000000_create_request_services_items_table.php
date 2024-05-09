@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('request_services_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('requests_id')->constrained('requests');
-            $table->foreignId('servicepricelists_id')->constrained('servicepricelists');            
+           
             $table->foreignId('request_service_id')->constrained('request_services');
             
+            $table->string('item_type');
             $table->string('description')->nullable();
             $table->float('price')->nullable();
             

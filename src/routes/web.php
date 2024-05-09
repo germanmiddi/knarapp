@@ -17,6 +17,7 @@ use App\Http\Controllers\Manager\Driver\DriverController;
 use App\Http\Controllers\Manager\Driver\DriverServicePriceController;
 use App\Http\Controllers\Manager\Setting\SettingsUserController;
 use App\Http\Controllers\Manager\RequestService\RequestServiceController;
+use App\Http\Controllers\Manager\RequestServicesItem\RequestServicesItemController;
 
 use App\Http\Controllers\Web\Reservas\ReservasController;
 
@@ -79,6 +80,10 @@ Route::get('/service/{service}/edit', [ServiceController::class, 'edit'])
 
 Route::get('/service/{service}', [ServiceController::class, 'confirmService'])
     ->name('service.confirm')
+    ->middleware('auth');
+
+Route::post('/requestServicesItem/store', [RequestServicesItemController::class, 'store'])
+    ->name('requestServicesItem.store')
     ->middleware('auth');
     
 

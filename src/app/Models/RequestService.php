@@ -20,7 +20,8 @@ class RequestService extends Model
         'created_by',
         'updated_by',
         'services_type_id',
-        'guide_name'
+        'guide_name',
+        'total'
     ];
  
     protected $casts = [
@@ -64,6 +65,11 @@ class RequestService extends Model
 
     public function serviceType(){
         return $this->belongsTo(ServiceType::class, 'services_type_id');
+    }
+
+    public function requestServicesItems()
+    {
+        return $this->hasMany(RequestServicesItem::class);
     }
 
     use HasFactory;

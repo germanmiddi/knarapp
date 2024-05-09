@@ -105,7 +105,7 @@
                         <th class="px-6 py-3 ">Fecha</th>
                         <th class="px-6 py-3 ">Hora</th>
                         <th class="px-6 py-3 ">Cliente</th>
-                        <th class="px-6 py-3 ">Recorrido</th>
+                        <th class="px-6 py-3 hidden lg:block">Recorrido</th>
                         <!-- <th class="px-6 py-3 ">Destino</th> -->
                         <th class="px-6 py-3 ">Pax</th>
                         <th class="px-6 py-3 ">Estado</th>
@@ -119,8 +119,8 @@
                         <td class="border-t px-6 py-4">{{formatFecha(service.date)}}</td>
                         <td class="border-t px-6 py-4">{{service.time}}</td>
                         <td class="border-t px-6 py-4">{{service.request.client.company_name}}</td>
-                        <td class="border-t px-6 py-4">{{service.from.name}}<br>
-                                                     {{service.to.name}}</td>
+                        <td class="border-t px-6 py-4 hidden lg:block">{{service.from.name}}<br>
+                                                                        {{service.to.name}}</td>
 
                         <!-- <td class="border-t px-6 py-4">{{service.to.name}}</td> -->
                         <td class="border-t px-6 py-4 text-center">{{service.pax_cant}}</td>
@@ -143,7 +143,7 @@
                                         <MenuItems class="origin-top-left absolute z-50 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                                             <div class="py-1">
                                                 <MenuItem v-slot="{ active }">
-                                                    <a :href="route('service.edit', 4)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
+                                                    <a :href="route('service.edit', service.id)" class="text-gray-900 block px-4 py-2 text-sm pointer-events hover:bg-gray-100 text-left">Editar</a>
                                                 </MenuItem>
                                             </div>
 
@@ -168,9 +168,9 @@
                                     </transition>
                                 </Menu>
                                 
-                                <a type="button" href="#" class="ml-2 inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
+                                <!-- <a type="button" href="#" class="ml-2 inline-flex items-center p-1 border border-gray-200 rounded-md text-white bg-gray-100 
                                             hover:bg-gray-300">
-                                    <ChevronRightIcon @click="open = true" class="h-4 w-4 text-gray-700" aria-hidden="true" /></a>
+                                    <ChevronRightIcon @click="open = true" class="h-4 w-4 text-gray-700" aria-hidden="true" /></a> -->
                             </div>
                         </td>                        
                     </tr>  

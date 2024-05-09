@@ -21,7 +21,8 @@ class Requests extends Model
         'observations',
         'status_id',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'total'
     ];
     
     public function client()
@@ -44,5 +45,10 @@ class Requests extends Model
         return $this->hasMany(RequestService::class);
     }    
     
+    public function requestServiceItems()
+    {
+        return $this->hasMany(RequestServicesItem::class);
+    }
+
     use HasFactory;
 }

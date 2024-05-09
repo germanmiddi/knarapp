@@ -7,9 +7,6 @@
                        <ChevronLeftIcon class="w-5 mr-2 rounded-full hover:bg-white" @click="goBack" /> Viajes - Editar Viaje
                     </h2>
                     <div class="space-x-2" >
-                        <!-- <button class="btn-blue" @click="showNewService = !showNewService">
-                            Agregar Servicio
-                        </button> -->
                         <a class="btn-blue" :href="route('services')" >
                             Guardar
                         </a>
@@ -29,7 +26,6 @@
                                     <div>
                                         <div class="px-4 sm:px-0">
                                           <h3 class="text-base font-semibold leading-7 text-gray-900">Información general de solicitud</h3>
-                                          <!-- <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Detalles de la reserva</p> -->
                                         </div>
                                         <div class="mt-6 border-t border-gray-100">
                                           <dl class="divide-y divide-gray-100">
@@ -101,7 +97,7 @@
                                             </div>
                                             
                                             <div class="mt-8" v-show="showNewItem">
-                                                <form @submit.prevent="addItem" class="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-5 sm:gap-4">
+                                                <form class="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-5 sm:gap-4">
                                                     <div class="col-span-2">
                                                       <label for="description" class="block text-sm font-medium text-gray-700">Descripción:</label>
                                                       <input v-model="newItem.description" type="text" name="description" id="description" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -111,7 +107,7 @@
                                                       <input v-model="newItem.price" type="number" name="price" id="price" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                     </div>
                                                     <div class="col-span-1">
-                                                      <button type="submit" class="btn-blue w-full mt-6">Agregar Item</button>
+                                                      <button @click.prevent="addItem" class="btn-blue w-full mt-6">Agregar Item</button>
                                                     </div>
                                                   </form>
                                             </div>       
@@ -126,7 +122,7 @@
                                                 </div>
                                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                     <dt class="text-base font-bold leading-6 text-gray-900 sm:col-span-2 text-right pl-5">Total:</dt>
-                                                    <dd class="mt-1 pr-8 text-base leading-6 font-bold text-gray-900 sm:mt-0 text-right">$ {{ calculateTotal().toFixed(2) }}</dd>
+                                                    <dd class="mt-1 pr-8 text-base leading-6 font-bold text-gray-900 sm:mt-0 text-right">$ {{ requestService.total }}</dd>
                                                   </div>
                                               </dl>
                                             </div>
@@ -141,10 +137,6 @@
      
             </div>
     
-             <Services v-show="showNewService" 
-                      :locations="locations" 
-                      :client="form.client_id" 
-                      @createService="createService"  />
         </div> 
     </template>
     
@@ -156,7 +148,6 @@
     import Toast from '@/Layouts/Components/Toast.vue'
     import Datepicker from '@vuepic/vue-datepicker'
     import '@vuepic/vue-datepicker/dist/main.css'
-    import Services from '@/Pages/Manager/Requests/Services.vue'
     
     import {
              ChevronLeftIcon
@@ -167,6 +158,7 @@
         props: {
             clients: Object,
             locations: Object,
+            requestService: Object,
         },
     
         components: {
@@ -174,8 +166,7 @@
             Toast,
             ChevronLeftIcon,
             Inertia,
-            Datepicker,
-            Services                
+            Datepicker,             
         },
     
         setup() {
@@ -200,24 +191,8 @@
         data() {
         
             return {
-                items: [
-                    {description: "Transfer Ezeiza / Hotel Céntrico o Viceversa", price: 43},
-                    {description: "Tiempo de espera: 1hs", price: 17},
-                ],
                 showNewItem: false,
-                form: {},
                 toastMessage: "",
-                showNewService: false,
-                services: [{
-                            "date":"2023-07-21",
-                            "time":{"hours":9,"minutes":0,"seconds":0},"cant_pax":3,"guia":"1","equipaje":"1",
-                            "service":{"id":30,"client_id":1,"detail":"Transfer Ezeiza / Palermo o Viceversa","type":"TRF VAN","wait_time":1,"baggage":true,"guide":true,"passenger_capacity":6,"duration":null,"price":137,"active":true,"created_by":1,"deleted_at":null,"created_at":null,"updated_at":null},
-                            "guide_name":"asdasd",
-                            "flight_number":"asdasd",
-                            "location_from":"Aeropuerto Internacional Ministro Pistarini (Ezeiza)",
-                            "location_to":"Hotel Colonial"
-                        }],
-    
                 newItem: {
                     description: "",
                     price: null,
@@ -244,19 +219,6 @@
                 return formattedTime;
             },        
     
-            createService(service) {
-                
-                console.log(service)
-                this.services.push(service)
-    
-            },
-    
-            getServices(){
-              
-    
-    
-            },
-    
             goBack() {
                Inertia.visit(document.referrer);
             },
@@ -264,34 +226,38 @@
                 this.toastMessage = ""
             },
     
-            submit() {
-                this.$inertia.post(route('client.store'), this.form)
-            },
-            calculateTotal() {
-                return this.items.reduce((total, item) => total + item.price, 0);
-            }, 
-
-            addItem() {
+            async addItem() {
                 // Validar que se haya ingresado una descripción y un precio
                 if (!this.newItem.description || !this.newItem.price) {
                 return;
                 }
 
+                
+                
+                const url = route('requestServicesItem.store')
+                const data = {
+                    request_service_id: this.requestService.id,
+                    request_id: this.requestService.requests_id,
+
+                    description: this.newItem.description,
+                    price: this.newItem.price,
+                }
+
+                const response = await axios.post(url, data)
+
+                alert(response.data.message)
+                
                 // Agregar el nuevo item a la lista de items
                 this.items.push({
-                description: this.newItem.description,
-                price: parseFloat(this.newItem.price),
+                    description: this.newItem.description,
+                    price: parseFloat(this.newItem.price),
                 });
-
                 // Limpiar el formulario
                 this.newItem.description = "";
                 this.newItem.price = null;
 
             }
 
-        },
-        created() {
-            //this.getCity()
         }
     })
     </script>

@@ -34,9 +34,11 @@ class ServiceController extends Controller
         ]);
     }
 
-    public function edit(Service $service){
+    public function edit(RequestService $service){
 
-        return Inertia::render('Manager/Services/Edit');
+        return Inertia::render('Manager/Services/Edit', [
+            'requestService' => $service::with('request')
+        ]);
     }
 
     public function create(){
