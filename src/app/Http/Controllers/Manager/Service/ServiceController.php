@@ -36,8 +36,19 @@ class ServiceController extends Controller
 
     public function edit(RequestService $service){
 
+        $service->load('request', 
+                       'request.client', 
+                       'requestServicesItems', 
+                       'servicepricelist', 
+                       'serviceType', 
+                       'status',
+                       'from',
+                       'to',
+                       'driver' 
+                    );
+
         return Inertia::render('Manager/Services/Edit', [
-            'requestService' => $service::with('request')
+            'requestService' => $service
         ]);
     }
 

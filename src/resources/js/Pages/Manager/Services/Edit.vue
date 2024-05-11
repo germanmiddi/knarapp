@@ -23,112 +23,16 @@
                         <div class="pb-12">
                             <div class="md:grid md:grid-cols-3 md:gap-10">
                                 <div class="md:col-span-1">
-                                    <div>
-                                        <div class="px-4 sm:px-0">
-                                          <h3 class="text-base font-semibold leading-7 text-gray-900">Información general de solicitud</h3>
-                                        </div>
-                                        <div class="mt-6 border-t border-gray-100">
-                                          <dl class="divide-y divide-gray-100">
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Cliente</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">ATP</dd>
-                                            </div>
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Recibido</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">01/07/2023</dd>
-                                            </div>
-                                            <!-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
-                                            </div> -->
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Responsable</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Gisela</dd>
-                                            </div>
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Notas</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> 2 Aguas</dd>
-                                            </div>
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                              <dt class="text-sm font-medium leading-6 text-gray-900">Notas del Chofer</dt>
-                                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum corrupti, animi asperiores natus fuga quia nesciunt iusto.</dd>
-                                            </div>
-                                          </dl>
-                                        </div>
-                                    </div>                                    
+                                    <RequestInfo :request="requestService.request" />
                                 </div>
                                 <div class="col-span-2">
-                                    <div>
-                                        <div class="px-4 sm:px-0 flex justify-between items-center">
-                                            <h3 class="text-base font-semibold leading-7 text-gray-900">Detalle del Viaje</h3>
-                                            <div class="bg-green-200 text-green-900 px-4 py-2 rounded-lg text-xs tracking-wider">FINALIZADO</div>
-                                        </div>     
-                                        <div v-for="service in services" :key="service.id" class="bg-gray-50 sm:rounded-lg">
-                                            <div class="px-4 py-5 sm:px-6 mt-3  ">
-                                                
-                                                <h3 class="text-lg leading-6 font-medium text-gray-900">{{service.service.detail}}</h3>
-                                                <p class="mt-1 max-w-2xl text-sm text-gray-500 mb-8">Fecha: {{formatDate(service.date)}}</p>
-                                            
-                                                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Origen</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_from}}</dd>
-                                                    </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Destino</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_to}}</dd>
-                                                    </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Nombre Guia</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.guide_name}}</dd>
-                                                    </div>
-                                                    <div class="sm:col-span-1">
-                                                        <dt class="text-sm font-medium text-gray-500">Nro Vuelo</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.flight_number}}</dd>
-                                                    </div>    
-                                                </dl>
-                                            </div>
-                                        </div>         
-                                        <div>
-                                            <div class="px-4 sm:px-0 mt-12 flex justify-between items-center">
-                                              <h3 class="text-base font-semibold leading-7 text-gray-900">Items del Viaje</h3>
-                                              <button class="btn-blue" @click="showNewItem =! showNewItem">Nuevo Item</button>
-                                            </div>
-                                            
-                                            <div class="mt-8" v-show="showNewItem">
-                                                <form class="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-5 sm:gap-4">
-                                                    <div class="col-span-2">
-                                                      <label for="description" class="block text-sm font-medium text-gray-700">Descripción:</label>
-                                                      <input v-model="newItem.description" type="text" name="description" id="description" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                    </div>
-                                                    <div class="col-span-2">
-                                                      <label for="price" class="block text-sm font-medium text-gray-700">Precio:</label>
-                                                      <input v-model="newItem.price" type="number" name="price" id="price" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                    </div>
-                                                    <div class="col-span-1">
-                                                      <button @click.prevent="addItem" class="btn-blue w-full mt-6">Agregar Item</button>
-                                                    </div>
-                                                  </form>
-                                            </div>       
-
-                                            <div class="mt-8 border-t border-gray-100">
-                                              <dl class="divide-y divide-gray-100">
-
-                                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
-                                                    v-for="item in items" :key="item.id" >
-                                                  <dt class="text-sm font-medium leading-6 text-gray-900 sm:col-span-2 pl-5">{{ item.description }}</dt>
-                                                  <dd class="mt-1 pr-8 text-sm leading-6 text-gray-700 sm:mt-0 text-right">$ {{ item.price }}</dd>
-                                                </div>
-                                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                    <dt class="text-base font-bold leading-6 text-gray-900 sm:col-span-2 text-right pl-5">Total:</dt>
-                                                    <dd class="mt-1 pr-8 text-base leading-6 font-bold text-gray-900 sm:mt-0 text-right">$ {{ requestService.total }}</dd>
-                                                  </div>
-                                              </dl>
-                                            </div>
-                                        </div>                                    
-
-                                    </div>                                    
+                                    <ServiceCard :service="requestService" 
+                                                 :servicePriceList="requestService.servicePriceList" />
+                                                                     
+                                    <ServiceItems 
+                                        :requestService="requestService"
+                                        :items="requestService.request_services_items" 
+                                        @updateRequestService="handleUpdateRequestService"/>
                                 </div>
                             </div>
                         </div>
@@ -146,6 +50,10 @@
     import { defineComponent, ref } from 'vue'
     import Icons from '@/Layouts/Components/Icons.vue'
     import Toast from '@/Layouts/Components/Toast.vue'
+    import RequestInfo from '@/Layouts/Request/RequestInfo.vue'
+    import ServiceItems from './ServiceItems/List.vue'
+    import ServiceCard from './ServiceCard.vue'
+
     import Datepicker from '@vuepic/vue-datepicker'
     import '@vuepic/vue-datepicker/dist/main.css'
     
@@ -166,7 +74,10 @@
             Toast,
             ChevronLeftIcon,
             Inertia,
-            Datepicker,             
+            Datepicker,     
+            RequestInfo,
+            ServiceItems,
+            ServiceCard        
         },
     
         setup() {
@@ -191,17 +102,18 @@
         data() {
         
             return {
-                showNewItem: false,
-                toastMessage: "",
-                newItem: {
-                    description: "",
-                    price: null,
-                },
+                // showNewItem: false,
+                // toastMessage: "",
+                // newItem: {
+                //     description: "",
+                //     price: null,
+                // },
     
             }
         },
     
         methods: {
+
             formatDate(date) {
                 const formattedDate = new Date(date).toLocaleDateString('es-AR', {
                     year: 'numeric',
@@ -225,39 +137,6 @@
             clearMessage() {
                 this.toastMessage = ""
             },
-    
-            async addItem() {
-                // Validar que se haya ingresado una descripción y un precio
-                if (!this.newItem.description || !this.newItem.price) {
-                return;
-                }
-
-                
-                
-                const url = route('requestServicesItem.store')
-                const data = {
-                    request_service_id: this.requestService.id,
-                    request_id: this.requestService.requests_id,
-
-                    description: this.newItem.description,
-                    price: this.newItem.price,
-                }
-
-                const response = await axios.post(url, data)
-
-                alert(response.data.message)
-                
-                // Agregar el nuevo item a la lista de items
-                this.items.push({
-                    description: this.newItem.description,
-                    price: parseFloat(this.newItem.price),
-                });
-                // Limpiar el formulario
-                this.newItem.description = "";
-                this.newItem.price = null;
-
-            }
-
         }
     })
     </script>

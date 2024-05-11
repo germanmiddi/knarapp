@@ -15,9 +15,9 @@
                  :aria-current="route().current(item.href) ? 'page' : undefined">
                 {{ item.name }}
               </a>
-              <div class="flex items-center px-2 py-2 hover:text-red-600 hover:bg-gray cursor-pointer text-gray-500 ">
+              <div @click="logout" class="flex items-center px-2 py-2 hover:text-red-600 hover:bg-gray cursor-pointer text-gray-500 ">
                 <PowerIcon class="mr-2 flex-shrink-0 h-4 w-4" />
-                <span @click="logout" class="text-xs font-medium hidden lg:block">Cerrar Sesión</span>
+                <span  class="text-xs font-medium hidden lg:block">Cerrar Sesión</span>
               </div> 
             </div>
           </div>

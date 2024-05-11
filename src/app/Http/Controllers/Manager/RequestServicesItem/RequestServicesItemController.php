@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Manager\RequestServicesItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\RequestServicesItem;
 use Illuminate\Support\Facades\DB;
 use App\Events\RequestServiceItemCreated;
 
+use App\Models\RequestServicesItem;
+use App\Models\RequestService;
 
 class RequestServicesItemController extends Controller
 {
@@ -40,9 +41,6 @@ class RequestServicesItemController extends Controller
      */
     public function store(Request $request)
     {
-
-        
-
         DB::BeginTransaction();
         try{
 
@@ -55,15 +53,18 @@ class RequestServicesItemController extends Controller
             $item->save();
             
             RequestServiceItemCreated::dispatch($item);
+
+            $total = RequestService::find($request->request_service_id);
+
             DB::commit();
-            return response()->json(['message' => 'Item created successfully'], 200);
+            return response()->json(
+                                ['message' => 'Item created successfully', 
+                                 'total' => $total->total ], 200);
+
         }catch(\Exception $e){
             DB::rollback();
             return response()->json(['error' => $e->getMessage()], 500);
         }
-
-
-
 
     }
 
@@ -109,6 +110,22 @@ class RequestServicesItemController extends Controller
      */
     public function destroy($id)
     {
-        // Your code here
+        DB::BeginTransaction();
+        try{
+            $item = RequestServicesItem::find($id);
+            $requestServiceId = $item->request_service_id;
+            $item->delete();
+
+            $total = RequestService::find($requestServiceId);
+
+            DB::commit();
+            return response()->json(
+                                ['message' => 'Item deleted successfully', 
+                                 'total' => $total->total ], 200);
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

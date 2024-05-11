@@ -28,33 +28,26 @@ class ReservasController extends Controller
         }
         
 
-        $list = Servicepricelist::where('client_id', auth()->user()->client->id)
-                                ->active()
-                                ->with('servicepricelistbase', 
-                                       'servicepricelistbase.services', 
-                                       'servicepricelistbase.services.service_type')
-                                ->get();
 
-        // Preparar servicepricelist para pasar a la vista
-        $servicepricelist = $list; // En este caso, ya tienes la lista, así que solo la asignamos directamente.
+        // Si el usuario es admin, toma todos los registros; si es cliente, toma solo los de su cliente
+        if (auth()->user()->hasRole('ADMIN')) {
+            $list = Servicepricelist::active()
+                                    ->with('servicetype')
+                                    ->get();
+        } else {
+            $list = Servicepricelist::where('client_id', auth()->user()->client->id)
+                                    ->active()
+                                    ->join('services_type', 'services_type.id', '=', 'servicepricelists.services_type_id')
+                                    ->select('servicepricelists.services_type_id', 'services_type.description')
+                                    ->groupBy('servicepricelists.services_type_id')
+                                    ->get();
 
-        // Extraer service_types con id y description
-        $serviceTypes = $list->pluck('service.services.service_type.description', 'service.services.service_type.id')->unique()->toArray();
-
-        $list_array = $list->toArray();
+        }
         
-        // Extraer con un map service_types con id y description
-        $serviceTypes = array_map(function($item){
-            $return['id'] = $item['service']['services']['service_type']['id'];
-            $return['description'] = $item['service']['services']['service_type']['description'];
-            return $return;
-        }, $list_array);
-
-        $serviceTypes = array_unique($serviceTypes, SORT_REGULAR);
-
+        $serviceTypes = $list->toArray();
+        
         return Inertia::render('Web/Reservas/Index', [
                                     'locations' => Location::all(),
-                                    'servicepricelist' => $servicepricelist,
                                     'service_types' => $serviceTypes,
                                 ]);
     }
