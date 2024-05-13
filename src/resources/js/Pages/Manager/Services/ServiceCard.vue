@@ -55,28 +55,34 @@
                     <dt class="text-xs font-medium text-gray-500">Nro Vuelo</dt>
                     <dd class="mt-1 text-sm text-gray-900">
                         <input v-model="service.flight_number" :disabled="service.flight_number == null"
-                               class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                               class="mt-1 block w-full py-2 px-3 border border-gray-100 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                                :class="{'bg-gray-50': 'service.flight_number == null'}"/>
                     </dd>
                 </div>    
     
-                
+                <!-- <pre>{{ service }}</pre> -->
+
                 <div class="col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Servicio</dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                        <select v-model="service.servicepricelists_id"
+                        <label class="bg-gray-50 mt-1 block w-full py-2 px-3 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
+                                {{ buildOptionService(servicePriceList) }} </label>
+                        <!-- <select v-model="service.servicepricelists_id"
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option v-for="price_list_item in price_list" :value="price_list_item.id" :key="price_list_item.id">{{ buildOptionService(price_list_item) }}</option>
-                        </select>
+                        </select> -->
                     </dd>
                 </div>
                 <div class="col-span-2 sm:col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Chofer</dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                        <select v-model="service.driver_id"
+                        <label class="bg-gray-50 mt-1 block w-full py-2 px-3 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
+                            {{ service.driver.name }} {{ service.driver.lastname }} | {{ service.driver.vehicle }}  </label>
+                        
+                        <!-- <select v-model="service.driver_id"
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option v-for="driver in drivers" :value="driver.id" :key="driver.id">{{ `${driver.name} ${driver.lastname}` }}</option>
-                        </select>
+                        </select> -->
                     </dd>                
                 </div>
                 <div v-if="service.guide" class="col-span-2 sm:col-span-2">

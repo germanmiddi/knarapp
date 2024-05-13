@@ -3,14 +3,14 @@
         <div class="px-4 py-5 bg-white sm:p-6">                        
             <div class="grid grid-cols-1 gap-6">
                 <div class="col-span-1">
-                    <label class="text-base font-medium text-gray-900">Tipo</label>
+                    <label class="text-xs font-medium text-gray-500">Tipo</label>
                     <fieldset class="mt-4">
                         <div class="space-y-4">
-                            <div v-for="service_type in serviceTypes" :key="service_type.id" class="flex items-center">
-                                <input :id="service_type.id" name="service_type" type="radio" 
-                                       v-model="form.selectedServiceType" :checked="service_type.id === 1" :value="service_type.id"
+                            <div v-for="service_type in serviceTypes" :key="service_type.services_type_id" class="flex items-center">
+                                <input :id="service_type.services_type_id" :name="`service_type_${service_type.services_type_id}`" type="radio" 
+                                       v-model="form.selectedServiceType" :value="service_type.services_type_id"
                                        class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                <label :for="service_type.id" class="ml-3 block text-sm font-medium text-gray-700">
+                                <label :for="`service_type_${service_type.services_type_id}`" class="ml-3 block text-sm font-medium text-gray-700">
                                     {{ service_type.description }}
                                 </label>
                             </div>
@@ -19,7 +19,7 @@
                 </div>
                 
                 <div class="col-span-1">
-                    <label for="date" class="block text-sm font-medium text-gray-700">Fecha:</label>
+                    <label for="date" class="block text-xs font-medium text-gray-500">Fecha:</label>
 
                     <Datepicker id="date" class="w-full mt-1" v-model="form.date"
                         :enableTimePicker="false" :monthChangeOnScroll="false"
@@ -28,77 +28,15 @@
                 </div>
 
                 <div class="col-span-1">
-                    <label for="time" class="block text-sm font-medium text-gray-700">Hora:</label>
+                    <label for="time" class="block text-xs font-medium text-gray-500">Hora:</label>
 
                     <Datepicker id="time" class="w-full mt-1" v-model="form.time"
                         :startTime="startTime" timePicker>
                     </Datepicker>
                 </div>
 
-
                 <div class="col-span-1">
-                    <label for="pax_cant"
-                        class="block text-sm font-medium text-gray-700">Cant. Pasajeros</label>
-                    <input type="number" name="pax_cant" id="pax_cant"
-                        v-model="form.pax_cant"
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                
-                <div class="col-span-1">
-                    <label for="guia"
-                        class="block text-sm font-medium text-gray-700">Guia</label>
-                    <div class="flex items-center"> 
-                        <div class="mr-3">
-                            <div class="cursor-pointer flex justify-center">
-                                <Switch v-model="form.guia"
-                                        @click="form.guia = !form.guia"
-                                        :class="form.guia ? 'bg-blue-600' : 'bg-gray-200'"
-                                        class="relative inline-flex h-6 w-11 items-center rounded-full">
-                                        <span :class="form.guia ? 'translate-x-6' : 'translate-x-1'"
-                                                class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
-                                </Switch>                
-                            </div>
-                        </div>                      
-                        <!-- <div class="w-4/5">
-                            <input type="text" name="guide_name" id="guide_name" v-model="form.guide_name" placeholder="Nombre de guia"
-                                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div> -->
-                    </div>
-                </div>
-
-                <div class="col-span-1">
-                    <label for="equipaje" class="block text-sm font-medium text-gray-700">Equipaje</label>
-                    <div class="flex items-left mt-2">
-                        <div class="cursor-pointer flex justify-center">
-                            <Switch v-model="form.bagagge"
-                                    @click="form.bagagge = !form.bagagge"
-                                    :class="form.bagagge ? 'bg-blue-600' : 'bg-gray-200'"
-                                    class="relative inline-flex h-6 w-11 items-center rounded-full">
-                                    <span :class="form.bagagge ? 'translate-x-6' : 'translate-x-1'"
-                                            class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
-                            </Switch>                
-                        </div>
-                    </div>    
-                </div>                                    
-
-
-                <!-- <div class="col-span-1">
-                    <label for="service_id"
-                        class="block text-sm font-medium text-gray-700">Servicio</label>
-                    
-                    <div v-if="services.length == 0 && !loadingServices" class="text-gray-500">No hay servicios para mostrar</div>    
-                    <div v-if="loadingServices"><Icons class="w-5 mt-1" name="loading" /></div>
-                    <select v-if="!loadingServices && services.length > 0" id="service_id" name="service_id" v-model="form.service" 
-                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option disabled value="">Seleccione un Servicio</option>
-                        <option v-for="service in services" :key="service.id" :value="service">
-                            {{ service.name }}
-                        </option>
-                    </select>
-                </div> -->
-
-                <div class="col-span-1">
-                    <label for="location_from" class="block text-sm font-medium text-gray-700">Origen:</label>
+                    <label for="location_from" class="block text-xs font-medium text-gray-500">Origen:</label>
                     <div style="position: relative; z-index: 1">
                         <LocationSelect :key="`location-from-${locationKey}`" 
                                         :locations="locations" 
@@ -108,18 +46,58 @@
                 </div>
 
                 <div class="col-span-1">
-                    <label for="location_to" class="block text-sm font-medium text-gray-700">Destino:</label>
+                    <label for="location_to" class="block text-xs font-medium text-gray-500">Destino:</label>
                     <LocationSelect :key="`location-to-${locationKey}`" 
                                     :locations="locations" 
                                     @update:selected="updateSelectedLocation" 
-                                    :locationType="2" />
+                                    :locationType="2" class="z-50"/>
                 </div>
 
+                <div class="col-span-1 border-t border-gray-200 w-full"></div>
+                
+                <div class="col-span-1">
+                    <div class="grid grid-cols-3">
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Pasajeros</dt>
+                            
+                            <dd class="mt-1">
+                                <input v-model="form.pax_cant"
+                                class="w-1/2 text-right mt-1 block py-1 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />                                
+                            </dd>
+                        </div>
 
-
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Guia</dt>
+                            
+                            <dd class="mt-1">
+                                <Switch v-model="form.guide"
+                                        @click="form.guide = !form.guide"
+                                        :class="form.guide ? 'bg-blue-600' : 'bg-gray-200'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full">
+                                        <span :class="form.guide ? 'translate-x-6' : 'translate-x-1'"
+                                                class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
+                                </Switch>                
+                            </dd>
+                        </div>
+        
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Equipaje</dt>
+                            <dd class="mt-1">
+                                <Switch v-model="form.baggage"
+                                        @click="form.baggage = !form.baggage"
+                                        :class="form.baggage ? 'bg-blue-600' : 'bg-gray-200'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full">
+                                        <span :class="form.baggage ? 'translate-x-6' : 'translate-x-1'"
+                                                class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
+                                </Switch>                
+                            </dd>
+                        </div>                        
+                    </div>
+                </div>
+   
                 <div class="col-span-1">
                     <label for="flight_number"
-                        class="block text-sm font-medium text-gray-700">Nro Vuelo</label>
+                        class="block text-xs font-medium text-gray-500">Nro Vuelo</label>
                     <input type="text" name="flight_number" id="flight_number" v-model="form.flight_number"
                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
@@ -166,9 +144,10 @@ export default {
         return {
             // services_types: "",
             form:{
-                guia: false,
-                bagagge: false,
-                selectedServiceType: null, 
+                guide: false,
+                baggage: false,
+                selectedServiceType: null,
+                service_type_description: "", 
             },
             services: {},
             showUpdateButton: false,
@@ -222,6 +201,7 @@ export default {
 
         createService(){
             console.log('createService')
+            this.form.service_type_description = this.serviceTypes.find( serviceType => serviceType.services_type_id == this.form.selectedServiceType).description
             this.$emit('createService', this.form)
             this.clearForm()
 
@@ -241,5 +221,7 @@ export default {
 </script>
 
 <style>
-
+ul{
+    z-index: 50;
+}
 </style>

@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-span-2">
                                     <ServiceCard :service="requestService" 
-                                                 :servicePriceList="requestService.servicePriceList" />
+                                                 :servicePriceList="requestService.servicepricelist" />
                                                                      
                                     <ServiceItems 
                                         :requestService="requestService"

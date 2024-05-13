@@ -25,8 +25,46 @@
                 </div>
     
                 <div class="col-span-2 border-t border-gray-200 w-full"></div>
-    
-                <div class="col-span-2 sm:col-span-1">
+                
+                <div class="col-span-2">
+                    <div class="grid grid-cols-3">
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Pasajeros</dt>
+                            
+                            <dd class="mt-1">
+                                <input v-model="service.pax_cant"
+                                class="w-1/2 text-right mt-1 block py-1 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />                                
+                            </dd>
+                        </div>
+
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Guia</dt>
+                            
+                            <dd class="mt-1">
+                                <Switch v-model="service.guide" disabled
+                                        :class="service.guide ? 'bg-blue-400' : 'bg-gray-200'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full">
+                                        <span :class="service.guide ? 'translate-x-6' : 'translate-x-1'"
+                                            class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
+                                </Switch> 
+                            </dd>
+                        </div>
+        
+                        <div class="col-span-3 sm:col-span-1">
+                            <dt class="text-xs font-medium text-gray-500">Equipaje</dt>
+                            <dd class="mt-1">
+                                <Switch v-model="service.baggage"
+                                        disabled
+                                        :class="service.baggage ? 'bg-blue-400' : 'bg-gray-200'"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full">
+                                        <span :class="service.baggage ? 'translate-x-6' : 'translate-x-1'"
+                                            class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
+                                </Switch> 
+                            </dd>
+                        </div>                        
+                    </div>
+                </div>
+                <!-- <div class="col-span-2 sm:col-span-1">
                     <dt class="text-xs font-medium text-gray-500">Guia</dt>
                     
                     <dd class="mt-1">
@@ -38,6 +76,7 @@
                         </Switch> 
                     </dd>
                 </div>
+
                 <div class="col-span-2 sm:col-span-1">
                     <dt class="text-xs font-medium text-gray-500">Equipaje</dt>
                     <dd class="mt-1">
@@ -49,7 +88,7 @@
                                     class="inline-block h-4 w-4 transform rounded-full bg-white transition"/>
                         </Switch> 
                     </dd>
-                </div>
+                </div> -->
 
                 <div class="col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Nro Vuelo</dt>
@@ -64,7 +103,7 @@
                 <div class="col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Servicio</dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                        <select v-model="service.servicepricelists_id"
+                        <select v-model="service.servicepricelists_id" :disabled="service.status_id != 1"
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option v-for="price_list_item in price_list" :value="price_list_item.id" :key="price_list_item.id">{{ buildOptionService(price_list_item) }}</option>
                         </select>
@@ -73,7 +112,7 @@
                 <div class="col-span-2 sm:col-span-2">
                     <dt class="text-xs font-medium text-gray-500">Chofer</dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                        <select v-model="service.driver_id"
+                        <select v-model="service.driver_id" :disabled="service.status_id != 1"
                         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option v-for="driver in drivers" :value="driver.id" :key="driver.id">{{ `${driver.name} ${driver.lastname}` }}</option>
                         </select>
@@ -94,11 +133,12 @@
             </div>
     
         </div>
-        <div class="flex justify-between w-full px-6 py-4 bg-gray-50 rounded-b-lg border-t  border-gray-300">
+        <div v-if="service.status_id == 1 || service.status_id == 4 || service.status_id == 5"
+             class="flex justify-between w-full px-6 py-4 bg-gray-50 rounded-b-lg border-t  border-gray-300">
             <div><button v-if="service.status_id == 1" @click="cancelService(service.id)" class="btn-outline-red">Cancelar</button></div>   
             <button v-if="service.status_id == 1" @click="confirmService()" class="btn-blue">Confirmar</button>
-            <button v-else-if="service.status_id == 2 || service.status_id == 3" class="btn-blue">Finalizar</button>
-            <button v-else-if="service.status_id == 4 || service.status_id == 5" class="btn-blue">Re Abrir</button>
+            <!-- <button v-else-if="service.status_id == 2 || service.status_id == 3" class="btn-blue">Finalizar</button> -->
+            <button v-if="service.status_id == 4 || service.status_id == 5" class="btn-blue">Re Abrir</button>
         </div>
 
     </div>  
