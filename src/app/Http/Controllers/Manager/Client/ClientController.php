@@ -105,7 +105,8 @@ class ClientController extends Controller
                 $servicePriceListItem->servicepricelistsbase_id = $baseItem->id;
                 $servicePriceListItem->price = $baseItem->price;
                 $servicePriceListItem->created_by = Auth::id();
-
+                $servicePriceListItem->services_id = $baseItem->services_id;
+                $servicePriceListItem->services_type_id = $baseItem->services_type_id;
                 $servicePriceListItem->save();
             }
 

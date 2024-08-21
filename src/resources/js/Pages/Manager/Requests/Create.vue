@@ -115,11 +115,11 @@
                                                 <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                                     <div class="sm:col-span-1">
                                                         <dt class="text-sm font-medium text-gray-500">Origen</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_from}}</dd>
+                                                        <dd v-if="service.location_from" class="mt-1 text-sm text-gray-900">{{service.location_from.name}}</dd>
                                                     </div>
                                                     <div class="sm:col-span-1">
                                                         <dt class="text-sm font-medium text-gray-500">Destino</dt>
-                                                        <dd class="mt-1 text-sm text-gray-900">{{service.location_to}}</dd>
+                                                        <dd v-if="service.location_to" class="mt-1 text-sm text-gray-900">{{service.location_to.name}}</dd>
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,6 +171,9 @@ import Toast from '@/Layouts/Components/Toast.vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import Services from '@/Pages/Manager/Requests/Services.vue'
+
+import useVuelidate from '@vuelidate/core';
+import { required, email, helpers } from '@vuelidate/validators';
 
 import { ChevronLeftIcon,
          PencilIcon,

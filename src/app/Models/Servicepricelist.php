@@ -14,8 +14,8 @@ class Servicepricelist extends Model
         'price',
         'active',
         'created_by',
-        'service_id',
-        'service_type_id',
+        'services_id',
+        'services_type_id',
         
     ];
     
